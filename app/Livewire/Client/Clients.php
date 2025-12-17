@@ -25,7 +25,18 @@ class Clients extends Component
     public function toggleEditMode($id)
     {
         if ($this->editMode) {
-            $this->resetForm();
+            $this->reset([
+                'editMode',
+                'clientId',
+                'name',
+                'email',
+                'phone',
+                'address',
+                'rccm',
+                'ifu',
+            ]);
+
+            $this->editMode = false;
             return;
         }
 

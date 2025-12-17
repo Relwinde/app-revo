@@ -21,6 +21,7 @@
                         <th>Nom</th>
                         <th>Email</th>
                         <th>Téléphone</th>
+                        <th>Adresse</th>
                         <th>RCCM</th>
                         <th>IFU</th>
                         <th>Date de création</th>
@@ -57,6 +58,16 @@
                                     <input wire:model="phone" type="text" class="form-control form-control-alt" />
                                 @else
                                     {{ $client->phone ?? '-' }}
+                                @endif
+                            </td>
+
+                            {{-- ADRESSE  --}}
+
+                            <td>
+                                @if ($editMode && $clientId === $client->id)
+                                    <input wire:model="address" type="text" class="form-control form-control-alt" />
+                                @else
+                                    {{ $client->address ?? '-' }}
                                 @endif
                             </td>
 

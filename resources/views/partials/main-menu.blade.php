@@ -11,9 +11,12 @@
                 </a>
             </li>
 
+            <!-- PARAMÈTRES -->
+            <li class="nav-main-heading">Outils</li>
+
             <li class="nav-main-item">
-                <a class="nav-main-link {{ request()->routeIs('clients') ? 'active' : '' }}" href="{{ route('clients') }}">
-                    <i class="nav-main-link-icon si si-home"></i>
+                <a class="nav-main-link {{ request()->routeIs('clients') ? 'active' : '' }}" href="{{ route('clients') }}" wire:navigate>
+                    <i class="nav-main-link-icon far fa-address-book"></i>
                     <span class="nav-main-link-name">Clients</span>
                 </a>
             </li>
