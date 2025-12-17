@@ -209,6 +209,7 @@
             assets/js/core/js.cookie.min.js
         -->
     @include('partials.scripts')
+    @livewire('wire-elements-modal')
 </body>
 
 </html>
