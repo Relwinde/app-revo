@@ -1,12 +1,13 @@
 <?php
 
-use App\Livewire\Client\Clients;
 use App\Livewire\Home;
 use App\Livewire\Login;
 use App\Livewire\User\Users;
 use App\Livewire\User\Header;
+use App\Livewire\Client\Clients;
 use App\Livewire\Profile\Profiles;
 use Illuminate\Support\Facades\Route;
+use App\Livewire\Fournisseur\Fournisseurs;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,5 +25,7 @@ Route::get('/login', Login::class)->name('login');
 Route::get('/logout', Header::class)->name('logout')->middleware('auth');
 Route::get('/users', Users::class)->name('users')->middleware('auth');
 Route::get('/clients', Clients::class)->name('clients')->middleware('auth');
+
+Route::get('/fournisseurs', Fournisseurs::class)->name('fournisseurs')->middleware('auth');   
 
 Route::get('/profils', Profiles::class)->name('profils')->middleware('auth');
