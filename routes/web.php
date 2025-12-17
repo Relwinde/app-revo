@@ -4,9 +4,11 @@ use App\Livewire\Home;
 use App\Livewire\Login;
 use App\Livewire\User\Users;
 use App\Livewire\User\Header;
+use App\Livewire\Camion\Camions;
 use App\Livewire\Client\Clients;
 use App\Livewire\Profile\Profiles;
 use Illuminate\Support\Facades\Route;
+use App\Livewire\Chauffeur\Chauffeurs;
 use App\Livewire\Fournisseur\Fournisseurs;
 
 /*
@@ -27,5 +29,9 @@ Route::get('/users', Users::class)->name('users')->middleware('auth');
 Route::get('/clients', Clients::class)->name('clients')->middleware('auth');
 
 Route::get('/fournisseurs', Fournisseurs::class)->name('fournisseurs')->middleware('auth');   
+
+Route::get('/chauffeurs', Chauffeurs::class)->name('chauffeurs')->middleware('auth');
+
+Route::get('/camions', Camions::class)->name('camions')->middleware('auth');
 
 Route::get('/profils', Profiles::class)->name('profils')->middleware('auth');

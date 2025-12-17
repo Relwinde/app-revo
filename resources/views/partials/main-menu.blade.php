@@ -12,6 +12,9 @@
             </li>
 
             <!-- PARAMÈTRES -->
+            <li class="nav-main-heading">Opérations</li>
+
+            <!-- PARAMÈTRES -->
             <li class="nav-main-heading">Outils</li>
 
             <li class="nav-main-item">
@@ -25,6 +28,20 @@
                 <a class="nav-main-link {{ request()->routeIs('fournisseurs') ? 'active' : '' }}" href="{{ route('fournisseurs') }}" wire:navigate>
                     <i class="nav-main-link-icon far fa-handshake"></i>
                     <span class="nav-main-link-name">Fournisseurs</span>
+                </a>
+            </li>
+
+            <li class="nav-main-item">
+                <a class="nav-main-link {{ request()->routeIs('camions') ? 'active' : '' }}" href="{{ route('camions') }}" wire:navigate>
+                    <i class="nav-main-link-icon fa fa-truck"></i>
+                    <span class="nav-main-link-name">Camions</span>
+                </a>
+            </li>
+
+            <li class="nav-main-item">
+                <a class="nav-main-link {{ request()->routeIs('chauffeurs') ? 'active' : '' }}" href="{{ route('chauffeurs') }}" wire:navigate>
+                    <i class="nav-main-link-icon far fa-user-circle"></i>
+                    <span class="nav-main-link-name">Chauffeurs</span>
                 </a>
             </li>
 
