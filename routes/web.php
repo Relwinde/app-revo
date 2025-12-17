@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\Client\Clients;
 use App\Livewire\Home;
 use App\Livewire\Login;
 use App\Livewire\User\Users;
@@ -22,5 +23,6 @@ Route::get('/', Home::class)->name('home')->middleware('auth');
 Route::get('/login', Login::class)->name('login');
 Route::get('/logout', Header::class)->name('logout')->middleware('auth');
 Route::get('/users', Users::class)->name('users')->middleware('auth');
+Route::get('/clients', Clients::class)->name('clients')->middleware('auth');
 
 Route::get('/profils', Profiles::class)->name('profils')->middleware('auth');
