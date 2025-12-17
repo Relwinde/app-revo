@@ -53,7 +53,7 @@
                         <div class="col-md-12">
                             <div class="form-check mb-3">
                                 <input type="checkbox" class="form-check-input" id="changePassword"
-                                    wire:model="changePassword">
+                                    wire:model.live="changePassword">
                                 <label class="form-check-label" for="changePassword">
                                     Modifier le mot de passe
                                 </label>
@@ -63,8 +63,8 @@
 
                     @if($changePassword)
                         <div class="row">
-                            <div class="col-md-4">
-                                <div class="form-group">
+                            <div class="col-md-6">
+                                <div class="mb-3 form-group">
                                     <label for="current_password">Mot de passe actuel</label>
                                     <input wire:model.defer="current_password" type="password"
                                         class="form-control form-control-alt" id="current_password"
@@ -75,8 +75,8 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-4">
-                                <div class="form-group">
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
                                     <label for="new_password">Nouveau mot de passe</label>
                                     <input wire:model.defer="new_password" type="password"
                                         class="form-control form-control-alt" id="new_password"
@@ -87,8 +87,8 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-4">
-                                <div class="form-group">
+                            <div class="col-md-6">
+                                <div class="form-group mb-3">
                                     <label for="new_password_confirmation">Confirmer le mot de passe</label>
                                     <input wire:model.defer="new_password_confirmation" type="password"
                                         class="form-control form-control-alt" id="new_password_confirmation"
