@@ -2,8 +2,9 @@
 
 use App\Livewire\Home;
 use App\Livewire\Login;
-use App\Livewire\User\Header;
 use App\Livewire\User\Users;
+use App\Livewire\User\Header;
+use App\Livewire\Profile\Profiles;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,4 +21,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', Home::class)->name('home')->middleware('auth');
 Route::get('/login', Login::class)->name('login');
 Route::get('/logout', Header::class)->name('logout')->middleware('auth');
-Route::get('/utilisateurs', Users::class)->name('utilisateurs')->middleware('auth');
+Route::get('/users', Users::class)->name('users')->middleware('auth');
+
+Route::get('/profils', Profiles::class)->name('profils')->middleware('auth');

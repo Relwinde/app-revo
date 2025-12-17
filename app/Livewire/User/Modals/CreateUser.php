@@ -4,52 +4,56 @@ namespace App\Livewire\User\Modals;
 
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
+use Spatie\Permission\Models\Role;
 use LivewireUI\Modal\ModalComponent;
 
 class CreateUser extends ModalComponent
 {
     public $name;
     public $email;
-    public $password;
+    public $profile;
 
     public function render()
     {
-        return view('livewire.user.modals.create-user');
+        $profiles = Role::all(['id', 'name']);
+        return view('livewire.user.modals.create-user', ['profiles' => $profiles]);
     }
 
-    public function create()
-    {
+    public function create (){
+
         $this->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email',
-            'password' => 'required|string|min:8',
+            'email' => 'required|string|email|max:255|unique:users',
+            'profile' => 'required|string',
         ], [
             'name.required' => 'Le nom est obligatoire.',
             'email.required' => "L'email est obligatoire.",
             'email.email' => "L'email doit être une adresse email valide.",
             'email.unique' => "Cet email est déjà utilisé.",
-            'password.required' => 'Le mot de passe est obligatoire.',
-            'password.min' => 'Le mot de passe doit contenir au moins 8 caractères.',
+            'profile.required' => 'Le profil est obligatoire.',
         ]);
 
-        try {
+        $user = User::make([
+            'name' => $this->name,
+            'email' => $this->email,
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+        ]);
+
+        try{
             DB::beginTransaction();
 
-            User::create([
-                'name' => $this->name,
-                'email' => $this->email,
-                'password' => Hash::make($this->password),
-            ]);
+            $user->save();
+            $user->syncRoles(Role::findById($this->profile));
 
             DB::commit();
-
             $this->dispatch('user-created');
             $this->reset();
-
+            $this->closeModal();
         } catch (\Exception $e) {
             DB::rollBack();
             $this->dispatch('error');
         }
+        
+        
     }
 }

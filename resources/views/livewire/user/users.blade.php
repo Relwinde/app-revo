@@ -4,7 +4,7 @@
         <div class="block-header">
             <h3 class="block-title">{{ $pageHeader['subtitle'] }}</h3>
             <div class="block-options">
-                <button wire:click=""
+                <button wire:click="$dispatch('openModal', { component: 'user.modals.create-user' })"
                     class="btn btn-sm btn-primary">
                     <i class="fa fa-plus"></i> Ajouter un utilisateur
                 </button>
@@ -32,7 +32,7 @@
                                 {{ $user->email }}
                             </td>
                             <td class="font-size-sm">
-                                -
+                                {{ ucfirst($user->roles()->first()->name) }}
                             </td>
                             <td class="font-size-sm">
                                 {{ $user->created_at->format('d/m/Y H:i') }}

@@ -5,7 +5,7 @@
 
             <!-- ACCUEIL -->
             <li class="nav-main-item">
-                <a class="nav-main-link" href="/">
+                <a class="nav-main-link {{ request()->routeIs('home') ? 'active' : '' }}" href="/">
                     <i class="nav-main-link-icon si si-home"></i>
                     <span class="nav-main-link-name">Accueil</span>
                 </a>
@@ -16,17 +16,17 @@
             <li class="nav-main-heading">Paramètres</li>
 
             <li class="nav-main-item">
-                <a class="nav-main-link {{ request()->routeIs('utilisateurs') ? 'active' : '' }}"
-                    href="{{ route('utilisateurs') }}" wire:navigate>
+                <a class="nav-main-link {{ request()->routeIs('users') ? 'active' : '' }}"
+                    href="{{ route('users') }}" wire:navigate>
                     <i class="nav-main-link-icon si si-users"></i>
                     <span class="nav-main-link-name">Utilisateurs</span>
                 </a>
             </li>
 
             <li class="nav-main-item">
-                <a class="nav-main-link" href="#">
+                <a class="nav-main-link {{ request()->routeIs('profils') ? 'active' : '' }}" href="{{ route('profils') }}" wire:navigate>
                     <i class="nav-main-link-icon si si-user"></i>
-                    <span class="nav-main-link-name">Profils</span>
+                    <span class="nav-main-link-name">Profiles</span>
                 </a>
             </li>
 
