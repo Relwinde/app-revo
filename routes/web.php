@@ -1,5 +1,9 @@
 <?php
 
+use App\Livewire\Home;
+use App\Livewire\Login;
+use App\Livewire\User\Header;
+use App\Livewire\User\Users;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
+Route::get('/', Home::class)->name('home')->middleware('auth');
+Route::get('/login', Login::class)->name('login');
+Route::get('/logout', Header::class)->name('logout')->middleware('auth');
+Route::get('/utilisateurs', Users::class)->name('utilisateurs')->middleware('auth');
