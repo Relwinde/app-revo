@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
 
-    <title>Connexion - Clinique Naila</title>
+    <title>Connexion - App revo</title>
 
     <meta name="description" content="Page de connexion - OneUI">
     <meta name="author" content="pixelcave">
