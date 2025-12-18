@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Route;
 use App\Livewire\Chauffeur\Chauffeurs;
 use App\Livewire\Dossier\Dossiers;
 use App\Livewire\Fournisseur\Fournisseurs;
+use App\Livewire\Marchandise\Marchandises;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,3 +39,5 @@ Route::get('/camions', Camions::class)->name('camions')->middleware('auth');
 Route::get('/profils', Profiles::class)->name('profils')->middleware('auth');
 
 Route::get('/dossiers', Dossiers::class)->name('dossiers')->middleware('auth');
+
+Route::get('/marchandises', Marchandises::class)->name('marchandises')->middleware('auth');

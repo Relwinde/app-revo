@@ -58,6 +58,13 @@
                 </a>
             </li>
 
+            <li class="nav-main-item">
+                <a class="nav-main-link {{ request()->routeIs('marchandises') ? 'active' : '' }}" href="{{ route('marchandises') }}" wire:navigate>
+                    <i class="nav-main-link-icon fas fa-box"></i>
+                    <span class="nav-main-link-name">Marchandises</span>
+                </a>
+            </li>
+
 
             <!-- PARAMÈTRES -->
             <li class="nav-main-heading">Paramètres</li>
