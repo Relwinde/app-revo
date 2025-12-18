@@ -7,5 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Chauffeur extends Model
 {
+    protected $guarded = [];
     use HasFactory;
 }
