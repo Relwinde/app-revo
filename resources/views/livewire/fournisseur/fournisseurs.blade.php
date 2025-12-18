@@ -109,7 +109,7 @@
                                                     </button>
                                                 @else
                                                     <button wire:click.prevent="delete({{ $fournisseur->id }})" class="btn btn-sm btn-light"
-                                                        title="Supprimer">
+                                                        title="Supprimer" wire:confirm="Êtes-vous sûr de vouloir supprimer ce fournisseur ?">
                                                         <i class="fa fa-fw fa-trash"></i>
                                                     </button>
                                                 @endif

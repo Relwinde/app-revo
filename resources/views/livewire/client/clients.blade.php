@@ -117,7 +117,7 @@
                                         <a wire:click.prevent="delete({{ $client->id }})"
                                             wire:confirm="Êtes-vous sûr de vouloir supprimer ce client ?" type="button"
                                             class="btn btn-sm btn-light" title="Supprimer">
-                                            <i class="fa fa-fw fa-times"></i>
+                                            <i class="fa fa-fw fa-trash"></i>
                                         </a>
                                     @endif
                                 </div>
