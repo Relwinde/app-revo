@@ -85,15 +85,15 @@
                                                 </button>
 
                                                 @if ($editMode && $camionId === $camion->id)
-                                                    <button wire:click.prevent="toggleEditMode({{ $camion->id }})"
+                                                    <button href="javascrip" wire:click.prevent="toggleEditMode({{ $camion->id }})"
                                                         class="btn btn-sm btn-light" title="Annuler">
                                                         <i class="fa fa-fw fa-times"></i>
                                                     </button>
                                                 @else
-                                                    <button wire:confirm="Êtes-vous sûr de vouloir supprimer ce camion ?" wire:click.prevent="delete({{ $camion->id }})" class="btn btn-sm btn-light"
-                                                        title="Supprimer">
+                                                    <a wire:confirm="Êtes-vous sûr de vouloir supprimer ce camion ?" wire:click.prevent="delete({{ $camion->id }})" class="btn btn-sm btn-light"
+                                                        title="Supprimer" type="button">
                                                         <i class="fa fa-fw fa-trash"></i>
-                                                    </button>
+                                                    </a>
                                                 @endif
                                             </div>
                                         </td>

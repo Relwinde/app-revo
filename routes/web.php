@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\Caisse\Caisses;
 use App\Livewire\Home;
 use App\Livewire\Login;
 use App\Livewire\User\Users;
@@ -38,3 +39,5 @@ Route::get('/camions', Camions::class)->name('camions')->middleware('auth');
 Route::get('/profils', Profiles::class)->name('profils')->middleware('auth');
 
 Route::get('/dossiers', Dossiers::class)->name('dossiers')->middleware('auth');
+
+Route::get('/caisses', Caisses::class)->name('caisses')->middleware('auth');

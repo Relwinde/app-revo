@@ -21,7 +21,7 @@
             </li>
 
             <li class="nav-main-item">
-                <a class="nav-main-link"  wire:navigate>
+                <a class="nav-main-link {{ request()->routeIs('caisses') ? 'active' : '' }}" href="{{ route('caisses') }}" wire:navigate>
                     <i class="nav-main-link-icon fa fa-funnel-dollar"></i>
                     <span class="nav-main-link-name">Caisse</span>
                 </a>

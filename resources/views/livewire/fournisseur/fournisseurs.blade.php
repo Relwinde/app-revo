@@ -108,10 +108,10 @@
                                                         <i class="fa fa-fw fa-times"></i>
                                                     </button>
                                                 @else
-                                                    <button wire:click.prevent="delete({{ $fournisseur->id }})" class="btn btn-sm btn-light"
+                                                    <a wire:click.prevent="delete({{ $fournisseur->id }})" class="btn btn-sm btn-light"
                                                         title="Supprimer" wire:confirm="Êtes-vous sûr de vouloir supprimer ce fournisseur ?">
                                                         <i class="fa fa-fw fa-trash"></i>
-                                                    </button>
+                                                    </a>
                                                 @endif
                                             </div>
                                         </td>
