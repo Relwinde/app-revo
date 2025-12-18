@@ -13,6 +13,19 @@
 
             <!-- PARAMÈTRES -->
             <li class="nav-main-heading">Opérations</li>
+            <li class="nav-main-item">
+                <a class="nav-main-link {{ request()->routeIs('dossiers') ? 'active' : '' }}" href="{{ route('dossiers') }}" wire:navigate>
+                    <i class="nav-main-link-icon far fa-folder"></i>
+                    <span class="nav-main-link-name">Dossiers</span>
+                </a>
+            </li>
+
+            <li class="nav-main-item">
+                <a class="nav-main-link"  wire:navigate>
+                    <i class="nav-main-link-icon fa fa-funnel-dollar"></i>
+                    <span class="nav-main-link-name">Caisse</span>
+                </a>
+            </li>
 
             <!-- PARAMÈTRES -->
             <li class="nav-main-heading">Outils</li>
