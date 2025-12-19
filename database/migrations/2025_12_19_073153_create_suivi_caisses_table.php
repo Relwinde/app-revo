@@ -11,12 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('caisses', function (Blueprint $table) {
+        Schema::create('suivi_caisses', function (Blueprint $table) {
             $table->id();
-            $table->string('nom');
-            $table->decimal('solde', 14, 2);
-            $table->unsignedBigInteger('last_updated_by')->nullable();
-            $table->foreign('last_updated_by')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -26,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('caisses');
+        Schema::dropIfExists('suivi_caisses');
     }
 };

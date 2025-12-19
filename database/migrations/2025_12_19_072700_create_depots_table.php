@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('caisses', function (Blueprint $table) {
+        Schema::create('depots', function (Blueprint $table) {
             $table->id();
-            $table->string('nom');
-            $table->decimal('solde', 14, 2);
-            $table->unsignedBigInteger('last_updated_by')->nullable();
-            $table->foreign('last_updated_by')->references('id')->on('users')->onDelete('cascade');
+            $table->string('deposant');
+            $table->string('libelle');
+            $table->decimal('montant', 14, 2);
+            $table->string('banque')->nullable();
+            $table->string('ref_cheque')->nullable();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -26,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('caisses');
+        Schema::dropIfExists('depots');
     }
 };
