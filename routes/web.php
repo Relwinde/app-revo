@@ -1,16 +1,17 @@
 <?php
 
-use App\Livewire\Caisse\Caisses;
 use App\Livewire\Home;
 use App\Livewire\Login;
 use App\Livewire\User\Users;
 use App\Livewire\User\Header;
+use App\Livewire\Caisse\Caisses;
 use App\Livewire\Camion\Camions;
 use App\Livewire\Client\Clients;
+use App\Livewire\Dossier\Dossiers;
 use App\Livewire\Profile\Profiles;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Chauffeur\Chauffeurs;
-use App\Livewire\Dossier\Dossiers;
+use App\Livewire\BonDeCaisse\BonDeCaisses;
 use App\Livewire\Fournisseur\Fournisseurs;
 use App\Livewire\Marchandise\Marchandises;
 
@@ -43,3 +44,5 @@ Route::get('/dossiers', Dossiers::class)->name('dossiers')->middleware('auth');
 
 Route::get('/caisses', Caisses::class)->name('caisses')->middleware('auth');
 Route::get('/marchandises', Marchandises::class)->name('marchandises')->middleware('auth');
+
+Route::get('/bon-de-caisses', BonDeCaisses::class)->name('bon-de-caisses')->middleware('auth');

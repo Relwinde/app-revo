@@ -13,6 +13,14 @@ return new class extends Migration
     {
         Schema::create('bon_de_caisses', function (Blueprint $table) {
             $table->id();
+            $table->decimal('montant', 14, 2);
+            $table->string('depense');
+            $table->enum('etape', ['EMETTEUR', 'RESPONSABLE', 'MANAGER', 'RAF', 'CAISSE', 'PAYE', 'CLOS'])->default('EMETTEUR');
+            $table->boolean('rejected')->default(false);
+            $table->foreignId('dossier_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('camion_id')->nullable()->constrained()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('numero', 2000);
             $table->timestamps();
         });
     }

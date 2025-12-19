@@ -19,6 +19,12 @@
                     <span class="nav-main-link-name">Dossiers</span>
                 </a>
             </li>
+            <li class="nav-main-item">
+                <a class="nav-main-link {{ request()->routeIs('bon-de-caisses') ? 'active' : '' }}" href="{{ route('bon-de-caisses') }}" wire:navigate>
+                    <i class="nav-main-link-icon fa fa-file-invoice-dollar"></i>
+                    <span class="nav-main-link-name">Bons De Caisse</span>
+                </a>
+            </li>
 
             <li class="nav-main-item">
                 <a class="nav-main-link {{ request()->routeIs('caisses') ? 'active' : '' }}" href="{{ route('caisses') }}" wire:navigate>
