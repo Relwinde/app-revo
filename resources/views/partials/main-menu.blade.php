@@ -20,6 +20,12 @@
                 </a>
             </li>
             <li class="nav-main-item">
+                <a class="nav-main-link {{ request()->routeIs('commandes') ? 'active' : '' }}" href="{{ route('commandes') }}" wire:navigate>
+                    <i class="nav-main-link-icon far fa-file-alt"></i>
+                    <span class="nav-main-link-name">Bons de commande</span>
+                </a>
+            </li>
+            <li class="nav-main-item">
                 <a class="nav-main-link {{ request()->routeIs('bon-de-caisses') ? 'active' : '' }}" href="{{ route('bon-de-caisses') }}" wire:navigate>
                     <i class="nav-main-link-icon fa fa-file-invoice-dollar"></i>
                     <span class="nav-main-link-name">Bons De Caisse</span>

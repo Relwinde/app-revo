@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('ajustement_bons', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('bon_de_caisse_id')->nullable()->constrained()->onDelete('cascade');
+            $table->string('libelle');
+            $table->enum('type', ['EXCEDANT', 'RESTITUTION']);
+            $table->decimal('montant_bon_before', 14, 2);
+            $table->decimal('montant', 14, 2);
+            $table->decimal('montant_bon_after', 14, 2);
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

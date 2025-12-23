@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('banque')->nullable();
             $table->string('ref_cheque')->nullable();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('dossier_id')->nullable()->constrained()->onDelete('cascade');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

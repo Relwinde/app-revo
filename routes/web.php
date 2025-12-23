@@ -9,6 +9,7 @@ use App\Livewire\Camion\Camions;
 use App\Livewire\Client\Clients;
 use App\Livewire\Dossier\Dossiers;
 use App\Livewire\Profile\Profiles;
+use App\Livewire\Commande\Commandes;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Chauffeur\Chauffeurs;
 use App\Livewire\BonDeCaisse\BonDeCaisses;
@@ -41,6 +42,8 @@ Route::get('/camions', Camions::class)->name('camions')->middleware('auth');
 Route::get('/profils', Profiles::class)->name('profils')->middleware('auth');
 
 Route::get('/dossiers', Dossiers::class)->name('dossiers')->middleware('auth');
+
+Route::get('/commandes', Commandes::class)->name('commandes')->middleware('auth');
 
 Route::get('/caisses', Caisses::class)->name('caisses')->middleware('auth');
 Route::get('/marchandises', Marchandises::class)->name('marchandises')->middleware('auth');

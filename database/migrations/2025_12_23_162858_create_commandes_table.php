@@ -11,14 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('dossiers', function (Blueprint $table) {
+        Schema::create('commandes', function (Blueprint $table) {
             $table->id();
             $table->string('numero')->unique();
-            $table->foreignId('client_id')->constrained()->onDelete('cascade');
-            $table->foreignId('fournisseur_id')->constrained()->onDelete('cascade');
-            $table->foreignId('chauffeur_id')->constrained()->onDelete('cascade');
-            $table->foreignId('camion_id')->constrained()->onDelete('cascade');
+            $table->integer('quantite');
+            $table->string('description')->nullable();
+            $table->foreignId('fournisseur_id')->nullable()->references('id')->on('fournisseurs')->onDelete('cascade');
+            $table->foreignId('marchandise_id')->constrained()->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('dossier_id')->nullable()->constrained()->onDelete('cascade'); 
             $table->timestamps();
         });
     }
@@ -28,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('dossiers');
+        Schema::dropIfExists('commandes');
     }
 };
