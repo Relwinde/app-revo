@@ -9,4 +9,37 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Dossier extends Model
 {
     use HasFactory, SoftDeletes;
+
+    protected $fillable = [
+        'numero',
+        'description',
+        'client_id',
+        'camion_id',
+        'chauffeur_id',
+    ];
+
+    public function client()
+    {
+        return $this->belongsTo(Client::class);
+    }
+
+    public function camion()
+    {
+        return $this->belongsTo(Camion::class);
+    }
+
+    public function chauffeur()
+    {
+        return $this->belongsTo(Chauffeur::class);
+    }
+
+    public function commandes()
+    {
+        return $this->hasMany(Commande::class);
+    }
+
+    public function destinataire()
+    {
+        return $this->belongsTo(Client::class, 'destinataire');
+    }
 }
