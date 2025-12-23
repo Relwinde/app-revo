@@ -1,0 +1,89 @@
+<?php
+
+namespace App\Livewire\Commande\Modals;
+
+use Livewire\Component;
+use App\Models\Commande;
+use App\Models\Fournisseur;
+use App\Models\Marchandise;
+use LivewireUI\Modal\ModalComponent;
+
+class ViewCommande extends ModalComponent
+{
+
+
+    public Commande $commande;
+    public $numero;
+    public $fournisseur_id;
+    public $marchandise_id;
+    public $quantite;
+    public $description;
+
+    public $editMode = false;
+
+    public function mount()
+    {
+        $this->numero = $this->commande->numero;
+        $this->fournisseur_id = $this->commande->fournisseur_id;
+        $this->marchandise_id = $this->commande->marchandise_id;
+        $this->quantite = $this->commande->quantite;
+        $this->description = $this->commande->description;
+    }
+
+    public function render()
+    {
+        $fournisseurs = Fournisseur::all();
+        $marchandises = Marchandise::all();
+
+        return view('livewire.commande.modals.view-commande', ['fournisseurs' => $fournisseurs, 'marchandises' => $marchandises]);
+    }
+
+    public function toggleEditMode()
+    {
+        $this->editMode = !$this->editMode;
+    }
+
+    public function update()
+    {
+
+        $this->validate([
+            'fournisseur_id' => ['required', 'exists:fournisseurs,id'],
+            'marchandise_id' => ['required', 'exists:marchandises,id'],
+            'quantite' => ['required', 'integer', 'min:1'],
+            'description' => ['required', 'string'],
+            'numero' => ['required', 'string', 'unique:commandes,numero,'.$this->commande->id],
+        ], [
+            'fournisseur_id.exists' => 'Le fournisseur sélectionné est invalide.',
+            'fournisseur_id.required' => 'Le fournisseur est obligatoire.',
+            'marchandise_id.required' => 'La marchandise est obligatoire.',
+            'marchandise_id.exists' => 'La marchandise sélectionnée est invalide.',
+            'quantite.required' => 'La quantité est obligatoire.',
+            'quantite.integer' => 'La quantité doit être un nombre entier.',
+            'quantite.min' => 'La quantité doit être au moins de 1.',
+            'numero.required' => 'Le numéro de commande est obligatoire.',
+            'numero.unique' => 'Ce numéro de commande existe déjà.',
+        ]);
+
+        try {
+             $this->commande->update([
+                'fournisseur_id' => $this->fournisseur_id,
+                'marchandise_id' => $this->marchandise_id,
+                'quantite' => $this->quantite,
+                'description' => $this->description,
+                'numero' => $this->numero,
+            ]);
+
+            // $this->commande->save();
+            
+
+        } catch (\Exception $e) {
+            $this->dispatch('error');
+            return;
+        }
+
+       
+
+        $this->dispatch('commande-updated');
+        $this->editMode = false;
+    }
+}

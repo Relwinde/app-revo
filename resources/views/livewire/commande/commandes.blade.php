@@ -24,22 +24,37 @@
                                     <th>Marchandise</th>
                                     <th>Quantité</th>
                                     <th>Description</th>
+                                    <th>Dossier</th>
                                     <th>Date de création</th>
                                     <th class="text-center" style="width: 120px;">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($commandes as $commande)
+                                @forelse($commandes as $commande)
                                 <tr>
                                     <td>{{ $commande->numero }}</td>
                                     <td>{{ $commande->fournisseur ? $commande->fournisseur->name : 'N/A' }}</td>
                                     <td>{{ $commande->marchandise->name }}</td>
                                     <td>{{ $commande->quantite }}</td>
                                     <td>{{ $commande->description }}</td>
+                                    <td>{{ $commande->dossier ? $commande->dossier->numero : 'N/A' }}</td>
                                     <td>{{ $commande->created_at->format('d/m/Y H:i') }}</td>
-                                    <td></td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <button wire:click="$dispatch('openModal', { component: 'commande.modals.view-commande', 
+                                                arguments: { commande: {{ $commande }} } })" class="btn btn-sm btn-light" title="Voir">
+                                                <i class="fa fa-fw fa-eye"></i>
+                                            </button>
+                                        </div>
+                                    </td>
                                 </tr>
-                                @endforeach
+                                @empty
+                                <tr>
+                                    <td colspan="6" class="text-center text-muted">
+                                        Aucune commande trouvée.
+                                    </td>
+                                </tr>
+                                @endforelse
                             </tbody>
                         </table>
                         {{ $commandes->links() }}

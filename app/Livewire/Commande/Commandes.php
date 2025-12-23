@@ -9,6 +9,7 @@ use Livewire\Attributes\On;
 class Commandes extends Component
 {
     #[On('commande-created')]
+    #[On('commande-updated')]
     public function render()
     {
         $pageHeader = [
