@@ -38,11 +38,11 @@
                                     <td>{{ $dossier->client ? $dossier->client->name : 'N/A' }}</td>
                                     
                                     {{-- Destinataire --}}  
-                                    <td>{{ $dossier->destinataire ? $dossier->destinataire->name : 'N/A' }}</td>
+                                    <td>{{ $dossier->destinate ? $dossier->destinate->name : 'N/A' }}</td>
 
 
                                     {{-- Camion --}}
-                                    <td>{{ $dossier->camion ? $dossier->camion->immatriculation : 'N/A' }}</td>
+                                    <td>{{ $dossier->camion ? $dossier->camion->license_plate : 'N/A' }}</td>
 
                                     {{-- Chauffeur --}}
                                     <td>{{ $dossier->chauffeur ? $dossier->chauffeur->name : 'N/A' }}</td>
@@ -53,7 +53,7 @@
                                     {{-- Actions --}}
                                     <td class="text-center">
                                         <div class="btn-group">
-                                            <button wire:click="$dispatch('openModal', { component: 'dossier.modals.view-dossier', dossierId: {{ $dossier->id }} })"
+                                            <button wire:click="$dispatch('openModal', { component: 'dossier.modals.view-dossier', arguments: { dossier: {{ $dossier }} } })"
                                                 class="btn btn-sm btn-light" title="Voir">
                                                 <i class="fa fa-fw fa-eye"></i>
                                             </button>

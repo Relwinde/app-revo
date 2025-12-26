@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\Commande;
 use App\Models\Fournisseur;
 use App\Models\Marchandise;
+use Illuminate\Support\Facades\DB;
 use LivewireUI\Modal\ModalComponent;
 
 class ViewCommande extends ModalComponent
@@ -65,6 +66,8 @@ class ViewCommande extends ModalComponent
         ]);
 
         try {
+
+            DB::beginTransaction();
              $this->commande->update([
                 'fournisseur_id' => $this->fournisseur_id,
                 'marchandise_id' => $this->marchandise_id,
@@ -72,11 +75,13 @@ class ViewCommande extends ModalComponent
                 'description' => $this->description,
                 'numero' => $this->numero,
             ]);
+            DB::commit();
 
             // $this->commande->save();
             
 
         } catch (\Exception $e) {
+            DB::rollBack();
             $this->dispatch('error');
             return;
         }

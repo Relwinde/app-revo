@@ -8,6 +8,7 @@ use App\Models\Commande;
 use App\Models\Fournisseur;
 use App\Models\Marchandise;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Testing\Fakes\Fake;
 use LivewireUI\Modal\ModalComponent;
 
 class CreateCommande extends ModalComponent
@@ -39,7 +40,7 @@ class CreateCommande extends ModalComponent
                 'fournisseur_id' => ['required', 'exists:fournisseurs,id'],
                 'marchandise_id' => ['required', 'exists:marchandises,id'],
                 'quantite' => ['required', 'integer', 'min:1'],
-                'description' => ['required', 'string'],
+                'description' => ['string'],
                 'numero' => ['required', 'string', 'unique:commandes,numero'],
             ],
             [
@@ -52,6 +53,7 @@ class CreateCommande extends ModalComponent
                 'quantite.min' => 'La quantité doit être au moins de 1.',
                 'numero.required' => 'Le numéro de commande est obligatoire.',
                 'numero.unique' => 'Ce numéro de commande existe déjà.',
+                'description.string' => 'La description doit être une chaîne de caractères.',
             ]
         );
 
@@ -71,7 +73,6 @@ class CreateCommande extends ModalComponent
             $commande->save();
             DB::commit();
         } catch (\Exception $e) {
-            throw $e;
             DB::rollBack();
             $this->dispatch('error');
             return;

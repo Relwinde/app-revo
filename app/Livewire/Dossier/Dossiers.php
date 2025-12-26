@@ -4,10 +4,12 @@ namespace App\Livewire\Dossier;
 
 use App\Models\Dossier;
 use Livewire\Component;
+use Livewire\Attributes\On;
 
 class Dossiers extends Component
 {
-    
+    #[On('dossier-created')]
+    #[On('dossier-updated')]
     public function render()
     {
 

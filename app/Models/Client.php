@@ -17,4 +17,11 @@ class Client extends Model
         'ifu',
     ];
     use HasFactory, SoftDeletes;
+
+    public function dossiers()
+    {
+        return $this->hasMany(Dossier::class);
+    }
+
+    
 }

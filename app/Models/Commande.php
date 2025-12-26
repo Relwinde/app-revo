@@ -34,5 +34,10 @@ class Commande extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function dossier()
+    {
+        return $this->belongsTo(Dossier::class);
+    }
+
 
 }

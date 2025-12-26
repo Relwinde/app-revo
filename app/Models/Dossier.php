@@ -16,6 +16,8 @@ class Dossier extends Model
         'client_id',
         'camion_id',
         'chauffeur_id',
+        'user_id',
+        'destinataire',
     ];
 
     public function client()
@@ -38,7 +40,7 @@ class Dossier extends Model
         return $this->hasMany(Commande::class);
     }
 
-    public function destinataire()
+    public function destinate()
     {
         return $this->belongsTo(Client::class, 'destinataire');
     }
