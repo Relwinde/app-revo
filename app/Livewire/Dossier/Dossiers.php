@@ -14,16 +14,16 @@ class Dossiers extends Component
     {
 
          $pageHeader = [
-            'title' => 'Bons de commande',
-            'subtitle' => 'Liste des bons de commande',
+            'title' => 'Opérations',
+            'subtitle' => 'Liste des opérations',
             'breadcrumbs' => [
                 ['label' => 'Accueil', 'url' => route('home')],
-                ['label' => 'Bons de commande']
+                ['label' => 'Opérations']
             ]
         ];
 
         $dossiers = Dossier::orderBy('created_at', 'desc')->paginate(10);
 
-        return view('livewire.dossier.dossiers', ['pageHeader' => $pageHeader, 'dossiers' => $dossiers])->layout('components.layouts.app', ['title' => 'Bons de commande'] );
+        return view('livewire.dossier.dossiers', ['pageHeader' => $pageHeader, 'dossiers' => $dossiers])->layout('components.layouts.app', ['title' => 'Opérations'] );
     }
 }

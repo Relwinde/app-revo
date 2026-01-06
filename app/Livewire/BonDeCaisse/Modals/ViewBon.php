@@ -5,27 +5,37 @@ namespace App\Livewire\BonDeCaisse\Modals;
 use App\Models\Camion;
 use App\Models\Dossier;
 use App\Models\BonDeCaisse;
-use Illuminate\Support\Facades\DB;
 use LivewireUI\Modal\ModalComponent;
 
-class CreateBon extends ModalComponent
+class ViewBon extends ModalComponent
 {
-    public $bon_item = null;
-    public $depense;
+
+    public BonDeCaisse $bon;
+    public $depense; 
     public $montant;
     public $description;
     public $camion_id;
     public $dossier_id;
+    
+    public $editMode = false;
+
+
+    public function mount (){
+        $this->depense = $this->bon->depense;
+        $this->montant = $this->bon->montant;
+        $this->description = $this->bon->description;
+        $this->camion_id = $this->bon->camion_id;
+        $this->dossier_id = $this->bon->dossier_id;
+    }
 
     public function render()
     {
         $dossiers = Dossier::all();
         $camions = Camion::all();
-
-        return view('livewire.bon-de-caisse.modals.create-bon', ['dossiers' => $dossiers, 'camions' => $camions]);
+        return view('livewire.bon-de-caisse.modals.view-bon', ['dossiers' => $dossiers, 'camions' => $camions]);
     }
 
-    public function create (){
+    public function update (){
         $this->validate([
             'montant' => 'required|numeric',
             'depense' => 'required|string',
@@ -38,33 +48,21 @@ class CreateBon extends ModalComponent
             'description.string' => 'La description doit être une chaîne de caractères.',
         ]);
 
-        $bon = BonDeCaisse::make([
+        $this->bon->update([
             'montant' => $this->montant,
-            'montant_definitif' => $this->montant,
             'depense' => $this->depense,
             'description' => $this->description,
-            'camion_id' => $this->camion_id,
-            'dossier_id' => $this->dossier_id,
-            'user_id' => auth()->id(),
         ]);
-        if(BonDeCaisse::latest()->first()==null){
-            $bon->numero= date('Y').date('m').date('d').date('H').date('i').date('s').'0000001';
-        }else {
-            $bon->numero= date('Y').date('m').date('d').date('H').date('i').date('s').str_pad(BonDeCaisse::latest()->first()->id+1, 7, '0', STR_PAD_LEFT);
-        }
 
-        try{
-            DB::beginTransaction();
-            $bon->save();
-            DB::commit();
-            $this->dispatch('bon-created');
-        }
-        catch(\Exception $e){
-            throw $e;
-            DB::rollBack();
-            return;
-        }
-        
+        $this->dispatch('bon-updated');
         $this->closeModal();
+        $this->reset();
     }
+
+    public function toggleEditMode ()
+    {
+        $this->editMode = ! $this->editMode;
+    }
+
+
 }

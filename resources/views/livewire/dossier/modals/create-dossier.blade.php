@@ -2,7 +2,7 @@
     <form wire:submit.prevent="create">
         <div class="block block-rounded">
             <div class="block-header block-header-default">
-                <h3 class="block-title">Créer un nouveau dossier</h3>
+                <h3 class="block-title">Créer une nouvelle opération</h3>
                 <div class="block-options">
                     <button type="submit" class="btn btn-sm btn-primary">
                         Enregistrer

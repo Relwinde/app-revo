@@ -41,7 +41,7 @@ Route::get('/camions', Camions::class)->name('camions')->middleware('auth');
 
 Route::get('/profils', Profiles::class)->name('profils')->middleware('auth');
 
-Route::get('/dossiers', Dossiers::class)->name('dossiers')->middleware('auth');
+Route::get('/dossiers', Dossiers::class)->name('operations')->middleware('auth');
 
 Route::get('/commandes', Commandes::class)->name('commandes')->middleware('auth');
 

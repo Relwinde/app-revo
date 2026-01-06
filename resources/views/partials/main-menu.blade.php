@@ -12,11 +12,11 @@
             </li>
 
             <!-- PARAMÈTRES -->
-            <li class="nav-main-heading">Opérations</li>
+            <li class="nav-main-heading">Activités</li>
             <li class="nav-main-item">
-                <a class="nav-main-link {{ request()->routeIs('dossiers') ? 'active' : '' }}" href="{{ route('dossiers') }}" wire:navigate>
+                <a class="nav-main-link {{ request()->routeIs('operations') ? 'active' : '' }}" href="{{ route('operations') }}" wire:navigate>
                     <i class="nav-main-link-icon far fa-folder"></i>
-                    <span class="nav-main-link-name">Dossiers</span>
+                    <span class="nav-main-link-name">Opérations</span>
                 </a>
             </li>
             <li class="nav-main-item">

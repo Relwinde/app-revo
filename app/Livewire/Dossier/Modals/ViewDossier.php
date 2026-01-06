@@ -35,7 +35,6 @@ class ViewDossier extends ModalComponent
 
     #[On('commande-attached')]
     #[On('commande-removed')]
-    
     public function render()
     {
         $chauffeurs = Chauffeur::all();

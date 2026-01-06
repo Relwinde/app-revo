@@ -8,7 +8,7 @@
                 <div class="block-options">
                     <button wire:click="$dispatch('openModal', { component: 'dossier.modals.create-dossier' })"
                         class="btn btn-sm btn-primary">
-                        <i class="fa fa-plus"></i> Ajouter un dossier
+                        <i class="fa fa-plus"></i> Nouvelle opération
                     </button>
                 </div>
             </div>
