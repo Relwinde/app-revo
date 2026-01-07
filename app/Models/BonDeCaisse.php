@@ -25,4 +25,9 @@ class BonDeCaisse extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function etapeBons()
+    {
+        return $this->hasMany(EtapeBon::class);
+    }
 }

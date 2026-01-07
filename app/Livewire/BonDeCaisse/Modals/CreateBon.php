@@ -53,11 +53,21 @@ class CreateBon extends ModalComponent
             $bon->numero= date('Y').date('m').date('d').date('H').date('i').date('s').str_pad(BonDeCaisse::latest()->first()->id+1, 7, '0', STR_PAD_LEFT);
         }
 
+        $etapeBon = $bon->etapeBons()->make([
+            'etape_precedente' => 'EMETTEUR',
+            'etape_actuelle' => 'EMETTEUR',
+            'montant' => $this->montant,
+            'user_id' => auth()->id(),
+        ]);
+
         try{
             DB::beginTransaction();
             $bon->save();
+            $etapeBon->bon_de_caisse_id = $bon->id;
+            $etapeBon->save();
             DB::commit();
             $this->dispatch('bon-created');
+            $this->closeModal();
         }
         catch(\Exception $e){
             throw $e;
@@ -65,6 +75,5 @@ class CreateBon extends ModalComponent
             return;
         }
         
-        $this->closeModal();
     }
 }

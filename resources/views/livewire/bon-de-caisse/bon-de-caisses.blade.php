@@ -20,6 +20,7 @@
                                 <tr>
                                     <th>Numéro</th>
                                     <th>Emétteur</th>
+                                    <th>Motif</th>
                                     <th>Montant</th>
                                     <th>Item</th>
                                     <th>Statut</th>
@@ -31,14 +32,13 @@
                                 <tr>
                                     <td>{{ $bon->numero }}</td>
                                     <td>{{ $bon->user->name }}</td>
-                                    <td>{{ $bon->montant_definitif }}</td>
+                                    <td>{{ $bon->depense }}</td>
+                                    <td>{{ number_format($bon->montant_definitif, 2, '.', ' ') }}</td>
                                     <td>
                                         {{ $bon->camion ? $bon->camion->license_plate : ($bon->dossier ? $bon->dossier->numero : "NA")}}
                                     </td>
                                     <td>
-                                        <span class="badge @if ($bon->etape == 'EMETTEUR')
-                                            badge-primary
-                                        @endif">{{ $bon->etape }}</span>
+                                        <span class="badge @if ($bon->etape == 'EMETTEUR') badge-primary @endif  @if ($bon->etape == 'MANAGER') badge-warning @endif @if ($bon->etape == 'CAISSE') badge-info @endif @if ($bon->etape == 'PAYE') badge-success @endif @if ($bon->etape == 'CLOS') badge-dark @endif ">{{ $bon->etape }}</span>
                                     </td>
                                     <td>
                                         <div class="btn-group">

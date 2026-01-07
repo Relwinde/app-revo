@@ -1,17 +1,16 @@
 <div>
-    <form wire:submit.prevent="create">
+    @if ($editMode)
+    <form wire:submit.prevent="update">   
+    @endif
         <div class="block block-rounded">
             <div class="block-header block-header-default">
-                <h3 class="block-title">Bon de caisse N° {{ $bon->numero }}</h3>
+                <h3 class="block-title">Bon N° {{ $bon->numero }}</h3>
                 <div class="block-options">
                     @if ($editMode)
                         <button wire:click.prevent="update" type="submit" class="btn btn-sm btn-primary">
                             Enregistrer
                         </button>
-                    @else
-                        <button wire:click.prevent="print" type="submit" class="btn btn-sm btn-primary">
-                            Imprimer le manifest
-                        </button>
+                    @elseif(!$editMode && $bon->etape == 'EMETTEUR' && Auth::user()->id == $bon->user->id)
                         <button wire:click.prevent="toggleEditMode" type="submit" class="btn btn-sm btn-primary">
                             Modifier
                         </button>
@@ -22,6 +21,76 @@
                     <button type="reset" wire:click='$dispatch("closeModal")' class="btn btn-sm btn-alt-primary">
                         Annuler
                     </button>
+                </div>
+            </div>
+            <div class="block-header block-header-default">
+                <h3 class="block-title">
+                    @if ($bon->etape == 'EMETTEUR')
+                        <span class="font-size-sm font-w600 px-2 py-1 rounded  bg-primary-light text-primary">En cours de saisie</span>
+                    @elseif ($bon->etape == 'MANAGER')
+                        <span class="font-size-sm font-w600 px-2 py-1 rounded  bg-warning-light text-warning">En attente de validation</span>
+                    @elseif ($bon->etape == 'CAISSE')
+                        <span class="font-size-sm font-w600 px-2 py-1 rounded  bg-info-light text-info">En attente de paiement</span>
+                    @elseif ($bon->etape == 'PAYE')
+                        <span class="font-size-sm font-w600 px-2 py-1 rounded  bg-success-light text-success">Payé</span>
+                    @elseif ($bon->etape == 'CLOS')
+                        <span class="font-size-sm font-w600 px-2 py-1 rounded  bg-dark-light text-dark">Cloré</span>
+                    @elseif ($bon->etape == 'ANNULE')
+                        <span class="badge badge-danger">Annulé</span>
+                    @endif
+                </h3>
+
+                <div class="block-options">
+                    @if (!$editMode)
+                        @if ($bon->etape == "EMETTEUR" && Auth::user()->id == $bon->user->id)
+                            <button wire:click.prevent="cancelBon" type="submit" class="btn btn-sm btn-warning">
+                                Annuler
+                            </button>
+                            <button wire:confirm="Êtes-vous sûr de vouloir envoyer ce bon pour validation ?" wire:click.prevent="nextStep" type="submit" class="btn btn-sm btn-danger">
+                                Envoyer pour validation
+                            </button>
+
+                        @elseif ($bon->etape == "MANAGER" && Auth::user()->can('Envoyer bon de caisse à la caisse'))
+                            <button wire:confirm="Êtes-vous sûr de vouloir envoyer ce bon pour paiement ?" wire:click.prevent="nextStep" type="submit" class="btn btn-sm btn-danger">
+                                Envoyer pour paiement
+                            </button>
+
+                        @elseif ($bon->etape == "CAISSE" && Auth::user()->can('Payer bon de caisse'))
+                            <form>
+                                <div class="form-group">
+                                    {{-- <label class="d-block">Mode de paiement</label> --}}
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" class="custom-control-input" id="type_paiement" wire:model="type_paiement" value="ESPECE">
+
+                                        <label class="custom-control-label" for="type_paiement">Espèce</label>
+                                    </div>
+
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" class="custom-control-input" id="type_paiement2" wire:model="type_paiement" value="CHEQUE">
+                                        <label class="custom-control-label" for="type_paiement2">Chèque</label>
+                                    </div>
+                                    
+                                    <button wire:confirm="Êtes-vous sûr de vouloir payer ce bon ? Cette action est irreversible." wire:click.prevent="nextStep" type="button" class="btn btn-sm btn-danger">
+                                    Payer
+                                    </button>
+                                    
+                                    @error('type_paiement')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                                
+                            </form>
+
+                        @elseif ($bon->etape == "PAYE" && Auth::user()->can('Clore bon de caisse'))
+                            <button wire:confirm="Êtes-vous sûr de vouloir clore ce bon" wire:click.prevent="nextStep" type="submit" class="btn btn-sm btn-danger">
+                                Clore le bon
+                            </button>
+
+                        @endif
+                    @endif
+
+
+                    
                 </div>
             </div>
             <div class="block-content">
@@ -37,6 +106,9 @@
                                             <option value="{{ $dossier->id }}">{{ $dossier->numero }}</option>
                                         @endforeach
                                     </select>
+                                    @error('dossier_id')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                         @elseif ($bon->camion_id)
@@ -49,6 +121,9 @@
                                             <option value="{{ $camion->id }}">{{ $camion->license_plate }}</option>
                                         @endforeach
                                     </select>
+                                    @error('camion_id')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
                         @endif
@@ -66,7 +141,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="">Dépense engagée</label>
-                                <input @if (!$editMode) @endif disabled  wire:model='depense' type="text" class="form-control form-control-alt" id="depense" name="depense" placeholder="Dépense engagée..">
+                                <input @if (!$editMode) disabled  @endif  wire:model='depense' type="text" class="form-control form-control-alt" id="depense" name="depense" placeholder="Dépense engagée..">
                                 @error('depense')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
@@ -88,6 +163,8 @@
                 
             </div>
         </div>
+    @if ($editMode)
     </form>
+    @endif
 </div>
 

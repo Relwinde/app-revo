@@ -35,9 +35,7 @@
                         <div class="col">
                             <div class="form-group">
                                 <label for="client">Expéditeur</label>
-                                <select @if (!$editMode) disabled
-                                    
-                                @endif required wire:model='client_id' class="custom-select" id="client" name="client">
+                                <select @if (!$editMode) disabled @endif required wire:model='client_id' class="custom-select" id="client" name="client">
                                     <option value="">Sélectionnez l'expéditeur</option>
                                     @foreach ($clients as $client)
                                         <option value="{{ $client->id }}">{{ $client->name }}</option>

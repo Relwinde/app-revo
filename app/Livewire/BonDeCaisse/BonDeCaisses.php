@@ -10,6 +10,7 @@ class BonDeCaisses extends Component
 {
     
     #[On('bon-created')]
+    #[On('bon-updated')]
     public function render()
     {
         $pageHeader = [
