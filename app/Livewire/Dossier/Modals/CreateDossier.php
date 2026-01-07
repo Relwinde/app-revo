@@ -61,7 +61,8 @@ class CreateDossier extends ModalComponent
             'user_id' => auth()->id(),
         ]);
 
-        $numero = fake()->unique()->regexify('[A-Z0-9]{8}');
+        $numero = 'REVOL'.'-'.date('Y').'-'.date('m').'-'.str_pad(Dossier::whereYear('created_at', now()->year)->count() + 1, 4, '0', STR_PAD_LEFT);
+
         $dossier->numero = $numero;
 
         try {
