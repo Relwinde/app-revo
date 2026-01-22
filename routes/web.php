@@ -2,6 +2,7 @@
 
 use App\Livewire\Home;
 use App\Livewire\Login;
+use App\Models\Dossier;
 use App\Livewire\User\Users;
 use App\Livewire\User\Header;
 use App\Livewire\Caisse\Caisses;
@@ -49,3 +50,9 @@ Route::get('/caisses', Caisses::class)->name('caisses')->middleware('auth');
 Route::get('/marchandises', Marchandises::class)->name('marchandises')->middleware('auth');
 
 Route::get('/bon-de-caisses', BonDeCaisses::class)->name('bon-de-caisses')->middleware('auth');
+
+
+Route::get('/print-ordre-mission/{dossier}', function (Dossier $dossier) {
+    return $dossier->print_ordre_mission();
+    
+})->name('print-ordre-mission')->middleware('auth');

@@ -13,8 +13,8 @@
                                 Enregistrer
                             </button>
                         @else
-                            <button wire:click.prevent="print" type="submit" class="btn btn-sm btn-primary">
-                                Imprimer le manifest
+                            <button wire:click.prevent="printOrdreMission" type="submit" class="btn btn-sm btn-primary">
+                                Imprimer OM
                             </button>
                             <button wire:click.prevent="toggleEditMode" type="submit" class="btn btn-sm btn-primary">
                                 Modifier
@@ -31,6 +31,25 @@
 
             <div class="block-content">
                 <div class="justify-content-center py-sm-3 py-md-5">
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="type_operation">Type d'opération</label>
+                                <select @if (!$editMode) disabled @endif class="custom-select" required wire:model='type_operation' name="type_operation" id="">
+                                    <option value="">Selectionnez le type d'opération</option>
+                                    <option value="MA">Manutention</option>
+                                    <option value="LO">Location</option>
+                                    <option value="TS">Transport</option>
+                                </select>
+                                @error('type_operation')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col">
+
+                        </div>
+                    </div>
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
@@ -98,6 +117,74 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="compagnon">Accompagnant</label>
+                                <input @if (!$editMode) disabled @endif type="text" wire:model='compagnon' class="form-control" id="compagnon" placeholder="Nom de l'accompagnant">
+                                @error('compagnon')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="lieu">Lieu de la mission</label>
+                                <input @if (!$editMode) disabled @endif type="text" wire:model='lieu' class="form-control" id="lieu" placeholder="Lieu de la mission">
+                                @error('lieu')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="date_depart">Date de départ</label>
+                                <input @if (!$editMode) disabled @endif type="date" wire:model='date_depart' class="form-control" id="date_depart" placeholder="Date de départ">
+                                @error('date_depart')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="date_retour">Date de retour</label>
+                                <input @if (!$editMode) disabled @endif type="date" wire:model='date_retour' class="form-control" id="date_retour" placeholder="Date de retour">
+                                @error('date_retour')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="motif">Motif de la mission</label>
+                                <input @if (!$editMode) disabled @endif type="text" wire:model='motif' class="form-control" id="motif" placeholder="Motif de la mission">
+                                @error('motif')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="escort">Escorte à organiser</label>
+                                <input @if (!$editMode) disabled @endif type="text" wire:model='escort' class="form-control" id="escort" placeholder="Escorte à organiser">
+                                @error('escort')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
 
                 <div class="block-footer">
@@ -123,7 +210,7 @@
                                 @foreach ($dossier->commandes as $commande)
                                     <tr>
                                         <td>{{ $commande->numero }}</td>
-                                        <td>{{ $commande->fournisseur ? $commande->fournisseur->name : 'N/A' }}</td>
+                                        <td>{{ $commande->fournisseur ? $commande->fournisseur : 'N/A' }}</td>
                                         <td>{{ $commande->marchandise ? $commande->marchandise->name : 'N/A' }}</td>
                                         <td>{{ $commande->quantite }}</td>
                                         <td class="text-center">
@@ -146,3 +233,17 @@
         </form>
     @endif
 </div>
+
+@script
+
+    <script>
+        $wire.on('print-ordre-mission', () => {
+            (function () {
+                window.open("{{route('print-ordre-mission', $dossier->id)}}", "_blank");
+            }).call(this);
+        });
+
+    </script>
+
+
+@endscript

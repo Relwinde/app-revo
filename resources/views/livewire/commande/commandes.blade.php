@@ -33,7 +33,7 @@
                                 @forelse($commandes as $commande)
                                 <tr>
                                     <td>{{ $commande->numero }}</td>
-                                    <td>{{ $commande->fournisseur ? $commande->fournisseur->name : 'N/A' }}</td>
+                                    <td>{{ $commande->fournisseur}}</td>
                                     <td>{{ $commande->marchandise->name }}</td>
                                     <td>{{ $commande->quantite }}</td>
                                     <td>{{ $commande->description }}</td>
@@ -50,7 +50,7 @@
                                 </tr>
                                 @empty
                                 <tr>
-                                    <td colspan="6" class="text-center text-muted">
+                                    <td colspan="8" class="text-center text-muted">
                                         Aucune commande trouvée.
                                     </td>
                                 </tr>

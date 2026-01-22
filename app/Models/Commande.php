@@ -16,13 +16,9 @@ class Commande extends Model
         'marchandise_id',
         'quantite',
         'description',
+        'fournisseur'
     ];
 
-
-    public function fournisseur()
-    {
-        return $this->belongsTo(Fournisseur::class);
-    }
 
     public function marchandise()
     {

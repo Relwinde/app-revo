@@ -25,20 +25,18 @@
                             @enderror
                         </div>
                     </div>
-
                     <div class="col">
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input id="email" type="email" wire:model="email" class="form-control form-control-alt"
-                                placeholder="Email du chauffeur...">
-                            @error('email')
-                                <div class="text-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
+                        <label for="ref_identite">Référence d'identité</label>
+                        <input id="ref_identite" type="text" wire:model="ref_identite" class="form-control form-control-alt"
+                            placeholder="Référence d'identité...">
+                        @error('ref_identite')
+                            <div class="text-danger">{{ $message }}</div>
+                        @enderror
                     </div>
                 </div>
 
                 <div class="row mt-3">
+                    
                     <div class="col">
                         <div class="form-group">
                             <label for="phone">Téléphone</label>
@@ -53,6 +51,21 @@
                             <input id="address" type="text" wire:model="address" class="form-control form-control-alt"
                                 placeholder="Adresse...">
                         </div>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                   <div class="col">
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input id="email" type="email" wire:model="email" class="form-control form-control-alt"
+                                placeholder="Email du chauffeur...">
+                            @error('email')
+                                <div class="text-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+                    <div class="col">
+
                     </div>
                 </div>
             </div>

@@ -42,15 +42,8 @@
                         <div class="col">
                             <div class="form-group">
                                 <label for="fournisseur">Fournisseur</label>
-                                <select @if (!$editMode) disabled
-                                    
-                                @endif required wire:model='fournisseur_id' class="custom-select" id="fournissuer" name="fournisseur">
-                                    <option value="0">Selextionnez le fournisseur</option>
-                                    @foreach ($fournisseurs as $fournisseur)
-                                        <option value="{{ $fournisseur->id }}">{{ $fournisseur->name }}</option>
-                                    @endforeach
-                                </select>
-                                @error('fournisseur_id')
+                                <input @if (!$editMode) disabled @endif required wire:model='fournisseur' class="form-control form-control-alt" id="fournissuer" name="fournisseur">
+                                @error('fournisseur')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>

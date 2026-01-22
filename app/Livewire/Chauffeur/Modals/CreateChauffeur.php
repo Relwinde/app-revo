@@ -12,6 +12,9 @@ class CreateChauffeur extends ModalComponent
     public $email;
     public $phone;
     public $address;
+    public $ref_identite;
+
+    // Reference CNIB or Passport can be added if needed in the future
 
     public function render()
     {
@@ -37,6 +40,7 @@ class CreateChauffeur extends ModalComponent
 
             Chauffeur::create([
                 'name' => mb_strtoupper($this->name, 'UTF-8'),
+                'ref_identite' => mb_strtoupper($this->ref_identite, 'UTF-8'),
                 'email' => $this->email,
                 'phone' => $this->phone,
                 'address' => $this->address,

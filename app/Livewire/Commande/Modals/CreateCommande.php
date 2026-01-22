@@ -14,10 +14,10 @@ use LivewireUI\Modal\ModalComponent;
 class CreateCommande extends ModalComponent
 {
 
-    public $fournisseur_id;
+    public $fournisseur; // Fournisseur doit être saisi 
     public $marchandise_id;
     public $quantite;
-    public $description;
+    public $description; // Type d'amballage ou autres détails
     public $numero;
 
     public function render()
@@ -37,15 +37,14 @@ class CreateCommande extends ModalComponent
         // Validation and creation logic here
         $this->validate(
             [
-                'fournisseur_id' => ['required', 'exists:fournisseurs,id'],
+                'fournisseur' => ['required'],
                 'marchandise_id' => ['required', 'exists:marchandises,id'],
                 'quantite' => ['required', 'integer', 'min:1'],
                 'description' => ['string'],
                 'numero' => ['required', 'string', 'unique:commandes,numero'],
             ],
             [
-                'fournisseur_id.exists' => 'Le fournisseur sélectionné est invalide.',
-                'fournisseur_id.required' => 'Le fournisseur est obligatoire.',
+                'fournisseur.required' => 'Le fournisseur est obligatoire.',
                 'marchandise_id.required' => 'La marchandise est obligatoire.',
                 'marchandise_id.exists' => 'La marchandise sélectionnée est invalide.',
                 'quantite.required' => 'La quantité est obligatoire.',
@@ -60,7 +59,7 @@ class CreateCommande extends ModalComponent
 
         // Create the Commande
         $commande = Commande::make([
-            'fournisseur_id' => $this->fournisseur_id,
+            'fournisseur' => $this->fournisseur,
             'marchandise_id' => $this->marchandise_id,
             'quantite' => $this->quantite,
             'description' => $this->description,

@@ -30,4 +30,10 @@ class BonDeCaisse extends Model
     {
         return $this->hasMany(EtapeBon::class);
     }
+
+    public function commentaires()
+    {
+        return $this->hasMany(BonDeCaisseCommentaire::class);
+    }
+    
 }

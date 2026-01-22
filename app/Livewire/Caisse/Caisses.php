@@ -15,6 +15,7 @@ class Caisses extends Component
 {
 
     #[On('depot-created')]
+    #[On('bon-updated')]
     public function render()
     {
         $pageHeader = [

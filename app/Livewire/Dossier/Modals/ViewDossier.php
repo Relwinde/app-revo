@@ -20,6 +20,14 @@ class ViewDossier extends ModalComponent
     public $camion_id;
     public $chauffeur_id;
     public $destinataire;
+    public $type_operation;
+    public $service;
+    public $escort;
+    public $compagnon;
+    public $lieu;
+    public $motif;
+    public $date_depart;
+    public $date_retour;
 
     public $editMode = false;
 
@@ -30,6 +38,14 @@ class ViewDossier extends ModalComponent
         $this->camion_id = $this->dossier->camion_id;
         $this->chauffeur_id = $this->dossier->chauffeur_id;
         $this->destinataire = $this->dossier->destinataire;
+        $this->type_operation = $this->dossier->type_operation;
+        $this->service = $this->dossier->service;
+        $this->escort = $this->dossier->escort;
+        $this->compagnon = $this->dossier->compagnon;
+        $this->lieu = $this->dossier->lieu;
+        $this->motif = $this->dossier->motif;
+        $this->date_depart = $this->dossier->date_depart;
+        $this->date_retour = $this->dossier->date_retour;
     }
 
 
@@ -59,6 +75,13 @@ class ViewDossier extends ModalComponent
                 'destinataire' => ['required', 'exists:clients,id'],
                 'camion_id' => ['required', 'exists:camions,id'],
                 'chauffeur_id' => ['required', 'exists:chauffeurs,id'],
+                'type_operation'=>['required'],
+                'lieu' => ['string'], 
+                'escort' => ['string'], 
+                'compagnon' => ['string'],
+                'motif' => ['string'],
+                'date_depart' => ['date'], 
+                'date_retour' => ['date'],
             ],
             [
                 'client_id.exists' => 'Le client sélectionné est invalide.',
@@ -69,6 +92,12 @@ class ViewDossier extends ModalComponent
                 'camion_id.exists' => 'Le camion sélectionné est invalide.',
                 'chauffeur_id.required' => 'Le chauffeur est obligatoire.',
                 'chauffeur_id.exists' => 'Le chauffeur sélectionné est invalide.',
+                'date_depart.date' => 'La date de départ doit être une date valide.',
+                'date_retour' => 'La date de retour doit être une date valide.',
+                'lieu.string' => 'Le lieu doit être une chaîne de caractères.',
+                'escort.string' => 'L\'escort doit être une chaîne de caractères.',
+                'compagnon.string' => 'Le compagnon doit être une chaîne de caractères.',
+                'motif.string' => 'Le motif doit être une chaîne de caractères.',
             ]
         );
 
@@ -79,6 +108,14 @@ class ViewDossier extends ModalComponent
                 'destinataire' => $this->destinataire,
                 'camion_id' => $this->camion_id,
                 'chauffeur_id' => $this->chauffeur_id,
+                'type_operation' => $this->type_operation,
+                'service' => $this->service,
+                'escort' => $this->escort,
+                'compagnon' => $this->compagnon,
+                'lieu' => $this->lieu,
+                'motif' => $this->motif,
+                'date_depart' => $this->date_depart,
+                'date_retour' => $this->date_retour,
             ]);
 
             DB::commit();
@@ -103,4 +140,11 @@ class ViewDossier extends ModalComponent
             $this->dispatch('commande-removed');
         }
     }
+
+
+    public function printOrdreMission()
+    {
+            $this->dispatch('print-ordre-mission');
+    }
+
 }

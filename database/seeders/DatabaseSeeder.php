@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Caisse;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Database\Seeders\PermissionSeeder;
@@ -17,6 +18,11 @@ class DatabaseSeeder extends Seeder
        $user = \App\Models\User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
+        ]);
+
+        $caisse = Caisse::create([
+            'nom' => 'Caisse Principale',
+            'solde' => 0,
         ]);
         $role = Role::create(['name' => 'Super-Admin']);
         $user->assignRole($role);

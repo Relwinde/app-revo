@@ -7,6 +7,7 @@ use App\Models\Camion;
 use App\Models\Dossier;
 use App\Models\BonDeCaisse;
 use App\Models\SuiviCaisse;
+use Livewire\Attributes\On;
 use Illuminate\Support\Facades\DB;
 use LivewireUI\Modal\ModalComponent;
 
@@ -33,6 +34,7 @@ class ViewBon extends ModalComponent
         $this->dossier_id = $this->bon->dossier_id;
     }
 
+    #[On('bon-updated')]
     public function render()
     {
         $dossiers = Dossier::all();

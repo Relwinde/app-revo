@@ -21,6 +21,22 @@ class CreateDossier extends ModalComponent
 
     public $chauffeur_id;
 
+    public $type_operation;
+
+    public $service;
+
+    public $escort;
+
+    public $compagnon;
+
+    public $lieu;
+
+    public $motif;
+
+    public $date_depart;
+    
+    public $date_retour;
+
 
     public function render()
     {
@@ -40,8 +56,16 @@ class CreateDossier extends ModalComponent
                 'destinataire' => ['required', 'string'],
                 'camion_id' => ['required', 'exists:camions,id'],
                 'chauffeur_id' => ['required', 'exists:chauffeurs,id'],
+                'type_operation'=>['required'],
+                'lieu' => ['string'], 
+                'escort' => ['string'], 
+                'compagnon' => ['string'],
+                'motif' => ['string'],
+                'date_depart' => ['date'], 
+                'date_retour' => ['date'],
             ],
             [
+                'type_operation.required' => 'Le type d\'opération est obligatoire',
                 'client_id.exists' => 'Le client sélectionné est invalide.',
                 'client_id.required' => 'Le client est obligatoire.',
                 'destinataire.required' => 'Le destinataire est obligatoire.',
@@ -50,6 +74,12 @@ class CreateDossier extends ModalComponent
                 'camion_id.exists' => 'Le camion sélectionné est invalide.',
                 'chauffeur_id.required' => 'Le chauffeur est obligatoire.',
                 'chauffeur_id.exists' => 'Le chauffeur sélectionné est invalide.',
+                'date_depart.date' => 'La date de départ doit être une date valide.',
+                'date_retour' => 'La date de retour doit être une date valide.',
+                'lieu.string' => 'Le lieu doit être une chaîne de caractères.',
+                'escort.string' => 'L\'escort doit être une chaîne de caractères.',
+                'compagnon.string' => 'Le compagnon doit être une chaîne de caractères.',
+                'motif.string' => 'Le motif doit être une chaîne de caractères.',
             ]
         );
 
@@ -58,10 +88,20 @@ class CreateDossier extends ModalComponent
             'destinataire' => $this->destinataire,
             'camion_id' => $this->camion_id,
             'chauffeur_id' => $this->chauffeur_id,
+            'type_operation' => $this->type_operation,
+            'service' => $this->service,
+            'escort' => $this->escort,
+            'compagnon' => $this->compagnon,
+            'lieu' => $this->lieu,
+            'motif' => $this->motif,
+            'date_depart' => $this->date_depart,
+            'date_retour' => $this->date_retour,
             'user_id' => auth()->id(),
         ]);
 
-        $numero = 'REVOL'.'-'.date('Y').'-'.date('m').'-'.str_pad(Dossier::whereYear('created_at', now()->year)->count() + 1, 4, '0', STR_PAD_LEFT);
+        $numero = 'REV0'.'-'.substr(date('Y'), -2).'-'.date('m').'/MA'.str_pad(Dossier::whereYear('created_at', now()->year)->count() + 1, 4, '0', STR_PAD_LEFT);
+        
+        // REV026-01/MA001
 
         $dossier->numero = $numero;
 

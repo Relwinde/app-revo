@@ -18,7 +18,7 @@
                     <thead>
                         <tr>
                             <th>Nom</th>
-                            <th>Email</th>
+                            <th>Ref Identité</th>
                             <th>Téléphone</th>
                             <th>Adresse</th>
                             <th>Date</th>
@@ -45,12 +45,12 @@
                                             {{-- Email --}}
                                             <td>
                                                 @if ($editMode && $chauffeurId === $chauffeur->id)
-                                                    <input wire:model="email" class="form-control form-control-sm" placeholder="Email">
-                                                    @error('email')
+                                                    <input wire:model="ref_identite" class="form-control form-control-sm" placeholder="Référence d'identité">
+                                                    @error('ref_identite')
                                                         <div class="text-danger">{{ $message }}</div>
                                                     @enderror
                                                 @else
-                                                    {{ $chauffeur->email ?? '-' }}
+                                                    {{ $chauffeur->ref_identite ?? '-' }}
                                                 @endif
                                             </td>
 

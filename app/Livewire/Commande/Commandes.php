@@ -21,7 +21,7 @@ class Commandes extends Component
             ]
         ];
 
-        $commandes = Commande::with(['fournisseur', 'marchandise'])->orderBy('created_at', 'desc')->paginate(10);
+        $commandes = Commande::with(['marchandise'])->orderBy('created_at', 'desc')->paginate(10);
 
         return view('livewire.commande.commandes', ['pageHeader' => $pageHeader, 'commandes' => $commandes])->layout('components.layouts.app', ['title' => 'Bons de commande'] );
     }

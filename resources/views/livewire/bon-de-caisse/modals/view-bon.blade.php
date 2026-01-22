@@ -82,11 +82,18 @@
                             </form>
 
                         @elseif ($bon->etape == "PAYE" && Auth::user()->can('Clore bon de caisse'))
-                            <button wire:confirm="Êtes-vous sûr de vouloir clore ce bon" wire:click.prevent="nextStep" type="submit" class="btn btn-sm btn-danger">
+                            <button wire:confirm="Êtes-vous sûr de vouloir clore ce bon" wire:click.prevent="nextStep" type="button" class="btn btn-sm btn-danger">
                                 Clore le bon
                             </button>
 
                         @endif
+
+                        @if ($bon->etape == "PAYE" || $bon->etape == "CLOS" && Auth::user()->can('Imprimer reçu bon de caisse'))
+                            <button wire:click.prevent="nextStep" type="button" class="btn btn-sm btn-primary">
+                                Imprimer reçu
+                            </button>
+                        @endif
+                        
                     @endif
 
 
@@ -161,6 +168,14 @@
                     </div>
                 </div>
                 
+            </div>
+
+            <div class="block-header block-header-default">
+                @if ($bon->etape != "EMETTEUR" && $bon->etape != "PAYE" && $bon->etape = "CLOS")
+                    <div class="block-title">
+                        <button class="btn btn-danger" wire:click="$dispatch('openModal', {component: 'bon-de-caisse.modals.return-bon', arguments: { bon : {{ $bon->id }} }})" wire:confirm="Êtes-vous sûr de vouloir retourner ce bon ?">Retourner le bon</button>
+                    </div>    
+                @endif
             </div>
         </div>
     @if ($editMode)

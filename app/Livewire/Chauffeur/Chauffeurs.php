@@ -18,6 +18,7 @@ class Chauffeurs extends Component
     public $email;
     public $phone;
     public $address;
+    public $ref_identite;
 
     public function toggleEditMode($id)
     {
@@ -35,6 +36,7 @@ class Chauffeurs extends Component
             $this->email   = $chauffeur->email;
             $this->phone   = $chauffeur->phone;
             $this->address = $chauffeur->address;
+            $this->ref_identite = $chauffeur->ref_identite;
         }
     }
 
@@ -60,6 +62,7 @@ class Chauffeurs extends Component
                 'email'   => $this->email,
                 'phone'   => $this->phone,
                 'address' => $this->address,
+                'ref_identite' => mb_strtoupper($this->ref_identite, 'UTF-8'),
             ]);
 
             $this->dispatch('chauffeur-updated');
@@ -81,6 +84,7 @@ class Chauffeurs extends Component
         $this->reset([
             'editMode',
             'chauffeurId',
+            'ref_identite',
             'name',
             'email',
             'phone',

@@ -15,7 +15,7 @@ class ViewCommande extends ModalComponent
 
     public Commande $commande;
     public $numero;
-    public $fournisseur_id;
+    public $fournisseur;
     public $marchandise_id;
     public $quantite;
     public $description;
@@ -25,7 +25,7 @@ class ViewCommande extends ModalComponent
     public function mount()
     {
         $this->numero = $this->commande->numero;
-        $this->fournisseur_id = $this->commande->fournisseur_id;
+        $this->fournisseur = $this->commande->fournisseur;
         $this->marchandise_id = $this->commande->marchandise_id;
         $this->quantite = $this->commande->quantite;
         $this->description = $this->commande->description;
@@ -33,10 +33,9 @@ class ViewCommande extends ModalComponent
 
     public function render()
     {
-        $fournisseurs = Fournisseur::all();
         $marchandises = Marchandise::all();
 
-        return view('livewire.commande.modals.view-commande', ['fournisseurs' => $fournisseurs, 'marchandises' => $marchandises]);
+        return view('livewire.commande.modals.view-commande', ['marchandises' => $marchandises]);
     }
 
     public function toggleEditMode()
@@ -48,14 +47,14 @@ class ViewCommande extends ModalComponent
     {
 
         $this->validate([
-            'fournisseur_id' => ['required', 'exists:fournisseurs,id'],
+            'fournisseur' => ['required', 'string'],
             'marchandise_id' => ['required', 'exists:marchandises,id'],
             'quantite' => ['required', 'integer', 'min:1'],
             'description' => ['required', 'string'],
             'numero' => ['required', 'string', 'unique:commandes,numero,'.$this->commande->id],
         ], [
-            'fournisseur_id.exists' => 'Le fournisseur sélectionné est invalide.',
-            'fournisseur_id.required' => 'Le fournisseur est obligatoire.',
+            'fournisseur.required' => 'Le fournisseur est obligatoire.',
+            'fournisseur.string' => 'Le fournisseur doit être une chaîne de caractères.',
             'marchandise_id.required' => 'La marchandise est obligatoire.',
             'marchandise_id.exists' => 'La marchandise sélectionnée est invalide.',
             'quantite.required' => 'La quantité est obligatoire.',
