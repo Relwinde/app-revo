@@ -34,7 +34,7 @@
                     @elseif ($bon->etape == 'PAYE')
                         <span class="font-size-sm font-w600 px-2 py-1 rounded  bg-success-light text-success">Payé</span>
                     @elseif ($bon->etape == 'CLOS')
-                        <span class="font-size-sm font-w600 px-2 py-1 rounded  bg-dark-light text-dark">Cloré</span>
+                        <span class="font-size-sm font-w600 px-2 py-1 rounded  bg-dark-light text-dark">Clos</span>
                     @elseif ($bon->etape == 'ANNULE')
                         <span class="badge badge-danger">Annulé</span>
                     @endif
@@ -89,7 +89,7 @@
                         @endif
 
                         @if ($bon->etape == "PAYE" && Auth::user()->can('Faire un ajustement sur bon de caisse'))
-                            <button wire:click.prevent="nextStep" type="button" class="btn btn-sm btn-danger">
+                            <button wire:click="$dispatch('openModal', {component: 'bon-de-caisse.modals.create-ajustement', arguments: { bon : {{ $bon->id }} }})" type="button" class="btn btn-sm btn-danger">
                                 Ajustement
                             </button>
 
@@ -206,12 +206,37 @@
             </div>
 
             <div class="block-header block-header-default">
-                @if ($bon->etape != "EMETTEUR" && $bon->etape != "PAYE" && $bon->etape = "CLOS")
+                @if ($bon->etape != "EMETTEUR" && $bon->etape != "PAYE" && $bon->etape != "CLOS")
                     <div class="block-title">
                         <button class="btn btn-danger" wire:click="$dispatch('openModal', {component: 'bon-de-caisse.modals.return-bon', arguments: { bon : {{ $bon->id }} }})" wire:confirm="Êtes-vous sûr de vouloir retourner ce bon ?">Retourner le bon</button>
                     </div>    
                 @endif
             </div>
+
+            @if ($bon->ajustements->count() > 0)
+                <div class="block-content">
+                    <h3 class="block-title">
+                        Ajustements ({{ $bon->ajustements->count() }})
+                    </h3>
+                    <table class="table table-borderless table-hover table-vcenter">
+                        <tbody>
+
+                            @foreach ($bon->ajustements as $ajustement)
+                            <tr>
+                                <td>
+                                    <a class="h5" href="be_pages_ecom_store_product.html">{{$ajustement->libelle}}</a>
+                                    <div class="font-size-sm text-muted">Montant avant : {{ number_format($ajustement->montant_bon_before, 2, '.', ' ') }} FCFA</div>
+                                </td>
+                                <td class="text-right">
+                                    <div class="font-w600 text-success">{{ number_format($ajustement->montant, 2, '.', ' ') }} FCFA</div>
+                                </td>
+                            </tr>
+                                
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            @endif
         </div>
     @if ($editMode)
     </form>

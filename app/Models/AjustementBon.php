@@ -7,5 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class AjustementBon extends Model
 {
+    protected $guarded = [];
     use HasFactory;
+
+
+    public function bon_de_caisse()
+    {
+        return $this->belongsTo(BonDeCaisse::class);
+    }
 }

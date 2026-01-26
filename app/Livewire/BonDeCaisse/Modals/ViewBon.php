@@ -30,7 +30,7 @@ class ViewBon extends ModalComponent
 
     public function mount (){
         $this->depense = $this->bon->depense;
-        $this->montant = $this->bon->montant;
+        $this->montant = $this->bon->montant_definitif;
         $this->description = $this->bon->description;
         $this->camion_id = $this->bon->camion_id;
         $this->dossier_id = $this->bon->dossier_id;
