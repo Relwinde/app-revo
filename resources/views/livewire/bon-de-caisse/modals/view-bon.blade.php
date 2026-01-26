@@ -88,8 +88,15 @@
 
                         @endif
 
+                        @if ($bon->etape == "PAYE" && Auth::user()->can('Faire un ajustement sur bon de caisse'))
+                            <button wire:click.prevent="nextStep" type="button" class="btn btn-sm btn-danger">
+                                Ajustement
+                            </button>
+
+                        @endif
+
                         @if ($bon->etape == "PAYE" || $bon->etape == "CLOS" && Auth::user()->can('Imprimer reçu bon de caisse'))
-                            <button wire:click.prevent="nextStep" type="button" class="btn btn-sm btn-primary">
+                            <button wire:click.prevent="printRecu" type="button" class="btn btn-sm btn-primary">
                                 Imprimer reçu
                             </button>
                         @endif
@@ -100,6 +107,34 @@
                     
                 </div>
             </div>
+            @if ($bon->commentaires->count() > 0)
+                <div class="block-header block-header-default">
+                    <div class="block-title">
+                        <div class="form-group">
+                            <div class="custom-control custom-checkbox custom-control-inline">
+                                <input  wire:model.live="comments" type="checkbox" class="custom-control-input" id="example-cb-custom-inline1" name="example-cb-custom-inline1">
+                                <label class="custom-control-label" for="example-cb-custom-inline1">Commentaires</label>
+                            </div>
+                        </div>
+
+                        @if ($comments)
+                            <div class="block-content font-size-sm">
+                                @foreach ($bon->commentaires as $comment)
+                                    <div class="push">
+                                        <a class="font-w600" href="be_pages_generic_profile.html">{{ $comment->user->name }}</a>; <a href="be_pages_blog_story.html">{{ $comment->created_at->format('d M Y H:i') }}</a>
+                                        <p class="mt-1">
+                                            {{ $comment->content }}
+                                        </p>
+                                    </div> 
+                                @endforeach
+                            </div> 
+                        @endif
+
+                    </div>
+                   
+                </div>
+            @endif
+
             <div class="block-content">
                 <div class="justify-content-center py-sm-3 py-md-5">
                     <div  class="row">
@@ -183,3 +218,12 @@
     @endif
 </div>
 
+
+@script
+    <script>
+        $wire.on('print-recu-bon', () => {
+            window.open('{{ route("print-recu-bon", ["bon" => $bon->id]) }}', '_blank');
+        });
+
+    </script>
+@endscript

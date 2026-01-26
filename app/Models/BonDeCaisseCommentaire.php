@@ -15,4 +15,9 @@ class BonDeCaisseCommentaire extends Model
     {
         return $this->belongsTo(BonDeCaisse::class);
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

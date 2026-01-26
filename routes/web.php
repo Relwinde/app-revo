@@ -3,6 +3,7 @@
 use App\Livewire\Home;
 use App\Livewire\Login;
 use App\Models\Dossier;
+use App\Models\BonDeCaisse;
 use App\Livewire\User\Users;
 use App\Livewire\User\Header;
 use App\Livewire\Caisse\Caisses;
@@ -56,3 +57,8 @@ Route::get('/print-ordre-mission/{dossier}', function (Dossier $dossier) {
     return $dossier->print_ordre_mission();
     
 })->name('print-ordre-mission')->middleware('auth');
+
+Route::get('/print-recu-bon/{bon}', function (BonDeCaisse $bon) {
+    return $bon->print_recu();
+    
+})->name('print-recu-bon')->middleware('auth');

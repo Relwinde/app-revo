@@ -21,6 +21,8 @@ class ViewBon extends ModalComponent
     public $camion_id;
     public $dossier_id;
 
+    public $comments = false;
+
     public $type_paiement;
     
     public $editMode = false;
@@ -186,5 +188,9 @@ class ViewBon extends ModalComponent
         }
     }
 
+
+    public function printRecu (){
+        $this->dispatch('print-recu-bon');
+    }
 
 }
