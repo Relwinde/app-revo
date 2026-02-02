@@ -13,7 +13,7 @@ class Commandes extends Component
     public function render()
     {
         $pageHeader = [
-            'title' => 'Bons de commande',
+            'title' => 'Manifestes',
             'subtitle' => 'Liste des bons de commande',
             'breadcrumbs' => [
                 ['label' => 'Accueil', 'url' => route('home')],

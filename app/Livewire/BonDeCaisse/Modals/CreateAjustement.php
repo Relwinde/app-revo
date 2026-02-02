@@ -26,11 +26,15 @@ class CreateAjustement extends ModalComponent
     {
         switch($this->type){
             case 1: 
-                $this->montantAfter = $this->bon->montant_definitif + $this->montant;
+                if ($this->montant != null && $this->montant >= 0){
+                    $this->montantAfter = $this->bon->montant_definitif + $this->montant;
+                }
                 break;
                 
             case 2: 
-                $this->montantAfter = $this->bon->montant_definitif - $this->montant;
+                if ($this->montant != null && $this->montant >= 0){
+                    $this->montantAfter = $this->bon->montant_definitif - $this->montant;
+                }
                 break;
         }
         return view('livewire.bon-de-caisse.modals.create-ajustement');

@@ -22,7 +22,7 @@
             <li class="nav-main-item">
                 <a class="nav-main-link {{ request()->routeIs('commandes') ? 'active' : '' }}" href="{{ route('commandes') }}" wire:navigate>
                     <i class="nav-main-link-icon far fa-file-alt"></i>
-                    <span class="nav-main-link-name">Bons de commande</span>
+                    <span class="nav-main-link-name">Manifestes</span>
                 </a>
             </li>
             <li class="nav-main-item">

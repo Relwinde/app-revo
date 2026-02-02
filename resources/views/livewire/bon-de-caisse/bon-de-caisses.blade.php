@@ -50,7 +50,7 @@
                                     </td>
                                 </tr>
                                 @empty
-                                    <td colspan="6" class="text-center text-muted">
+                                    <td colspan="7" class="text-center text-muted">
                                         Aucun bon de caisse trouvé.
                                     </td>
                                 @endforelse
