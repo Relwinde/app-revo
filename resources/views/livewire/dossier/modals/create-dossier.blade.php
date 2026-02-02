@@ -23,9 +23,9 @@
                                 <label for="type_operation">Type d'opération</label>
                                 <select class="custom-select" required wire:model='type_operation' name="type_operation" id="">
                                     <option value="">Selectionnez le type d'opération</option>
-                                    <option value="MA">Manutention</option>
-                                    <option value="AV">Location</option>
-                                    <option value="AA">Transport</option>
+                                    <option value="TP">Transport</option>
+                                    <option value="CL">Collecte</option>
+                                    <option value="LC">Location</option>
                                 </select>
                                 @error('type_operation')
                                     <div class="text-danger">{{ $message }}</div>
@@ -33,9 +33,47 @@
                             </div>
                         </div>
                         <div class="col">
-
+                            <div class="form-group">
+                                <label>Avec location</label>
+                                <div class="custom-control custom-switch mb-1">
+                                    <input type="checkbox" class="custom-control-input" id="example-sw-custom1" name="example-sw-custom1" wire:model.live="avec_location">
+                                    <label class="custom-control-label" for="example-sw-custom1">Avec location</label>
+                                </div>
+                            </div>
                         </div>
                     </div>
+
+                    @if ($avec_location)
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="fournisseur">Fournisseur de la location</label>
+                                    <select required wire:model='fournisseur_id' class="custom-select" id="fournisseur" name="fournisseur">
+                                        <option value="">Sélectionnez le fournisseur</option>
+                                        @foreach ($fournisseurs as $fournisseur)
+                                            <option value="{{ $fournisseur->id }}">{{ $fournisseur->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('fournisseur_id')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>  
+
+                            <div class="col">
+                                <div class="form-group">
+                                    <label for="prix_location">Prix de la location</label>
+                                    <input type="number" class="form-control form-control" placeholder="Prix de la location" wire:model="prix_location">
+                                    @error("prix_location")
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                        
+                    @endif
+
+                    <hr>
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
@@ -98,6 +136,7 @@
                             </div>
                         </div>
                     </div>
+                    <hr>
 
                     <div class="row">
                         <div class="col">
@@ -142,7 +181,8 @@
                             </div>
                         </div>
                     </div>
-
+                    <hr>
+                    
                     <div class="row">
                         <div class="col">
                             <div class="form-group">

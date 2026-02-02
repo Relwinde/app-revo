@@ -6,6 +6,7 @@ use App\Models\Camion;
 use App\Models\Client;
 use App\Models\Dossier;
 use App\Models\Chauffeur;
+use App\Models\Fournisseur;
 use Illuminate\Support\Facades\DB;
 use LivewireUI\Modal\ModalComponent;
 use Illuminate\Support\Testing\Fakes\Fake;
@@ -37,15 +38,22 @@ class CreateDossier extends ModalComponent
     
     public $date_retour;
 
+    public $avec_location = false;
+
+    public $prix_location;
+
+    public $fournisseur_id;
+
 
     public function render()
     {
         $clients = Client::all();
         $camions = Camion::all();
         $chauffeurs = Chauffeur::all();
+        $fournisseurs = Fournisseur::all();
 
 
-        return view('livewire.dossier.modals.create-dossier', ['clients' => $clients, 'camions' => $camions, 'chauffeurs' => $chauffeurs]);
+        return view('livewire.dossier.modals.create-dossier', ['clients' => $clients, 'camions' => $camions, 'chauffeurs' => $chauffeurs, 'fournisseurs' => $fournisseurs]);
     }
 
     public function create()
@@ -57,12 +65,14 @@ class CreateDossier extends ModalComponent
                 'camion_id' => ['required', 'exists:camions,id'],
                 'chauffeur_id' => ['required', 'exists:chauffeurs,id'],
                 'type_operation'=>['required'],
-                'lieu' => ['string'], 
-                'escort' => ['string'], 
-                'compagnon' => ['string'],
-                'motif' => ['string'],
-                'date_depart' => ['date'], 
-                'date_retour' => ['date'],
+                'lieu' => ['string', 'nullable'], 
+                'escort' => ['string', 'nullable'], 
+                'compagnon' => ['string', 'nullable'],
+                'motif' => ['string', 'nullable'],
+                'date_depart' => ['date', 'nullable'], 
+                'date_retour' => ['date', 'nullable'],
+                'prix_location' => $this->avec_location ? ['required', 'numeric'] : ['nullable'],
+                'fournisseur_id' => $this->avec_location ? ['required', 'exists:fournisseurs,id'] : ['nullable'],
             ],
             [
                 'type_operation.required' => 'Le type d\'opération est obligatoire',
@@ -80,6 +90,10 @@ class CreateDossier extends ModalComponent
                 'escort.string' => 'L\'escort doit être une chaîne de caractères.',
                 'compagnon.string' => 'Le compagnon doit être une chaîne de caractères.',
                 'motif.string' => 'Le motif doit être une chaîne de caractères.',
+                'prix_location.required' => 'Le prix de location est obligatoire lorsque l\'option avec location est activée.',
+                'prix_location.numeric' => 'Le prix de location doit être un nombre.',
+                'fournisseur_id.required' => 'Le fournisseur est obligatoire lorsque l\'option avec location est activée.',
+                'fournisseur_id.exists' => 'Le fournisseur sélectionné est invalide.',
             ]
         );
 
@@ -97,6 +111,8 @@ class CreateDossier extends ModalComponent
             'date_depart' => $this->date_depart,
             'date_retour' => $this->date_retour,
             'user_id' => auth()->id(),
+            'prix_location' => $this->avec_location ? $this->prix_location : null,
+            'fournisseur_id' => $this->avec_location ? $this->fournisseur_id : null,
         ]);
 
         $numero = 'REV0'.'-'.substr(date('Y'), -2).'-'.date('m').'/MA'.str_pad(Dossier::whereYear('created_at', now()->year)->count() + 1, 4, '0', STR_PAD_LEFT);

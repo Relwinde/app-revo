@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('dossiers', function (Blueprint $table) {
-            $table->enum('type_operation', ['TP', 'CL', 'LC'])->default('TP')->after('numero');
+            $table->decimal('prix_location', 14, 2)->nullable()->after('type_operation');
+            $table->foreignId('fournisseur_id')->nullable()->constrained('fournisseurs')->after('prix_location');
         });
     }
 
@@ -22,7 +23,9 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('dossiers', function (Blueprint $table) {
-            $table->dropColumn('type_operation');
+            $table->dropColumn('prix_location');
+            $table->dropForeign(['fournisseur_id']);
+            $table->dropColumn('fournisseur_id');
         });
     }
 };

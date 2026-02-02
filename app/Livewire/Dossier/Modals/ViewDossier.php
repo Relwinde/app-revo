@@ -6,6 +6,7 @@ use App\Models\Camion;
 use App\Models\Client;
 use App\Models\Dossier;
 use App\Models\Chauffeur;
+use App\Models\Fournisseur;
 use Livewire\Attributes\On;
 use Illuminate\Support\Facades\DB;
 use LivewireUI\Modal\ModalComponent;
@@ -29,6 +30,12 @@ class ViewDossier extends ModalComponent
     public $date_depart;
     public $date_retour;
 
+    public $avec_location;
+
+    public $prix_location;
+
+    public $fournisseur_id;
+
     public $editMode = false;
 
     public function mount ()
@@ -46,6 +53,10 @@ class ViewDossier extends ModalComponent
         $this->motif = $this->dossier->motif;
         $this->date_depart = $this->dossier->date_depart;
         $this->date_retour = $this->dossier->date_retour;
+
+        $this->avec_location = $this->dossier->prix_location ? true : false;
+        $this->prix_location = $this->dossier->prix_location;
+        $this->fournisseur_id = $this->dossier->fournisseur_id;
     }
 
 
@@ -56,8 +67,9 @@ class ViewDossier extends ModalComponent
         $chauffeurs = Chauffeur::all();
         $camions = Camion::all();
         $clients = Client::all();
+        $fournisseurs = Fournisseur::all();
 
-        return view('livewire.dossier.modals.view-dossier', ['chauffeurs' => $chauffeurs, 'camions' => $camions, 'clients' => $clients]);
+        return view('livewire.dossier.modals.view-dossier', ['chauffeurs' => $chauffeurs, 'camions' => $camions, 'clients' => $clients, 'fournisseurs' => $fournisseurs]);
     }
 
 
@@ -76,12 +88,14 @@ class ViewDossier extends ModalComponent
                 'camion_id' => ['required', 'exists:camions,id'],
                 'chauffeur_id' => ['required', 'exists:chauffeurs,id'],
                 'type_operation'=>['required'],
-                'lieu' => ['string'], 
-                'escort' => ['string'], 
-                'compagnon' => ['string'],
-                'motif' => ['string'],
-                'date_depart' => ['date'], 
-                'date_retour' => ['date'],
+                'lieu' => ['string', 'nullable'], 
+                'escort' => ['string', 'nullable'], 
+                'compagnon' => ['string', 'nullable'],
+                'motif' => ['string', 'nullable'],
+                'date_depart' => ['date', 'nullable'], 
+                'date_retour' => ['date', 'nullable'],
+                'prix_location' => $this->avec_location ? ['required', 'numeric'] : ['nullable'],
+                'fournisseur_id' => $this->avec_location ? ['required', 'exists:fournisseurs,id'] : ['nullable'],
             ],
             [
                 'client_id.exists' => 'Le client sélectionné est invalide.',
@@ -103,6 +117,19 @@ class ViewDossier extends ModalComponent
 
         try {
             DB::beginTransaction();
+
+            if ($this->avec_location) {
+                $this->dossier->update([
+                    'prix_location' => $this->prix_location,
+                    'fournisseur_id' => $this->fournisseur_id,
+                ]);
+            } else {
+                $this->dossier->update([
+                    'prix_location' => null,
+                    'fournisseur_id' => null,
+                ]);
+            }
+
             $this->dossier->update([
                 'client_id' => $this->client_id,
                 'destinataire' => $this->destinataire,

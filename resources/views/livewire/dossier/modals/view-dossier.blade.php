@@ -37,9 +37,9 @@
                                 <label for="type_operation">Type d'opération</label>
                                 <select @if (!$editMode) disabled @endif class="custom-select" required wire:model='type_operation' name="type_operation" id="">
                                     <option value="">Selectionnez le type d'opération</option>
-                                    <option value="MA">Manutention</option>
-                                    <option value="LO">Location</option>
-                                    <option value="TS">Transport</option>
+                                    <option value="TP">Transport</option>
+                                    <option value="CL">Collecte</option>
+                                    <option value="LC">Location</option>
                                 </select>
                                 @error('type_operation')
                                     <div class="text-danger">{{ $message }}</div>
@@ -47,9 +47,47 @@
                             </div>
                         </div>
                         <div class="col">
-
+                            <div class="form-group">
+                                <label for="avec_location">Avec location</label>
+                                <div class="custom-control custom-switch mb-1">
+                                    <input type="checkbox" class="custom-control-input" id="example-sw-custom1" name="example-sw-custom1" wire:model.live="avec_location" @if (!$editMode) disabled @endif>
+                                    <label class="custom-control-label" for="example-sw-custom1">Avec location</label>
+                                </div>
+                            </div>
                         </div>
                     </div>
+
+                    @if ($avec_location)
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="prix_location">Prix de location</label>
+                                <input @if (!$editMode) disabled @endif type="number" step="0.01" wire:model='prix_location' class="form-control" id="prix_location" placeholder="Prix de location">
+                                @error('prix_location')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="fournisseur">Fournisseur</label>
+                                <select @if (!$editMode) disabled @endif required wire:model='fournisseur_id' class="custom-select" id="fournisseur" name="fournisseur">
+                                    <option value="">Sélectionnez le fournisseur</option>
+                                    @foreach ($fournisseurs as $fournisseur)
+                                        <option value="{{ $fournisseur->id }}">{{ $fournisseur->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('fournisseur_id')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                    </div> 
+                    @endif
+
+                    <hr>
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
@@ -118,6 +156,8 @@
                         </div>
                     </div>
 
+                    <hr>
+
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
@@ -139,6 +179,7 @@
                             </div>
                         </div>
                     </div>
+                    
 
                     <div class="row">
                         <div class="col">
