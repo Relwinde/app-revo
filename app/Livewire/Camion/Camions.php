@@ -14,6 +14,8 @@ class Camions extends Component
     public $editMode = false;
     public $camionId;
 
+    public $search;
+
     public $license_plate;
     public $model;
     public $brand;
@@ -88,7 +90,9 @@ class Camions extends Component
     #[On('camion-deleted')]
     public function render()
     {
-        $camions = Camion::orderBy('license_plate')->paginate(10);
+        $camions = Camion::where('license_plate', 'like', "%{$this->search}%")
+                ->orderBy('license_plate')
+                ->paginate(10);
 
         $pageHeader = [
             'title' => 'Camions',
@@ -103,5 +107,10 @@ class Camions extends Component
             'camions' => $camions,
             'pageHeader' => $pageHeader,
         ])->layout('components.layouts.app', ['title' => 'Camions']);
+    }
+
+    public function clear_search()
+    {
+        $this->search = '';
     }
 }

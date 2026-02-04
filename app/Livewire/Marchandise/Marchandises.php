@@ -14,6 +14,8 @@ class Marchandises extends Component
     public $marchandiseId;
     public $editMode = false;
 
+    public $search;
+
     public function toggleEditMode($id){
         if($this->editMode){
             $this->resetForm();
@@ -60,7 +62,7 @@ class Marchandises extends Component
     #[On('marchandise-deleted')]
     public function render()
     {
-        $Marchandises = Marchandise::orderBy('name', 'ASC')->paginate(10);
+        $Marchandises = Marchandise::where('name', 'like', "%{$this->search}%")->orderBy('name', 'ASC')->paginate(10);
         $pageHeader = [
                 'title' => 'Marchandises',
                 'subtitle' => 'Liste des marchandises',
@@ -73,5 +75,11 @@ class Marchandises extends Component
             'marchandises' => $Marchandises,
             'pageHeader' => $pageHeader,
         ])->layout('components.layouts.app', ['title' => 'Marchandises']);
+    }
+
+
+    public function clear_search()
+    {
+        $this->search = '';
     }
 }

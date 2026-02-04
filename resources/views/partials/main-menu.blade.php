@@ -52,7 +52,7 @@
             <li class="nav-main-item">
                 <a class="nav-main-link {{ request()->routeIs('fournisseurs') ? 'active' : '' }}" href="{{ route('fournisseurs') }}" wire:navigate>
                     <i class="nav-main-link-icon far fa-handshake"></i>
-                    <span class="nav-main-link-name">Fournisseurs</span>
+                    <span class="nav-main-link-name">Partenaires</span>
                 </a>
             </li>
 

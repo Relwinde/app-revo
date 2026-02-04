@@ -15,6 +15,8 @@ class Clients extends Component
     public $editMode = false;
     public $clientId;
 
+    public $search;
+
     public $name;
     public $email;
     public $phone;
@@ -59,7 +61,12 @@ class Clients extends Component
     #[On('client-deleted')]
     public function render()
     {
-        $clients = Client::orderBy('name', 'asc')->paginate(10);
+        $clients = Client::where('name', 'like', "%{$this->search}%")
+                    ->orWhere('email', 'like', "%{$this->search}%")
+                    ->orWhere('phone', 'like', "%{$this->search}%")
+                    ->orWhere('rccm', 'like', "%{$this->search}%")
+                    ->orWhere('ifu', 'like', "%{$this->search}%")
+                    ->orderBy('name', 'asc')->paginate(10);
 
         $pageHeader = [
             'title' => 'Clients',
@@ -132,6 +139,11 @@ class Clients extends Component
             $client->delete();
             $this->dispatch('client-deleted');
         }
+    }
+
+    public function clear_search()
+    {
+        $this->search = '';
     }
 
 }

@@ -11,6 +11,8 @@ class Users extends Component
 {
     use WithPagination;
 
+    public $search;
+
     #[On('user-created')]
     public function render()
     {
@@ -24,7 +26,7 @@ class Users extends Component
             ]
         ];
 
-        $users = User::orderBy('name', 'asc')->paginate(10);
+        $users = User::where('name', 'like', "%{$this->search}%")->orderBy('name', 'asc')->paginate(10);
         return view('livewire.user.users', ['users' => $users, 'pageHeader' => $pageHeader])->layout('components.layouts.app', ['title' => 'Liste des utilisateurs']);
     }
 
@@ -35,5 +37,10 @@ class Users extends Component
             $user->delete();
             $this->dispatch('user-deleted');
         }
+    }
+
+    public function clear_search()
+    {
+        $this->search = '';
     }
 }

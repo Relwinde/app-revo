@@ -14,6 +14,8 @@ class Chauffeurs extends Component
     public $editMode = false;
     public $chauffeurId;
 
+    public $search;
+
     public $name;
     public $email;
     public $phone;
@@ -97,7 +99,7 @@ class Chauffeurs extends Component
     #[On('chauffeur-deleted')]
     public function render()
     {
-        $chauffeurs = Chauffeur::orderBy('name')->paginate(10);
+        $chauffeurs = Chauffeur::where('name', 'like', "%{$this->search}%")->orderBy('name')->paginate(10);
 
         $pageHeader = [
             'title' => 'Chauffeurs',
@@ -112,5 +114,11 @@ class Chauffeurs extends Component
             'chauffeurs' => $chauffeurs,
             'pageHeader' => $pageHeader,
         ])->layout('components.layouts.app', ['title' => 'Chauffeurs']);
+    }
+
+
+    public function clear_search()
+    {
+        $this->search = '';
     }
 }

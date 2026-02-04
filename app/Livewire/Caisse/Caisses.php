@@ -13,6 +13,7 @@ use App\Models\AjustementBon;
 
 class Caisses extends Component
 {
+    public $search;
 
     #[On('depot-created')]
     #[On('bon-updated')]
@@ -39,9 +40,29 @@ class Caisses extends Component
         ->sum('montant') + AjustementBon::where('ajustement_bons.type', 'EXCEDANT')->whereDate('ajustement_bons.created_at', Carbon::today())
         ->sum('montant');
 
-        $bons = BonDeCaisse::orderBy('created_at', 'desc')->where('etape', 'CAISSE')->orWhere('etape', 'PAYE')->orWhere('etape', 'CLOS')->paginate(10);
+        $bons = BonDeCaisse::orderBy('created_at', 'desc')
+        // 1. Group the statuses into one requirement
+        ->whereIn('etape', ['CAISSE', 'PAYE', 'CLOS']) 
+        
+        // 2. Keep the search logic as a single grouped AND requirement
+        ->where(function($query) {
+            $query->where('numero', 'like', "%{$this->search}%")
+                ->orWhereHas('dossier', function($q) {
+                    $q->where('numero', 'like', "%{$this->search}%");
+                })
+                ->orWhereHas('user', function($q) {
+                    $q->where('name', 'like', "%{$this->search}%");
+                });
+        })
+        ->paginate(10);
+                
 
 
         return view('livewire.caisse.caisses', ['pageHeader' => $pageHeader, 'sommeAttente' => $sommeAttente, 'caisse' => $caisse, 'sommeDepots' => $sommeDepots, 'sommeDecaissements' => $sommeDecaissements, 'bons' => $bons])->layout('components.layouts.app', ['title' => 'Caisse']);
+    }
+
+    public function clear_search()
+    {
+        $this->search = '';
     }
 }

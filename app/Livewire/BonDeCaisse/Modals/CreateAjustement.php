@@ -99,9 +99,11 @@ class CreateAjustement extends ModalComponent
 
                     case 2: 
                         if($this->montant > $this->bon->montant_definitif){
-                            $this->dispatch('insufficient-funds');
-                            $this->reset();
-                            $this->closeModal();
+                            // $this->dispatch('insufficient-funds');
+                            // $this->closeModal();
+                            // $this->reset();
+
+                            $this->addError('montant', 'Le montant de la restitution ne peut pas être supérieur au montant du bon de caisse.');
                             break;
                         }
 
@@ -142,6 +144,9 @@ class CreateAjustement extends ModalComponent
 
                         }
                     break;
+
+                diefault:
+                        break;
 
                 }
 

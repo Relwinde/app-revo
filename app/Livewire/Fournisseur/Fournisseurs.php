@@ -11,6 +11,8 @@ use Illuminate\Validation\Rule;
 class Fournisseurs extends Component
 {
     use WithPagination;
+    
+    public $search;
 
     public $editMode = false;
     public $fournisseurId;
@@ -102,15 +104,30 @@ class Fournisseurs extends Component
     public function render()
     {
         return view('livewire.fournisseur.fournisseurs', [
-            'fournisseurs' => Fournisseur::orderBy('name')->paginate(10),
+
+        
+            'fournisseurs' => Fournisseur::where('name', 'like', "%{$this->search}%")
+                    ->orWhere('email', 'like', "%{$this->search}%")
+                    ->orWhere('phone', 'like', "%{$this->search}%")
+                    ->orWhere('rccm', 'like', "%{$this->search}%")
+                    ->orWhere('ifu', 'like', "%{$this->search}%")
+                    ->orderBy('name')->paginate(10),
+
+
             'pageHeader' => [
-                'title' => 'Fournisseurs',
-                'subtitle' => 'Liste des fournisseurs',
+                'title' => 'Partenaires',
+                'subtitle' => 'Liste des partenaires',
                 'breadcrumbs' => [
                     ['label' => 'Accueil', 'url' => route('home')],
-                    ['label' => 'Fournisseurs'],
+                    ['label' => 'Partenaires'],
                 ],
             ],
-        ])->layout('components.layouts.app', ['title' => 'Fournisseurs']);
+        ])->layout('components.layouts.app', ['title' => 'Partenaires']);
+    }
+
+
+    public function clear_search()
+    {
+        $this->search = '';
     }
 }

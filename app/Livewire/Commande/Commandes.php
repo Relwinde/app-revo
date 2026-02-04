@@ -8,6 +8,8 @@ use Livewire\Attributes\On;
 
 class Commandes extends Component
 {
+    public $search;
+
     #[On('commande-created')]
     #[On('commande-updated')]
     public function render()
@@ -21,8 +23,22 @@ class Commandes extends Component
             ]
         ];
 
-        $commandes = Commande::with(['marchandise'])->orderBy('created_at', 'desc')->paginate(10);
+        $commandes = Commande::where('numero', 'like', "%{$this->search}%")
+            ->orWhere('fournisseur', 'like', "%{$this->search}%")
+            ->orWhereHas('marchandise', function($query) {
+                $query->where('name', 'like', "%{$this->search}%");
+            })
+            ->orWhereHas('dossier', function($query) {
+                $query->where('numero', 'like', "%{$this->search}%");
+            })
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
 
         return view('livewire.commande.commandes', ['pageHeader' => $pageHeader, 'commandes' => $commandes])->layout('components.layouts.app', ['title' => 'Bons de commande'] );
+    }
+
+    public function clear_search()
+    {
+        $this->search = '';
     }
 }

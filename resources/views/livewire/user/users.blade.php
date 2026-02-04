@@ -14,6 +14,17 @@
             </div>
 
             <div class="block-content block-content-full">
+                <div class="input-group p-3">
+                    @if ($search != null && $search !="")
+                        <div class="input-group-prepend">
+                            <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
+                            <button wire:click="clear_search" type="button" class="btn btn-alt-danger" data-toggle="layout" data-action="header_search_off">
+                                <i class="fa fa-fw fa-times-circle"></i>
+                            </button>
+                        </div>     
+                    @endif
+                    <input wire:model.live.debounce.500ms="search" type="text" class="form-control" placeholder="Recherche..." id="page-header-search-input" name="page-header-search-input">
+                    </div>
                 <table class="table table-bordered table-striped table-vcenter js-dataTable-full table-responsive-md">
                     <thead>
                         <tr>
