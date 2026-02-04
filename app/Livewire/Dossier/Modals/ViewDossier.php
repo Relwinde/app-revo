@@ -174,4 +174,10 @@ class ViewDossier extends ModalComponent
             $this->dispatch('print-ordre-mission');
     }
 
+    public function printManifest()
+    {
+            $this->dispatch('print-manifest');
+
+    }
+
 }

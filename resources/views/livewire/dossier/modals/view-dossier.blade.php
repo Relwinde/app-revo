@@ -14,7 +14,10 @@
                             </button>
                         @else
                             <button wire:click.prevent="printOrdreMission" type="submit" class="btn btn-sm btn-primary">
-                                Imprimer OM
+                                Ordre de mission
+                            </button>
+                            <button wire:click.prevent="printManifest" type="submit" class="btn btn-sm btn-primary">
+                                Manifeste
                             </button>
                             <button wire:click.prevent="toggleEditMode" type="submit" class="btn btn-sm btn-primary">
                                 Modifier
@@ -281,6 +284,12 @@
         $wire.on('print-ordre-mission', () => {
             (function () {
                 window.open("{{route('print-ordre-mission', $dossier->id)}}", "_blank");
+            }).call(this);
+        });
+
+        $wire.on('print-manifest', () => {
+            (function () {
+                window.open("{{route('print-manifest', $dossier->id)}}", "_blank");
             }).call(this);
         });
 

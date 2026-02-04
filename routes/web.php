@@ -58,6 +58,11 @@ Route::get('/print-ordre-mission/{dossier}', function (Dossier $dossier) {
     
 })->name('print-ordre-mission')->middleware('auth');
 
+Route::get('/print-manifest/{dossier}', function (Dossier $dossier) {
+    return $dossier->print_manifest();
+    
+})->name('print-manifest')->middleware('auth');
+
 Route::get('/print-recu-bon/{bon}', function (BonDeCaisse $bon) {
     return $bon->print_recu();
     

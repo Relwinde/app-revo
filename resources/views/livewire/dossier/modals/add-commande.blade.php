@@ -20,8 +20,15 @@
 
                                     @foreach ($commandes as $commande)
                                         <tr>
+                                            
                                             <td class="font-w600 font-size-sm">
                                                 <a href="#">{{$commande->numero}}</a>
+                                            </td>
+                                            <td class="font-w600 font-size-sm">
+                                                <a href="#">{{$commande->fournisseur}}</a>
+                                            </td>
+                                            <td class="font-w600 font-size-sm">
+                                                <a href="#">{{$commande->marchandise->name ?? '-'}}</a>
                                             </td>
                                             <td class="text-center">
                                                 <div class="btn-group">

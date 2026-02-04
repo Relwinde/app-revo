@@ -35,33 +35,33 @@
     </table>
 
 
-    <div style="margin-top: 20px; margin-right: 0px; margin-bottom: 20px; margin-left: 5px; font-family: roboto; font-size: 14px; font-style: italic;">Messieurs</div>
+    <div style="margin-top: 20px; margin-right: 0px; margin-bottom: 20px; margin-left: 5px; font-family: roboto; font-size: 14px; font-style: italic;">{{strtoupper("Messieurs")}} </div>
 
     <table style="font-size: 14px; width: 100%; margin-top: 20px; border-collapse: collapse;">
         <thead>
-            <tr>
+            <tr style="width: 100%;">
                 <td style="width: 35%; padding: 10px;">
                     <b> {{ strtoupper("Conducteur :") }}</b>
                 </td>
-                <td style="color: blueviolet;">
+                <td style="color: blueviolet; width: 65%; text-align: center;">
                     {{$dossier->chauffeur->name}}
                 </td>
             </tr>
 
             <tr>
-                <td style="width: 35%; padding: 10px;">
-                    <b>{{ strtoupper("CNIB :") }}</b>
+                <td style="width: 35%; padding-left: 10px;">
+                    CNIB :
                 </td>
-                <td style="color: blueviolet;">
+                <td style="color: blueviolet; width: 65%; text-align: center;">
                     {{$dossier->chauffeur->ref_identite}}
                 </td>
             </tr>
 
             <tr>
-                <td style="width: 35%; padding: 10px;">
-                    <b>{{ strtoupper("Telephone :") }}</b>
+                <td style="width: 35%; padding-left: 10px; padding-bottom: 20px;">
+                    Telephone :
                 </td>
-                <td style="color: blueviolet;">
+                <td style="color: blueviolet; width: 65%; text-align: center;">
                     {{$dossier->chauffeur->phone}}
                 </td>
             </tr>
@@ -70,8 +70,17 @@
                 <td style="width: 35%; padding: 10px;">
                     <b>{{ strtoupper("Accompagnant :") }}</b>
                 </td>
-                <td style="color: blueviolet;">
+                <td style="color: blueviolet; width: 65%; text-align: center;">
+                    {{$dossier->compagnon ? $dossier->compagnon->name : "Aucun"}}
+                </td>
+            </tr>
 
+             <tr>
+                <td style="width: 35%; padding: 10px;">
+                    <b>{{ strtoupper("Escorte à organiser :") }}</b>
+                </td>
+                <td style="color: blueviolet; width: 65%; text-align: center;">
+                    {{$dossier->escort ? $dossier->escort : ""}}
                 </td>
             </tr>
 
@@ -80,16 +89,7 @@
                     <b>{{ strtoupper("Service :") }}</b>
                 </td>
 
-                <td style="color: blueviolet;">
-
-                </td>
-            </tr>
-
-            <tr>
-                <td style="width: 35%; padding: 10px;">
-                    <b>{{ strtoupper("Escorte à organiser :") }}</b>
-                </td>
-                <td style="color: blueviolet;">
+                <td style="color: blueviolet; width: 65%; text-align: center;">
 
                 </td>
             </tr>
@@ -98,8 +98,8 @@
                 <td style="width: 35%; padding: 10px;">
                     <b>{{ strtoupper("Lieu de la mission :") }}</b>
                 </td>
-                <td style="color: blueviolet;">
-
+                <td style="color: blueviolet; width: 65%; text-align: center;">
+                    {{$dossier->lieu}}
                 </td>
             </tr>
 
@@ -108,18 +108,38 @@
                     <b>{{ strtoupper("Motif de la mission :") }}</b>
                 </td>
 
-                <td style="color: blueviolet;">
-
+                <td style="color: blueviolet; width: 65%; text-align: center;">
+                    {{$dossier->motif}}
                 </td>
             </tr>
 
             <tr>
-                <td style="width: 35%; padding: 10px;">
+                <td style="width: 35%; padding: 10px; padding-bottom: 5px;">
                     <b>{{ strtoupper("Vehicule :") }}</b>
                 </td>
 
-                <td style="color: blueviolet;">
+                <td style="color: blueviolet; width: 65%; text-align: center;">
+                    {{$dossier->camion ? $dossier->camion->license_plate : "Aucun"}}
+                </td>
+            </tr>
 
+            <tr>
+                <td style="width: 35%; padding-left: 10px;;">
+                    Marque :
+                </td>
+
+                <td style="color: blueviolet; width: 65%; text-align: center;">
+                    {{$dossier->camion ? $dossier->camion->brand : ""}}
+                </td>
+            </tr>
+
+            <tr>
+                <td style="width: 35%; padding-left: 10px; padding-bottom: 20px;">
+                    Modèle :
+                </td>
+
+                <td style="color: blueviolet; width: 65%; text-align: center;">
+                    {{$dossier->camion ? $dossier->camion->model : "Aucun"}}
                 </td>
             </tr>
 
@@ -128,8 +148,8 @@
                     <b>{{ strtoupper("Date de depart :") }}</b>
                 </td>
 
-                <td style="color: blueviolet;">
-                   
+                <td style="color: blueviolet; width: 65%; text-align: center;">
+                   {{$dossier->date_depart}}
                 </td>
             </tr>
 
@@ -138,12 +158,14 @@
                      <b>{{ strtoupper("Date de retour :") }}</b>
                 </td>
 
-                <td style="color: blueviolet;">
-
+                <td style="color: blueviolet; width: 65%; text-align: center;">
+                    {{$dossier->date_retour}}
                 </td>
             </tr>
-
-
         </thead>
     </table>
+
+     <div class="location" style="margin: 20px; width: 100%;">
+        <span style="text-align: right; width:100%; font-family: roboto; font-size: 11pt;"> La direction  </span>
+    </div>
 </div>

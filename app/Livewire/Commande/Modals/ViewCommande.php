@@ -68,7 +68,7 @@ class ViewCommande extends ModalComponent
 
             DB::beginTransaction();
              $this->commande->update([
-                'fournisseur_id' => $this->fournisseur_id,
+                'fournisseur' => $this->fournisseur,
                 'marchandise_id' => $this->marchandise_id,
                 'quantite' => $this->quantite,
                 'description' => $this->description,
@@ -80,6 +80,7 @@ class ViewCommande extends ModalComponent
             
 
         } catch (\Exception $e) {
+            throw $e;
             DB::rollBack();
             $this->dispatch('error');
             return;
