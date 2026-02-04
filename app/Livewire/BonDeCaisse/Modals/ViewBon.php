@@ -37,6 +37,7 @@ class ViewBon extends ModalComponent
     }
 
     #[On('bon-updated')]
+    #[On('documents-uploaded')]
     public function render()
     {
         $dossiers = Dossier::all();

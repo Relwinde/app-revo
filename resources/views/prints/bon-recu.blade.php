@@ -1,6 +1,15 @@
 <div>
     @include('prints.partials.entreprise-header')
 
+    <hr  style="height:2px; color:#883905; margin :0px;">
+    <center style="text-align: center;">
+            <p style="font-size: 14; line-height: 0;">
+                <b>
+                    RECU DE DEPENSE
+                </b>
+            </p>
+    </center>
+
     <style>
         td{
             padding: 20px;

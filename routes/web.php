@@ -1,8 +1,10 @@
 <?php
 
+use App\Models\Depot;
 use App\Livewire\Home;
 use App\Livewire\Login;
 use App\Models\Dossier;
+use App\Models\Document;
 use App\Models\BonDeCaisse;
 use App\Livewire\User\Users;
 use App\Livewire\User\Header;
@@ -17,7 +19,6 @@ use App\Livewire\Chauffeur\Chauffeurs;
 use App\Livewire\BonDeCaisse\BonDeCaisses;
 use App\Livewire\Fournisseur\Fournisseurs;
 use App\Livewire\Marchandise\Marchandises;
-use App\Models\Depot;
 
 /*
 |--------------------------------------------------------------------------
@@ -73,3 +74,8 @@ Route::get('/print-depot/{depot}', function (Depot $depot) {
     return $depot->print_depot();
     
 })->name('print-depot')->middleware('auth');
+
+
+Route::get('/download-document/{document}', function (Document $document) {
+    return response()->download(storage_path('app/' . $document->path), $document->name);
+})->name('download-document')->middleware('auth');

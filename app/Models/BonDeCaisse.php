@@ -42,6 +42,11 @@ class BonDeCaisse extends Model
         return $this->hasMany(AjustementBon::class);
     }
 
+    public function documents()
+    {
+        return $this->hasMany(Document::class);
+    }
+
     public function print_recu()
     {
         // Logic to generate and return the receipt for this BonDeCaisse

@@ -211,6 +211,37 @@
                         <button class="btn btn-danger" wire:click="$dispatch('openModal', {component: 'bon-de-caisse.modals.return-bon', arguments: { bon : {{ $bon->id }} }})" wire:confirm="Êtes-vous sûr de vouloir retourner ce bon ?">Retourner le bon</button>
                     </div>    
                 @endif
+
+                @if ($bon->etape == "CLOS" || $bon->etape == "PAYE" && $bon->documents->count() == 0 && Auth::user()->id == $bon->user->id )
+                    <div class="block-title">
+                        <button class="btn btn-primary" wire:click="$dispatch('openModal', {component: 'bon-de-caisse.modals.upload-documents', arguments: { bon : {{ $bon->id }} }})">Joindre un document</button>
+                    </div>
+                    
+                @endif
+
+                @if ($bon->etape == "CLOS" || $bon->etape == "PAYE" && $bon->documents->count() > 0)
+                    <div class="block-title">
+                        <h3 class="block-title">
+                            Documents joints ({{ $bon->documents->count() }})
+                        </h3>
+                        <table class="table table-borderless table-hover table-vcenter">
+                            <tbody>
+
+                                @foreach ($bon->documents as $document)
+                                <tr>
+                                    <td>
+                                        <a class="h5" href="{{ route('download-document', $document) }}">{{$document->name}}</a>
+                                        <div class="font-size-sm text-muted">Téléchargé le : {{ $document->created_at->format('d/m/Y H:i') }}</div>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                @endif
+
+
             </div>
 
             @if ($bon->ajustements->count() > 0)
