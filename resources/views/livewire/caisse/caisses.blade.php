@@ -152,3 +152,13 @@
 
     {{-- Nothing in the world is as soft and yielding as water. --}}
 </div>
+
+
+@script
+    <script>
+        Livewire.on('print-depot', ({ url }) => {
+            window.open(url, '_blank');
+        });
+    </script>
+
+@endscript

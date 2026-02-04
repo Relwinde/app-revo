@@ -17,6 +17,7 @@ use App\Livewire\Chauffeur\Chauffeurs;
 use App\Livewire\BonDeCaisse\BonDeCaisses;
 use App\Livewire\Fournisseur\Fournisseurs;
 use App\Livewire\Marchandise\Marchandises;
+use App\Models\Depot;
 
 /*
 |--------------------------------------------------------------------------
@@ -67,3 +68,8 @@ Route::get('/print-recu-bon/{bon}', function (BonDeCaisse $bon) {
     return $bon->print_recu();
     
 })->name('print-recu-bon')->middleware('auth');
+
+Route::get('/print-depot/{depot}', function (Depot $depot) {
+    return $depot->print_depot();
+    
+})->name('print-depot')->middleware('auth');

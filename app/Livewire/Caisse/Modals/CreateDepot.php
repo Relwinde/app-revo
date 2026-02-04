@@ -65,8 +65,12 @@ class CreateDepot extends ModalComponent
 
                 $suiviCaisse->save();
 
-                DB::commit();
+            DB::commit();
             $this->dispatch('depot-created');
+            $url = route('print-depot', ['depot' => $depot->id]);
+    
+            $this->dispatch('print-depot', url: $url);
+
             $this->closeModal();
 
         } catch (\Exception $e) {
