@@ -4,11 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Camion extends Model
+class FactureItem extends Model
 {
+    use HasFactory;
 
     protected $guarded = [];
-    use HasFactory;
 }

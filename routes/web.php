@@ -20,6 +20,10 @@ use App\Livewire\BonDeCaisse\BonDeCaisses;
 use App\Livewire\Fournisseur\Fournisseurs;
 use App\Livewire\Marchandise\Marchandises;
 
+use App\Livewire\Facture\Factures;
+use App\Livewire\FactureProforma\CreateFacture;
+use App\Livewire\FactureProforma\Factures as FactureProformas;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -79,3 +83,9 @@ Route::get('/print-depot/{depot}', function (Depot $depot) {
 Route::get('/download-document/{document}', function (Document $document) {
     return response()->download(storage_path('app/' . $document->path), $document->name);
 })->name('download-document')->middleware('auth');
+
+Route::get('/facture-proformas', FactureProformas::class)->name('facture-proformas')->middleware('auth');
+
+Route::get('/factures', Factures::class)->name('factures')->middleware('auth');
+
+Route::get('/facture-proformas/create', CreateFacture::class)->name('create-facture-proforma')->middleware('auth');
