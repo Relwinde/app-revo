@@ -8,7 +8,7 @@
         <!-- Invoice -->
         <div class="block block-rounded">
             <div class="block-header">
-                <h3 class="block-title">#{{ $numero }}</h3>
+                <h3 class="block-title">{{ $numero }}</h3>
                 <div class="block-options">
                     <!-- Print Page functionality is initialized in Helpers.print() -->
                     <button type="button" class="btn-block-option" onclick="One.helpers('print');">
@@ -136,52 +136,41 @@
                     <!-- END Invoice Info -->
 
                     <!-- Table -->
-                    <div class="table-responsive push">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th class="text-center" style="width: 60px;">No Ligne</th>
-                                    <th>Description</th>
-                                    <th class="text-center" style="width: 90px;">Unité Tarifaire</th>
-                                    <th class="text-right" style="width: 120px;">Taux unitaire</th>
-                                    <th class="text-right" style="width: 120px;">Quantité</th>
-                                    <th class="text-right" style="width: 120px;">Montant</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td class="text-center">1</td>
-                                    <td>
-                                        <p class="font-w600 mb-1">App Design & Development</p>
-                                        <div class="text-muted">Design/Development of iOS and Android application</div>
-                                    </td>
-                                    <td class="text-center">
-                                        <span class="badge badge-pill badge-primary">1</span>
-                                    </td>
-                                    <td class="text-right">$25.000,00</td>
-                                    <td class="text-right">$25.000,00</td>
-                                    <td class="text-right">$25.000,00</td>
-                                </tr>
-                                <tr>
-                                    <td class="text-center">2</td>
-                                    <td>
-                                        <p class="font-w600 mb-1">Icon Pack Design</p>
-                                        <div class="text-muted">50 uniquely crafted icons for promotion</div>
-                                    </td>
-                                    <td class="text-center">
-                                        <span class="badge badge-pill badge-primary">1</span>
-                                    </td>
-                                    <td class="text-right">$900,00</td>
-                                    <td class="text-right">$900,00</td>
-                                    <td class="text-right">$900,00</td>
-                                </tr>
-                                <tr>
-                                    <td colspan="5" class="font-w700 text-uppercase text-right bg-body-light">Total Due</td>
-                                    <td class="font-w700 text-right bg-body-light">$33.000,00</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                        <div class="table-responsive push">
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center" style="width: 60px;">No Ligne</th>
+                                        <th>Description</th>
+                                        <th class="text-center" style="width: 90px;">Unité Tarifaire</th>
+                                        <th class="text-right" style="width: 120px;">Taux unitaire</th>
+                                        <th class="text-right" style="width: 120px;">Quantité</th>
+                                        <th class="text-right" style="width: 120px;">Montant</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($factureProforma != null ? $factureProforma->items : [] as $item)
+                                        <tr>
+                                            <td class="text-center">{{$loop->iteration}}</td>
+                                            <td>
+                                                <p class="font-w600 mb-1">{{$item->description}}</p>
+                                                {{-- <div class="text-muted">Design/Development of iOS and Android application</div> --}}
+                                            </td>
+                                            <td class="text-right">{{$item->unit}}</td>
+                                            <td class="text-right">{{$item->unit_price}}</td>
+                                            <td class="text-center">
+                                                <span class="badge badge-pill badge-primary">{{$item->quantity}}</span>
+                                            </td>
+                                            <td class="text-right">{{ number_format($item->unit_price * $item->quantity, 2, '.', ' ') }} </td>
+                                        </tr>             
+                                    @endforeach
+                                    <tr>
+                                        <td colspan="5" class="font-w700 text-uppercase text-right bg-body-light">Total Due</td>
+                                        <td class="font-w700 text-right bg-body-light">$33.000,00</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     <!-- END Table -->
 
                     <!-- Footer -->

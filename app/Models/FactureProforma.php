@@ -23,4 +23,8 @@ class FactureProforma extends Model
     public function chauffeur (){
         return $this->belongsTo(Chauffeur::class);
     }
+
+    public function items (){
+        return $this->hasMany(FactureItem::class);
+    }
 }

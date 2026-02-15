@@ -71,6 +71,8 @@
                             @endforelse
                         </tbody>
                     </table>
+                    {{ $factureProformas->links() }}
+
                 </div>
 
             </div>

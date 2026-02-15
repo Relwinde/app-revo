@@ -5,6 +5,7 @@ namespace App\Livewire\FactureProforma;
 use App\Models\Camion;
 use App\Models\Client;
 use Livewire\Component;
+use Livewire\Attributes\On;
 use App\Models\Chauffeur;
 use App\Models\FactureProforma;
 use Illuminate\Support\Facades\DB;
@@ -25,6 +26,7 @@ class CreateFacture extends Component
 
     public $numero;
 
+    #[On('item-added')]
     public function render()
     {
         $pageHeader = [
@@ -42,6 +44,12 @@ class CreateFacture extends Component
         $camions = Camion::orderBy('license_plate')->get();
 
         return view('livewire.facture-proforma.create-facture', compact('pageHeader', 'clients', 'chauffeurs', 'camions'))->layout('components.layouts.app', ['title' => 'Créer une Facture Pro-Forma']);
+    }
+
+    #[On('item-added')]
+    public function refreshItems()
+    {
+        $this->factureProforma = $this->factureProforma->fresh();
     }
 
     public function saveHeader (){
@@ -89,6 +97,8 @@ class CreateFacture extends Component
                 $this->factureProforma = $factureProforma;
                 $this->numero = $factureProforma->reference;
                 DB::commit();
+                $this->factureProforma = $this->factureProforma->fresh();
+
             } 
             catch (\Exception $e) {
                 DB::rollBack();
