@@ -46,18 +46,15 @@
                                 <tr>
                                     <td>{{ $factureProforma->reference }}</td>
                                     <td>{{ $factureProforma->client->name }}</td>
-                                    <td></td>
+                                    <td>{{ \Carbon\Carbon::parse($factureProforma->date)->format('d ') }}{{ __(\Carbon\Carbon::parse($factureProforma->date)->format('n')) }} {{ \Carbon\Carbon::parse($factureProforma->date)->format('Y') }}</td>
                                     <td>{{ $factureProforma->chauffeur ? $factureProforma->chauffeur->name : 'N/A' }}</td>
                                     <td>{{ $factureProforma->personne_contact ?? 'N/A' }}</td>
-                                    <td>{{ number_format($factureProforma->total_amount, 2, ',', ' ') }} FCFA</td>
+                                    <td>{{ number_format($factureProforma->items->sum(function($item) { return $item->unit_price * $item->quantity; }) ?? 0, 2, ',', ' ') }} FCFA</td>
                                     <td class="text-center">
                                          <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-light" data-toggle="tooltip" title="View Proforma">
+                                            <a href="{{route('view-facture-proforma', $factureProforma->id)}}" wire:navigate class="btn btn-sm btn-light" data-toggle="tooltip" title="View Proforma">
                                                 <i class="fa fa-fw fa-eye"></i>
-                                            </button>
-                                            <button type="button" class="btn btn-sm btn-light" data-toggle="tooltip" title="Edit Proforma">
-                                                <i class="fa fa-fw fa-pencil-alt"></i>
-                                            </button>
+                                            </a>
                                             <button type="button" class="btn btn-sm btn-light" data-toggle="tooltip" title="Remove Proforma">
                                                 <i class="fa fa-fw fa-times"></i>
                                             </button>

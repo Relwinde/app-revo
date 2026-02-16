@@ -7,6 +7,7 @@
     <div class="content content-boxed">
         <!-- Invoice -->
         <div class="block block-rounded">
+            
             <div class="block-header">
                 <h3 class="block-title">{{ $numero }}</h3>
                 <div class="block-options">

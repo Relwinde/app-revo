@@ -22,6 +22,7 @@ use App\Livewire\Marchandise\Marchandises;
 
 use App\Livewire\Facture\Factures;
 use App\Livewire\FactureProforma\CreateFacture;
+use App\Livewire\FactureProforma\EditFacture as EditFactureProforma;
 use App\Livewire\FactureProforma\Factures as FactureProformas;
 use App\Models\FactureProforma;
 
@@ -94,3 +95,5 @@ Route::get('/facture-proformas/create', CreateFacture::class)->name('create-fact
 Route::get('print-proforma/{facture}', function (FactureProforma $facture){
     return $facture->print();
 })->name('print-facture-proforma')->middleware('auth');
+
+Route::get('/view-facture-proformas/{facture}', EditFactureProforma::class)->name('view-facture-proforma')->middleware('auth');

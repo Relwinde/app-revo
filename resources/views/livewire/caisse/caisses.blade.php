@@ -19,7 +19,7 @@
                 <a class="block block-rounded block-link-shadow text-center" href="javascript:void(0)">
                     <div class="block-content block-content-full flex-grow-1 d-flex justify-content-between align-items-center">
                         <dl class="mb-0">
-                            <dt class="font-size-h2 font-w700">{{ number_format($caisse->solde, 2, '.', ' ') }}</dt>
+                            <dt class="font-size-h3 font-w700">{{ number_format($caisse->solde, 2, '.', ' ') }}</dt>
                         </dl>
                         <div class="item item-rounded bg-body">
                             <i class="fa fa-piggy-bank font-size-h3 text-primary"></i>
@@ -36,7 +36,7 @@
                 <a class="block block-rounded block-link-shadow text-center" href="javascript:void(0)">
                     <div class="block-content block-content-full flex-grow-1 d-flex justify-content-between align-items-center">
                         <dl class="mb-0">
-                            <dt class="font-size-h2 font-w700">{{ number_format($sommeAttente, 2, '.', ' ') }}</dt>
+                            <dt class="font-size-h3 font-w700">{{ number_format($sommeAttente, 2, '.', ' ') }}</dt>
                         </dl>
                         <div class="item item-rounded bg-body">
                             <i class="fa fa-th-list font-size-h3 text-primary"></i>
@@ -53,7 +53,7 @@
                 <a class="block block-rounded block-link-shadow text-center" href="javascript:void(0)">
                     <div class="block-content block-content-full flex-grow-1 d-flex justify-content-between align-items-center">
                         <dl class="mb-0">
-                            <dt class="font-size-h2 font-w700">{{ number_format($sommeDepots, 2, '.', ' ') }}</dt>
+                            <dt class="font-size-h3 font-w700">{{ number_format($sommeDepots, 2, '.', ' ') }}</dt>
                         </dl>
                         <div class="item item-rounded bg-body">
                             <i class="fa fa-hand-holding-usd font-size-h3 text-primary"></i>
@@ -70,7 +70,7 @@
                 <a class="block block-rounded block-link-shadow text-center" href="javascript:void(0)">
                     <div class="block-content block-content-full flex-grow-1 d-flex justify-content-between align-items-center">
                         <dl class="mb-0">
-                            <dt class="font-size-h2 font-w700">{{ number_format($sommeDecaissements, 2, '.', ' ') }}</dt>
+                            <dt class="font-size-h3 font-w700">{{ number_format($sommeDecaissements, 2, '.', ' ') }}</dt>
                         </dl>
                         <div class="item item-rounded bg-body">
                             <i class="fa fa-level-up-alt font-size-h3 text-primary"></i>
