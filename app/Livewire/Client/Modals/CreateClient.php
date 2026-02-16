@@ -15,6 +15,7 @@ class CreateClient extends ModalComponent
     public $address;
     public $rccm;
     public $ifu;
+    public $div_fisc;
 
     public function render()
     {
@@ -29,6 +30,7 @@ class CreateClient extends ModalComponent
                 'email' => ['nullable', 'email', 'unique:clients,email'],
                 'phone' => ['nullable', 'string', 'max:50'],
                 'address' => ['nullable', 'string'],
+                'div_fisc' => ['nullable', 'string'],
                 'rccm' => ['nullable', 'string', 'unique:clients,rccm'],
                 'ifu' => ['nullable', 'string', 'unique:clients,ifu'],
             ],
@@ -49,6 +51,8 @@ class CreateClient extends ModalComponent
             'address' => $this->address,
             'rccm' => $this->rccm,
             'ifu' => $this->ifu,
+            'div_fisc' => $this->div_fisc,
+            'code'=>'CODE'
         ]);
 
         try {
@@ -57,6 +61,7 @@ class CreateClient extends ModalComponent
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
+            throw $e;
             $this->dispatch('error');
             return;
         }

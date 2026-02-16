@@ -98,7 +98,7 @@ class Dossier extends Model
     public function print_manifest()
     {
 
-         ini_set('memory_limit', '440M');
+        ini_set('memory_limit', '440M');
         
         // Configuration des polices Roboto
         $defaultConfig = (new \Mpdf\Config\ConfigVariables())->getDefaults();

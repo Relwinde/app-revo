@@ -11,9 +11,14 @@
                 <h3 class="block-title">{{ $numero }}</h3>
                 <div class="block-options">
                     <!-- Print Page functionality is initialized in Helpers.print() -->
-                    <button type="button" class="btn-block-option" onclick="One.helpers('print');">
-                        <i class="si si-printer mr-1"></i> Imprimer
-                    </button>
+
+                    {{-- onclick="One.helpers('print');" --}}
+
+                    @if ($factureProforma?->items->count() > 0)
+                        <button wire:click='print' type="button" class="btn-block-option" >
+                            <i class="si si-printer mr-1"></i> Imprimer
+                        </button>    
+                    @endif
                 </div>
             </div>
             <div class="block-content">
@@ -140,12 +145,13 @@
                             <table class="table table-bordered">
                                 <thead>
                                     <tr>
-                                        <th class="text-center" style="width: 60px;">No Ligne</th>
+                                        <th class="text-center" style="width: 120px;">N° Ligne</th>
                                         <th>Description</th>
-                                        <th class="text-center" style="width: 90px;">Unité Tarifaire</th>
-                                        <th class="text-right" style="width: 120px;">Taux unitaire</th>
-                                        <th class="text-right" style="width: 120px;">Quantité</th>
+                                        <th class="text-center" style="width: 60px;">Unité Tarifaire</th>
+                                        <th class="text-right" style="width: 60px;">Taux unitaire</th>
+                                        <th class="text-right" style="width: 60px;">Quantité</th>
                                         <th class="text-right" style="width: 120px;">Montant</th>
+                                        <th class="text-right" style="width: 60px;">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -162,11 +168,26 @@
                                                 <span class="badge badge-pill badge-primary">{{$item->quantity}}</span>
                                             </td>
                                             <td class="text-right">{{ number_format($item->unit_price * $item->quantity, 2, '.', ' ') }} </td>
+                                            <td class="text-center">
+                                                <div class="btn-group">
+                                                    <button wire:click="$dispatch('openModal', { component: 'facture-proforma.modals.edit-item', arguments: { item: {{ $item }} } })" type="button" class="btn btn-sm btn-light" data-toggle="tooltip" title="Edit Item">
+                                                        <i class="fa fa-fw fa-pencil-alt"></i>
+                                                    </button>
+                                                    <button wire:confirm='Êtes vous sûr de vouloir supprimer cette ligne ?' wire:click='removeItem ({{$item->id}})' type="button" class="btn btn-sm btn-light" data-toggle="tooltip" title="Remove Item">
+                                                        <i class="fa fa-fw fa-times"></i>
+                                                    </button>
+                                                </div>
+                                            </td>
                                         </tr>             
                                     @endforeach
                                     <tr>
-                                        <td colspan="5" class="font-w700 text-uppercase text-right bg-body-light">Total Due</td>
-                                        <td class="font-w700 text-right bg-body-light">$33.000,00</td>
+                                        <td colspan="6" class="font-w700 text-uppercase text-right bg-body-light">Montant Total</td>
+                                        <td style="width: 120px;" class="font-w700 text-right bg-body-light">{{ number_format(
+                                            $factureProforma?->items->sum(function($item) {
+                                                return $item->unit_price * $item->quantity;
+                                            }) ?? 0, 
+                                            2, ',', ' '
+                                        ) }} FCFA</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -174,6 +195,29 @@
                     <!-- END Table -->
 
                     <!-- Footer -->
+
+                    @if ($numero != null)
+                        <div class="row">
+                            <div class="col">
+                                <label for="comments">Commentaires</label>
+                            </div>
+
+                            <div class="col">
+                                <div class="row mb-4">
+                                    <div class="col text-right">
+                                        <button wire:click="saveComments" class="btn btn-primary">Enregistrer Commentaires</button>
+                                        <div wire:loading class="spinner-border spinner-border-sm text-primary" role="status">
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+
+                                    </div>
+                                </div>    
+                            </div>
+                                <textarea wire:model='comments' class="form-control form-control-alt" name="comments" id="" cols="30" rows="10"></textarea>
+                        </div>    
+                    @endif
+
+
                     {{-- <p class="font-size-sm text-muted text-center py-3 my-3 border-top">
                         Thank you very much for doing business with us. We look forward to working with you again!
                     </p> --}}
@@ -185,3 +229,12 @@
     </div>
     <!-- END Page Content -->
 </div>
+
+
+@script
+    <script>
+        $wire.on('print-proforma', ({ url }) => {
+            window.open(url, '_blank');
+        });
+    </script>
+@endscript

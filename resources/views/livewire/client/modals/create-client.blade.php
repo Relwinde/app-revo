@@ -86,6 +86,23 @@
                         </div>
                     </div>
 
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="div_fisc">Division Fiscale</label>
+                                <input wire:model='div_fisc' type="text" class="form-control form-control-alt" id="div_fisc"
+                                    placeholder="Division Fiscale...">
+                                @error('div_fisc')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="col">
+
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>

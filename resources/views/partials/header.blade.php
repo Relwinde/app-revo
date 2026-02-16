@@ -55,7 +55,7 @@
             </button>
             <div class="dropdown-menu dropdown-menu-md dropdown-menu-right p-0 border-0" aria-labelledby="page-header-user-dropdown">
                 <div class="p-3 text-center bg-primary-dark rounded-top">
-                    <img class="img-avatar img-avatar48 img-avatar-thumb" src="assets/media/avatars/avatar10.jpg" alt="">
+                    <img class="img-avatar img-avatar48 img-avatar-thumb" src="{{ asset('assets/media/avatars/avatar10.jpg')}}" alt="">
                     <p class="mt-2 mb-0 text-white font-w500">{{Auth::user()->name}}</p>
                     <p class="mb-0 text-white-50 font-size-sm"></p>
                 </div>

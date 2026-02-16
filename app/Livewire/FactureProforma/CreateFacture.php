@@ -7,6 +7,7 @@ use App\Models\Client;
 use Livewire\Component;
 use Livewire\Attributes\On;
 use App\Models\Chauffeur;
+use App\Models\FactureItem;
 use App\Models\FactureProforma;
 use Illuminate\Support\Facades\DB;
 
@@ -25,6 +26,8 @@ class CreateFacture extends Component
     public $factureProforma;
 
     public $numero;
+
+    public $comments;
 
     #[On('item-added')]
     public function render()
@@ -107,4 +110,24 @@ class CreateFacture extends Component
     
             
     }
+
+
+    public function removeItem (FactureItem $item){
+        $item->delete();
+    }
+
+    public function saveComments (){
+        $this->factureProforma->comments = $this->comments;
+
+        $this->factureProforma->save();
+    }
+
+    public function print (){
+
+            $url = route('print-facture-proforma', ['facture'=>$this->factureProforma->id]);
+
+            $this->dispatch('print-proforma', url: $url);
+    }
+
+
 }

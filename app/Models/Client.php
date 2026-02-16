@@ -15,6 +15,7 @@ class Client extends Model
         'address',
         'rccm',
         'ifu',
+        'code'
     ];
     use HasFactory, SoftDeletes;
 

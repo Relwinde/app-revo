@@ -12,7 +12,7 @@ class AddItem extends ModalComponent
 {
     public FactureProforma $factureProforma;
 
-    public  $description;
+    public $description;
 
     public $quantity;
 
