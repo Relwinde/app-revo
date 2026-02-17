@@ -16,6 +16,7 @@ class CreateClient extends ModalComponent
     public $rccm;
     public $ifu;
     public $div_fisc;
+    public $code;
 
     public function render()
     {
@@ -27,6 +28,7 @@ class CreateClient extends ModalComponent
         $this->validate(
             [
                 'name' => ['required', 'string', 'max:255', 'unique:clients,name'],
+                'code' => ['required', 'string', 'max:255', 'unique:clients,name'],
                 'email' => ['nullable', 'email', 'unique:clients,email'],
                 'phone' => ['nullable', 'string', 'max:50'],
                 'address' => ['nullable', 'string'],
@@ -36,6 +38,7 @@ class CreateClient extends ModalComponent
             ],
             [
                 'name.required' => 'Le nom du client est obligatoire.',
+                'code.required' => 'Le code du client est obligatoire.',
                 'name.unique' => 'Ce client existe déjà.',
                 'email.email' => 'Adresse email invalide.',
                 'email.unique' => 'Cet email est déjà utilisé.',
@@ -52,7 +55,7 @@ class CreateClient extends ModalComponent
             'rccm' => $this->rccm,
             'ifu' => $this->ifu,
             'div_fisc' => $this->div_fisc,
-            'code'=>'CODE'
+            'code'=>mb_strtoupper($this->code, 'UTF-8').Client::count()+1
         ]);
 
         try {

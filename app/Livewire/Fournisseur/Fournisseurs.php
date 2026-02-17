@@ -115,14 +115,14 @@ class Fournisseurs extends Component
 
 
             'pageHeader' => [
-                'title' => 'Partenaires',
-                'subtitle' => 'Liste des partenaires',
+                'title' => 'Prestataires',
+                'subtitle' => 'Liste des prestataires',
                 'breadcrumbs' => [
                     ['label' => 'Accueil', 'url' => route('home')],
-                    ['label' => 'Partenaires'],
+                    ['label' => 'Prestataires'],
                 ],
             ],
-        ])->layout('components.layouts.app', ['title' => 'Partenaires']);
+        ])->layout('components.layouts.app', ['title' => 'Prestataires']);
     }
 
 

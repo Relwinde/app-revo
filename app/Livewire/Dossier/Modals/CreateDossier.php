@@ -44,6 +44,8 @@ class CreateDossier extends ModalComponent
 
     public $fournisseur_id;
 
+    public $avec_escort;
+
 
     public function render()
     {
@@ -72,6 +74,7 @@ class CreateDossier extends ModalComponent
                 'date_depart' => ['date', 'nullable'], 
                 'date_retour' => ['date', 'nullable'],
                 'prix_location' => $this->avec_location ? ['required', 'numeric'] : ['nullable'],
+                'escort' => $this->avec_escort ? ['required', 'string'] : ['nullable'],
                 'fournisseur_id' => $this->avec_location ? ['required', 'exists:fournisseurs,id'] : ['nullable'],
             ],
             [
@@ -88,6 +91,7 @@ class CreateDossier extends ModalComponent
                 'date_retour' => 'La date de retour doit être une date valide.',
                 'lieu.string' => 'Le lieu doit être une chaîne de caractères.',
                 'escort.string' => 'L\'escort doit être une chaîne de caractères.',
+                'escort.required' => 'L\'escort est obligatoire.',
                 'compagnon.string' => 'Le compagnon doit être une chaîne de caractères.',
                 'motif.string' => 'Le motif doit être une chaîne de caractères.',
                 'prix_location.required' => 'Le prix de location est obligatoire lorsque l\'option avec location est activée.',
@@ -115,7 +119,7 @@ class CreateDossier extends ModalComponent
             'fournisseur_id' => $this->avec_location ? $this->fournisseur_id : null,
         ]);
 
-        $numero = 'REV0'.'-'.substr(date('Y'), -2).'-'.date('m').'/MA'.str_pad(Dossier::whereYear('created_at', now()->year)->count() + 1, 4, '0', STR_PAD_LEFT);
+        $numero = 'REV0'.substr(date('Y'), -2).'-'.date('m').$this->type_operation.str_pad(Dossier::whereYear('created_at', now()->year)->count() + 1, 3, '0', STR_PAD_LEFT);
         
         // REV026-01/MA001
 

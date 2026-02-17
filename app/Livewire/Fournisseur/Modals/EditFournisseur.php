@@ -3,11 +3,15 @@
 namespace App\Livewire\Fournisseur\Modals;
 
 use App\Models\Fournisseur;
+use Exception;
 use Illuminate\Support\Facades\DB;
 use LivewireUI\Modal\ModalComponent;
 
-class CreateFournisseur extends ModalComponent
+class EditFournisseur extends ModalComponent
 {
+
+    public Fournisseur $fournisseur; 
+
     public $name;
     public $email;
     public $phone;
@@ -16,27 +20,36 @@ class CreateFournisseur extends ModalComponent
     public $ifu;
     public $div_fisc;
 
-    public function render()
-    {
-        return view('livewire.fournisseur.modals.create-fournisseur');
+
+    public function mount(){
+        $this->name = $this->fournisseur->name;
+        $this->email = $this->fournisseur->email;
+        $this->phone = $this->fournisseur->address;
+        $this->rccm = $this->fournisseur->rccm; 
+        $this->ifu = $this->fournisseur->ifu;
+        $this->div_fisc = $this->fournisseur->div_fisc;
     }
 
-    public function create()
+    public function render()
     {
+        return view('livewire.fournisseur.modals.edit-fournisseur');
+    }
+
+    public function save (){
         $this->validate([
-            'name' => ['required', 'string', 'max:255', 'unique:fournisseurs,name'],
-            'email' => ['nullable', 'email', 'unique:fournisseurs,email'],
+            'name' => ['required', 'string', 'max:255', 'unique:fournisseurs,name,' . $this->fournisseur->id],
+            'email' => ['nullable', 'email', 'unique:fournisseurs,email'. $this->fournisseur->id],
             'phone' => ['nullable', 'string', 'max:50'],
             'address' => ['nullable', 'string'],
             'div_fisc' => ['nullable', 'string'],
-            'rccm' => ['nullable', 'unique:fournisseurs,rccm'],
-            'ifu' => ['nullable', 'unique:fournisseurs,ifu'],
+            'rccm' => ['nullable', 'unique:fournisseurs,rccm'. $this->fournisseur->id],
+            'ifu' => ['nullable', 'unique:fournisseurs,ifu'. $this->fournisseur->id],
         ]);
 
         try {
-            DB::beginTransaction();
 
-            Fournisseur::create([
+            DB::beginTransaction();
+            $this->fournisseur->update([
                 'name' => mb_strtoupper($this->name, 'UTF-8'),
                 'email' => $this->email,
                 'phone' => $this->phone,
@@ -47,10 +60,11 @@ class CreateFournisseur extends ModalComponent
             ]);
 
             DB::commit();
-        } catch (\Exception $e) {
+
+        } catch (Exception $ex){
             DB::rollBack();
+            throw $ex;
             $this->dispatch('error');
-            return $e;
         }
 
         $this->dispatch('fournisseur-created');

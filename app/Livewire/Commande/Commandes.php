@@ -16,10 +16,10 @@ class Commandes extends Component
     {
         $pageHeader = [
             'title' => 'Manifestes',
-            'subtitle' => 'Liste des bons de commande',
+            'subtitle' => 'Liste des PO',
             'breadcrumbs' => [
                 ['label' => 'Accueil', 'url' => route('home')],
-                ['label' => 'Bons de commande']
+                ['label' => 'PO']
             ]
         ];
 
@@ -34,7 +34,7 @@ class Commandes extends Component
             ->orderBy('created_at', 'desc')
             ->paginate(10);
 
-        return view('livewire.commande.commandes', ['pageHeader' => $pageHeader, 'commandes' => $commandes])->layout('components.layouts.app', ['title' => 'Bons de commande'] );
+        return view('livewire.commande.commandes', ['pageHeader' => $pageHeader, 'commandes' => $commandes])->layout('components.layouts.app', ['title' => 'PO'] );
     }
 
     public function clear_search()

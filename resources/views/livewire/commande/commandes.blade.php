@@ -8,7 +8,7 @@
                     <div class="block-options">
                         <button wire:click="$dispatch('openModal', { component: 'commande.modals.create-commande' })"
                             class="btn btn-sm btn-primary">
-                            <i class="fa fa-plus"></i> Nouveau bon de commande
+                            <i class="fa fa-plus"></i> Nouveau PO
                         </button>
                     </div>
                 </div>

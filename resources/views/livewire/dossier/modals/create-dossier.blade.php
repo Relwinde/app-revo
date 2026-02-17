@@ -23,9 +23,9 @@
                                 <label for="type_operation">Type d'opération</label>
                                 <select class="custom-select" required wire:model='type_operation' name="type_operation" id="">
                                     <option value="">Selectionnez le type d'opération</option>
-                                    <option value="TP">Transport</option>
-                                    <option value="CL">Collecte</option>
-                                    <option value="LC">Location</option>
+                                    <option value="MA">Transport</option>
+                                    <option value="CO">Collecte</option>
+                                    <option value="LOC">Location</option>
                                 </select>
                                 @error('type_operation')
                                     <div class="text-danger">{{ $message }}</div>
@@ -195,13 +195,21 @@
                         </div>
 
                         <div class="col">
+
                             <div class="form-group">
-                                <label for="escort">Escorte à organiser</label>
-                                <input placeholder="Escorte à organiser" type="text" class="form-control form-control" wire:model="escort">
-                                @error("escort")
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
+                                <div class="custom-control custom-switch mb-1">
+                                    <input type="checkbox" class="custom-control-input" id="example-sw-custom2" name="example-sw-custom2" wire:model.live="avec_escort">
+                                    <label class="custom-control-label" for="example-sw-custom2">Avec Escorte</label>
+                                </div>
                             </div>
+                            @if ($avec_escort)
+                                <div class="form-group">
+                                    <input placeholder="Escorte à organiser" type="text" class="form-control form-control" wire:model="escort">
+                                    @error("escort")
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            @endif
                         </div>
                     </div>
 

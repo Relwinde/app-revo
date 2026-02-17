@@ -2,9 +2,9 @@
     <form wire:submit.prevent="create">
         <div class="block block-rounded">
             <div class="block-header block-header-default">
-                <h3 class="block-title">Nouveau Client</h3>
+                <h3 class="block-title">Modifier le Client</h3>
                 <div class="block-options">
-                    <button wire:click.prevent="create" type="submit" class="btn btn-sm btn-primary">
+                    <button wire:click.prevent="save" type="submit" class="btn btn-sm btn-primary">
                         Enregistrer
                     </button>
                     <div wire:loading class="spinner-border spinner-border-sm text-primary" role="status">
@@ -99,14 +99,6 @@
                         </div>
 
                         <div class="col">
-                            <div class="form-group">
-                                <label for="code">Code Client</label>
-                                <input wire:model='code' type="text" class="form-control form-control-alt" id="code"
-                                    placeholder="Code Client...">
-                                @error('code')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
                         </div>
                     </div>
 

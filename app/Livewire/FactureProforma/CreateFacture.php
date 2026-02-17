@@ -95,7 +95,7 @@ class CreateFacture extends Component
             try{
                 DB::beginTransaction();
                 
-                $factureProforma->reference = 'REVO'.substr(date('Y'), -2)."-SAP". str_pad(FactureProforma::max('id') + 1, 6, '0', STR_PAD_LEFT);
+                $factureProforma->reference = 'REVO'.substr(date('Y'), -2)."-FAP". str_pad(FactureProforma::max('id') + 1, 3, '0', STR_PAD_LEFT);
                 $factureProforma->save();
                 $this->factureProforma = $factureProforma;
                 $this->numero = $factureProforma->reference;

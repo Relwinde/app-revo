@@ -8,7 +8,7 @@
                 <div class="block-options">
                     <button wire:click="$dispatch('openModal', { component: 'fournisseur.modals.create-fournisseur' })"
                         class="btn btn-sm btn-primary">
-                        <i class="fa fa-plus"></i> Ajouter un fournisseur
+                        <i class="fa fa-plus"></i> Ajouter un prestataire
                     </button>
                 </div>
             </div>
@@ -44,60 +44,32 @@
                                         <tr>
                                             {{-- NOM --}}
                                             <td>
-                                                @if ($editMode && $fournisseurId === $fournisseur->id)
-                                                    <input wire:model="name" class="form-control form-control-sm">
-                                                    @error('name') <div class="text-danger">{{ $message }}</div> @enderror
-                                                @else
-                                                    {{ $fournisseur->name }}
-                                                @endif
+                                                {{ $fournisseur->name }}
                                             </td>
 
                                             {{-- EMAIL --}}
                                             <td>
-                                                @if ($editMode && $fournisseurId === $fournisseur->id)
-                                                    <input wire:model="email" type="email" class="form-control form-control-sm">
-                                                    @error('email') <div class="text-danger">{{ $message }}</div> @enderror
-                                                @else
-                                                    {{ $fournisseur->email ?? '-' }}
-                                                @endif
+                                                {{ $fournisseur->email ?? '-' }}
                                             </td>
 
                                             {{-- PHONE --}}
                                             <td>
-                                                @if ($editMode && $fournisseurId === $fournisseur->id)
-                                                    <input wire:model="phone" class="form-control form-control-sm">
-                                                @else
-                                                    {{ $fournisseur->phone ?? '-' }}
-                                                @endif
+                                                {{ $fournisseur->phone ?? '-' }}
                                             </td>
 
                                             {{-- ADDRESS --}}
                                             <td>
-                                                @if ($editMode && $fournisseurId === $fournisseur->id)
-                                                    <input wire:model="address" class="form-control form-control-sm">
-                                                @else
-                                                    {{ $fournisseur->address ?? '-' }}
-                                                @endif
+                                                {{ $fournisseur->address ?? '-' }}
                                             </td>
 
                                             {{-- RCCM --}}
                                             <td>
-                                                @if ($editMode && $fournisseurId === $fournisseur->id)
-                                                    <input wire:model="rccm" class="form-control form-control-sm">
-                                                    @error('rccm') <div class="text-danger">{{ $message }}</div> @enderror
-                                                @else
-                                                    {{ $fournisseur->rccm ?? '-' }}
-                                                @endif
+                                                {{ $fournisseur->rccm ?? '-' }}
                                             </td>
 
                                             {{-- IFU --}}
                                             <td>
-                                                @if ($editMode && $fournisseurId === $fournisseur->id)
-                                                    <input wire:model="ifu" class="form-control form-control-sm">
-                                                    @error('ifu') <div class="text-danger">{{ $message }}</div> @enderror
-                                                @else
-                                                    {{ $fournisseur->ifu ?? '-' }}
-                                                @endif
+                                                {{ $fournisseur->ifu ?? '-' }}
                                             </td>
 
                                             {{-- DATE --}}
@@ -106,25 +78,15 @@
                                             {{-- ACTIONS --}}
                                             <td class="text-center">
                                                 <div class="btn-group">
-                                                    <button wire:click.prevent="{{ $editMode && $fournisseurId === $fournisseur->id
-                            ? 'update(' . $fournisseur->id . ')'
-                            : 'toggleEditMode(' . $fournisseur->id . ')' }}"
+                                                    <button wire:click="$dispatch('openModal', { component: 'fournisseur.modals.edit-fournisseur', arguments: { fournisseur: {{ $fournisseur }} } })"
                                                         class="btn btn-sm btn-light" title="Modifier">
                                                         <i
-                                                            class="fa fa-fw {{ $editMode && $fournisseurId === $fournisseur->id ? 'fa-check' : 'fa-pencil-alt' }}"></i>
+                                                            class="fa fa-fw fa-pencil-alt"></i>
                                                     </button>
-
-                                                    @if ($editMode && $fournisseurId === $fournisseur->id)
-                                                        <button wire:click.prevent="toggleEditMode({{ $fournisseur->id }})"
-                                                            class="btn btn-sm btn-light" title="Annuler">
-                                                            <i class="fa fa-fw fa-times"></i>
-                                                        </button>
-                                                    @else
-                                                        <a wire:click.prevent="delete({{ $fournisseur->id }})" class="btn btn-sm btn-light"
-                                                            title="Supprimer" wire:confirm="Êtes-vous sûr de vouloir supprimer ce fournisseur ?">
-                                                            <i class="fa fa-fw fa-trash"></i>
-                                                        </a>
-                                                    @endif
+                                                    <a wire:click.prevent="delete({{ $fournisseur->id }})" class="btn btn-sm btn-light"
+                                                        title="Supprimer" wire:confirm="Êtes-vous sûr de vouloir supprimer ce fournisseur ?">
+                                                        <i class="fa fa-fw fa-trash"></i>
+                                                    </a>
                                                 </div>
                                             </td>
                                         </tr>

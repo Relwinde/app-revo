@@ -2,9 +2,9 @@
     <form wire:submit.prevent="create">
         <div class="block block-rounded">
             <div class="block-header block-header-default">
-                <h3 class="block-title">Nouveau Client</h3>
+                <h3 class="block-title">Modifier le prestataire</h3>
                 <div class="block-options">
-                    <button wire:click.prevent="create" type="submit" class="btn btn-sm btn-primary">
+                    <button wire:click.prevent="save" type="submit" class="btn btn-sm btn-primary">
                         Enregistrer
                     </button>
                     <div wire:loading class="spinner-border spinner-border-sm text-primary" role="status">
@@ -15,24 +15,27 @@
                     </button>
                 </div>
             </div>
+
             <div class="block-content">
                 <div class="justify-content-center py-sm-3 py-md-5">
+
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
                                 <label for="name">Nom</label>
-                                <input wire:model='name' type="text" class="form-control form-control-alt" id="name"
-                                    placeholder="Nom du client..">
+                                <input wire:model="name" type="text" class="form-control form-control-alt" id="name"
+                                    placeholder="Nom du fournisseur..">
                                 @error('name')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>
+
                         <div class="col">
                             <div class="form-group">
                                 <label for="email">Email</label>
-                                <input wire:model='email' type="email" class="form-control form-control-alt" id="email"
-                                    placeholder="Email du client..">
+                                <input wire:model="email" type="email" class="form-control form-control-alt" id="email"
+                                    placeholder="Email du fournisseur..">
                                 @error('email')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
@@ -44,17 +47,18 @@
                         <div class="col">
                             <div class="form-group">
                                 <label for="phone">Téléphone</label>
-                                <input wire:model='phone' type="text" class="form-control form-control-alt" id="phone"
+                                <input wire:model="phone" type="text" class="form-control form-control-alt" id="phone"
                                     placeholder="Téléphone..">
                                 @error('phone')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>
+
                         <div class="col">
                             <div class="form-group">
                                 <label for="address">Adresse</label>
-                                <input wire:model='address' type="text" class="form-control form-control-alt"
+                                <input wire:model="address" type="text" class="form-control form-control-alt"
                                     id="address" placeholder="Adresse..">
                                 @error('address')
                                     <div class="text-danger">{{ $message }}</div>
@@ -67,17 +71,18 @@
                         <div class="col">
                             <div class="form-group">
                                 <label for="rccm">RCCM</label>
-                                <input wire:model='rccm' type="text" class="form-control form-control-alt" id="rccm"
+                                <input wire:model="rccm" type="text" class="form-control form-control-alt" id="rccm"
                                     placeholder="RCCM..">
                                 @error('rccm')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
                         </div>
+
                         <div class="col">
                             <div class="form-group">
                                 <label for="ifu">IFU</label>
-                                <input wire:model='ifu' type="text" class="form-control form-control-alt" id="ifu"
+                                <input wire:model="ifu" type="text" class="form-control form-control-alt" id="ifu"
                                     placeholder="IFU..">
                                 @error('ifu')
                                     <div class="text-danger">{{ $message }}</div>
@@ -90,7 +95,7 @@
                         <div class="col">
                             <div class="form-group">
                                 <label for="div_fisc">Division Fiscale</label>
-                                <input wire:model='div_fisc' type="text" class="form-control form-control-alt" id="div_fisc"
+                                <input wire:model="div_fisc" type="text" class="form-control form-control-alt" id="div_fisc"
                                     placeholder="Division Fiscale...">
                                 @error('div_fisc')
                                     <div class="text-danger">{{ $message }}</div>
@@ -99,14 +104,7 @@
                         </div>
 
                         <div class="col">
-                            <div class="form-group">
-                                <label for="code">Code Client</label>
-                                <input wire:model='code' type="text" class="form-control form-control-alt" id="code"
-                                    placeholder="Code Client...">
-                                @error('code')
-                                    <div class="text-danger">{{ $message }}</div>
-                                @enderror
-                            </div>
+                            
                         </div>
                     </div>
 

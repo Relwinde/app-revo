@@ -46,61 +46,33 @@
                             <tr>
                                 {{-- NOM --}}
                                 <td>
-                                    @if ($editMode && $clientId === $client->id)
-                                        <input wire:model="name" type="text" class="form-control form-control-alt" />
-                                        @error('name') <div class="text-danger">{{ $message }}</div> @enderror
-                                    @else
-                                        {{ $client->name }}
-                                    @endif
+                                    {{ $client->name }}
                                 </td>
 
                                 {{-- EMAIL --}}
                                 <td>
-                                    @if ($editMode && $clientId === $client->id)
-                                        <input wire:model="email" type="email" class="form-control form-control-alt" />
-                                        @error('email') <div class="text-danger">{{ $message }}</div> @enderror
-                                    @else
-                                        {{ $client->email ?? '-' }}
-                                    @endif
+                                    {{ $client->email ?? '-' }}
                                 </td>
 
                                 {{-- TELEPHONE --}}
                                 <td>
-                                    @if ($editMode && $clientId === $client->id)
-                                        <input wire:model="phone" type="text" class="form-control form-control-alt" />
-                                    @else
-                                        {{ $client->phone ?? '-' }}
-                                    @endif
+                                    {{ $client->phone ?? '-' }}
                                 </td>
 
                                 {{-- ADRESSE  --}}
 
                                 <td>
-                                    @if ($editMode && $clientId === $client->id)
-                                        <input wire:model="address" type="text" class="form-control form-control-alt" />
-                                    @else
-                                        {{ $client->address ?? '-' }}
-                                    @endif
+                                    {{ $client->address ?? '-' }}
                                 </td>
 
                                 {{-- RCCM --}}
                                 <td>
-                                    @if ($editMode && $clientId === $client->id)
-                                        <input wire:model="rccm" type="text" class="form-control form-control-alt" />
-                                        @error('rccm') <div class="text-danger">{{ $message }}</div> @enderror
-                                    @else
-                                        {{ $client->rccm ?? '-' }}
-                                    @endif
+                                    {{ $client->rccm ?? '-' }}
                                 </td>
 
                                 {{-- IFU --}}
                                 <td>
-                                    @if ($editMode && $clientId === $client->id)
-                                        <input wire:model="ifu" type="text" class="form-control form-control-alt" />
-                                        @error('ifu') <div class="text-danger">{{ $message }}</div> @enderror
-                                    @else
-                                        {{ $client->ifu ?? '-' }}
-                                    @endif
+                                    {{ $client->ifu ?? '-' }}
                                 </td>
 
                                 {{-- DATE --}}
@@ -109,29 +81,14 @@
                                 {{-- ACTIONS --}}
                                 <td class="text-center">
                                     <div class="btn-group">
-                                        <button @if ($editMode && $clientId === $client->id)
-                                        wire:click.prevent="update({{ $client->id }})" @else
-                                            wire:click.prevent="toggleEditMode({{ $client->id }})" @endif type="button"
-                                            class="btn btn-sm btn-light" title="Modifier">
-                                            @if ($editMode && $clientId === $client->id)
-                                                <i class="fa fa-fw fa-check"></i>
-                                            @else
+                                        <button wire:click="$dispatch('openModal', { component: 'client.modals.edit-client', arguments: { client: {{ $client }} } })" type="button" class="btn btn-sm btn-light" title="Modifier">
                                                 <i class="fa fa-fw fa-pencil-alt"></i>
-                                            @endif
                                         </button>
-
-                                        @if ($editMode && $clientId === $client->id)
-                                            <button wire:click.prevent="toggleEditMode({{ $client->id }})" type="button"
-                                                class="btn btn-sm btn-light" title="Annuler">
-                                                <i class="fa fa-fw fa-times"></i>
-                                            </button>
-                                        @else
-                                            <a wire:click.prevent="delete({{ $client->id }})"
-                                                wire:confirm="Êtes-vous sûr de vouloir supprimer ce client ?" type="button"
-                                                class="btn btn-sm btn-light" title="Supprimer">
-                                                <i class="fa fa-fw fa-trash"></i>
-                                            </a>
-                                        @endif
+                                        <a wire:click.prevent="delete({{ $client->id }})"
+                                            wire:confirm="Êtes-vous sûr de vouloir supprimer ce client ?" type="button"
+                                            class="btn btn-sm btn-light" title="Supprimer">
+                                            <i class="fa fa-fw fa-trash"></i>
+                                        </a>
                                     </div>
                                 </td>
                             </tr>

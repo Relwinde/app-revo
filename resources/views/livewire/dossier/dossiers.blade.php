@@ -18,7 +18,7 @@
                     <div class="input-group p-3">
     
                         @if ($search != null && $search !="")
-                            <div class="input-group-prepend">
+                            <div class="input-group -prepend">
                                 <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
                                 <button wire:click="clear_search" type="button" class="btn btn-alt-danger" data-toggle="layout" data-action="header_search_off">
                                     <i class="fa fa-fw fa-times-circle"></i>

@@ -2,7 +2,7 @@
     <form wire:submit.prevent="create">
         <div class="block block-rounded">
             <div class="block-header block-header-default">
-                <h3 class="block-title">Nouveau Fournisseur</h3>
+                <h3 class="block-title">Nouveau Prestataire</h3>
                 <div class="block-options">
                     <button wire:click.prevent="create" type="submit" class="btn btn-sm btn-primary">
                         Enregistrer
@@ -24,7 +24,7 @@
                             <div class="form-group">
                                 <label for="name">Nom</label>
                                 <input wire:model="name" type="text" class="form-control form-control-alt" id="name"
-                                    placeholder="Nom du fournisseur..">
+                                    placeholder="Nom du prestataire..">
                                 @error('name')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
@@ -35,7 +35,7 @@
                             <div class="form-group">
                                 <label for="email">Email</label>
                                 <input wire:model="email" type="email" class="form-control form-control-alt" id="email"
-                                    placeholder="Email du fournisseur..">
+                                    placeholder="Email du prestataire..">
                                 @error('email')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
@@ -88,6 +88,23 @@
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="div_fisc">Division Fiscale</label>
+                                <input wire:model="div_fisc" type="text" class="form-control form-control-alt" id="div_fisc"
+                                    placeholder="Division Fiscale...">
+                                @error('div_fisc')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            
                         </div>
                     </div>
 

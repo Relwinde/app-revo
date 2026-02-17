@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('dossiers', function (Blueprint $table) {
-            $table->enum('type_operation', ['MA', 'CO', 'LOC'])->default('MA')->after('numero');
+        Schema::table('fournisseurs', function (Blueprint $table) {
+            $table->string('div_fisc')->nullable();
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('dossiers', function (Blueprint $table) {
-            $table->dropColumn('type_operation');
+        Schema::table('fournisseurs', function (Blueprint $table) {
+            $table->dropColumn('div_fisc');
         });
     }
 };

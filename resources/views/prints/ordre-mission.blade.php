@@ -71,7 +71,7 @@
                     <b>{{ strtoupper("Accompagnant :") }}</b>
                 </td>
                 <td style="color: blueviolet; width: 65%; text-align: center;">
-                    {{$dossier->compagnon ? $dossier->compagnon->name : "Aucun"}}
+                    {{$dossier->compagnon ? $dossier->compagnon : "Aucun"}}
                 </td>
             </tr>
 
