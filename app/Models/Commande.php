@@ -16,7 +16,8 @@ class Commande extends Model
         'marchandise_id',
         'quantite',
         'description',
-        'fournisseur'
+        'fournisseur',
+        'dossier_id',
     ];
 
 

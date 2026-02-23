@@ -6,6 +6,7 @@ use Mpdf\Mpdf;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Facades\DB;
 
 class Dossier extends Model
 {
@@ -46,6 +47,52 @@ class Dossier extends Model
      public function factureProforma()
     {
         return $this->belongsTo(FactureProforma::class);
+    }
+
+    public function generateFactureDefinitive() : Facture
+    {
+        $facture = new Facture();
+        $factureProforma = $this->factureProforma;
+
+
+        $facture->reference = 'REVO'.substr(date('Y'), -2)."-FAD". str_pad(Facture::max('id') + 1, 3, '0', STR_PAD_LEFT);
+        $facture->date = now();
+        $facture->client_id = $factureProforma->client_id;
+        $facture->camion_id = $factureProforma->camion_id;
+        $facture->chauffeur_id = $factureProforma->chauffeur_id;
+        $facture->facture_proforma_id = $factureProforma->id;
+        $facture->payment_terms = $factureProforma->payment_terms;
+        $facture->payment_conditions = $factureProforma->payment_conditions;
+        $facture->personne_contact = $factureProforma->personne_contact;
+        $facture->total_amount = $factureProforma->total_amount;
+        $facture->created_by = auth()->id();
+        $facture->avance = 0;
+
+        try{
+            DB::beginTransaction();
+            $facture->save();
+    
+            foreach ($factureProforma->items as $item) {
+                $factureItem = new FactureItem();
+                $factureItem->type = "DEF";
+                $factureItem->facture_id = $facture->id;
+                $factureItem->description = $item->description;
+                $factureItem->quantity = $item->quantity;
+                $factureItem->unit = $item->unit;
+                $factureItem->unit_price = $item->unit_price;
+                $factureItem->save();
+            }
+
+            DB::commit();
+
+        }
+
+        catch (\Exception $e) {
+            DB::rollBack();
+            throw $e;
+        }
+
+        return $facture;
     }
 
     public function print_ordre_mission()

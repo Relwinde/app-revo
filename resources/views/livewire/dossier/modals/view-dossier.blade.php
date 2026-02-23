@@ -6,6 +6,9 @@
         <div class="block block-rounded">
             <div class="block-header block-header-default">
                 <h3 class="block-title">Dossier N°: {{ $numero }}</h3>
+            </div>
+            
+            <div class="block-header block-header-default">
                 <div class="block-options">
                    
                         @if ($editMode)
@@ -13,6 +16,14 @@
                                 Enregistrer
                             </button>
                         @else
+
+                            @if ($dossier->factureProforma )
+
+                                <button wire:click.prevent="generateFactureDefinitive" type="submit" class="btn btn-sm btn-primary">
+                                    Générer Facture Définitive
+                                </button>
+                                
+                            @endif
                             <button wire:click.prevent="printOrdreMission" type="submit" class="btn btn-sm btn-primary">
                                 Ordre de mission
                             </button>
@@ -31,6 +42,7 @@
                     </button>
                 </div>
             </div>
+
 
             <div class="block-content">
                 <div class="justify-content-center py-sm-3 py-md-5">
@@ -267,7 +279,12 @@
                 <div class="block-footer">
                     <div class="table-responsive">
                         <div class="justify-content-left py-sm-1 py-md-1">
-                            <button wire:click="$dispatch('openModal', { component: 'dossier.modals.add-commande', arguments: { dossier: {{ $dossier }} } })" class="btn btn-sm btn-primary">Ajouter un bon de commande</button>
+                            <button wire:click="$dispatch('openModal', { component: 'dossier.modals.add-commande', arguments: { dossier: {{ $dossier }} } })" class="btn btn-sm btn-primary">Ajouter un PO</button>
+
+                            <button wire:click="$dispatch('openModal', { component: 'commande.modals.create-commande', arguments: { dossier: {{ $dossier }} } })"
+                            class="btn btn-sm btn-primary">
+                            <i class="fa fa-plus"></i> Nouveau PO
+                            </button>
 
                         </div>
 
@@ -324,6 +341,11 @@
             (function () {
                 window.open("{{route('print-manifest', $dossier->id)}}", "_blank");
             }).call(this);
+        });
+
+
+        Livewire.on('openFacture', ({ url }) => {
+            window.location.href = url;
         });
 
     </script>

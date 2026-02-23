@@ -3,22 +3,27 @@
 namespace App\Livewire\Commande\Modals;
 
 
-use App\Models\Client;
 use App\Models\Commande;
+use App\Models\Dossier;
 use App\Models\Fournisseur;
 use App\Models\Marchandise;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Testing\Fakes\Fake;
 use LivewireUI\Modal\ModalComponent;
 
 class CreateCommande extends ModalComponent
 {
+
+    // allow null and provide default to avoid uninitialized property error
+    public ?Dossier $dossier = null;
 
     public $fournisseur; // Fournisseur doit être saisi 
     public $marchandise_id;
     public $quantite;
     public $description; // Type d'amballage ou autres détails
     public $numero;
+
+    // accept an optional dossier when the component is mounted
+    
 
     public function render()
     {
@@ -65,6 +70,7 @@ class CreateCommande extends ModalComponent
             'description' => $this->description,
             'numero' => $this->numero,
             'user_id' => auth()->id(),
+            'dossier_id' => $this?->dossier?->id,
         ]);
 
         try {

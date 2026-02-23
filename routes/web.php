@@ -17,6 +17,7 @@ use App\Livewire\Commande\Commandes;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Chauffeur\Chauffeurs;
 use App\Livewire\BonDeCaisse\BonDeCaisses;
+use App\Livewire\Facture\EditFacture;
 use App\Livewire\Fournisseur\Fournisseurs;
 use App\Livewire\Marchandise\Marchandises;
 
@@ -96,6 +97,6 @@ Route::get('print-proforma/{facture}', function (FactureProforma $facture){
 
 Route::get('/view-facture-proformas/{facture}', EditFactureProforma::class)->name('view-facture-proforma')->middleware('auth');
 
-
-
 Route::get('/facture-definitives', FacturesDefinitives::class)->name('facture-definitives')->middleware('auth');
+
+Route::get('/view-facture-definitives/{facture}', EditFacture::class)->name('view-facture')->middleware('auth');

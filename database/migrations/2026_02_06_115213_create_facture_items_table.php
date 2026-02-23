@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('facture_items', function (Blueprint $table) {
             $table->id();
             $table->enum('type', ['DEF', 'PRO']);
-            $table->foreignId('facture_proforma_id')->constrained()->onDelete('cascade');
+            $table->foreignId('facture_proforma_id')->nullable()->constrained()->onDelete('cascade');
             $table->foreignId('facture_id')->nullable()->constrained()->onDelete('set null');
             $table->string('description');
             $table->integer('quantity');

@@ -165,6 +165,10 @@
         </thead>
     </table>
 
+    <p>
+        REVO. Ltd prie toutes les autorités militaires et paramilitaires, des régions traversées de bien vouloir, nous apporter leur soutien. 
+    </p>
+
      <div class="location" style="margin: 20px; width: 100%;">
         <span style="text-align: right; width:100%; font-family: roboto; font-size: 11pt;"> La direction  </span>
     </div>

@@ -70,6 +70,7 @@ class ViewDossier extends ModalComponent
 
     #[On('commande-attached')]
     #[On('commande-removed')]
+    #[On('commande-created')]
     public function render()
     {
         $chauffeurs = Chauffeur::all();
@@ -195,12 +196,22 @@ class ViewDossier extends ModalComponent
 
     public function printOrdreMission()
     {
-            $this->dispatch('print-ordre-mission');
+        $this->dispatch('print-ordre-mission');
     }
 
     public function printManifest()
     {
-            $this->dispatch('print-manifest');
+        $this->dispatch('print-manifest');
+
+    }
+
+    public function generateFactureDefinitive()
+    {
+       $facture = $this->dossier->generateFactureDefinitive();
+
+       $url = route('view-facture', ['facture' => $facture->id]);
+
+       $this->dispatch('openFacture', url :$url);
 
     }
 
