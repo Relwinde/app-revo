@@ -235,7 +235,7 @@
 
 @script
     <script>
-        $wire.on('print-proforma', ({ url }) => {
+        $wire.on('print-facture', ({ url }) => {
             window.open(url, '_blank');
         });
     </script>

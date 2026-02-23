@@ -87,7 +87,7 @@ class Facture extends Model
         // Page {PAGENO}/{nbpg}
 
         // Contenu principal
-        $html = view('prints.facture-proforma', ['facture' => $this])->render();
+        $html = view('prints.facture', ['facture' => $this])->render();
 
         $mpdf->WriteHTML($html);
 

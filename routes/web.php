@@ -1,31 +1,31 @@
 <?php
 
-use App\Models\Depot;
-use App\Livewire\Home;
-use App\Livewire\Login;
-use App\Models\Dossier;
-use App\Models\Document;
-use App\Models\BonDeCaisse;
-use App\Livewire\User\Users;
-use App\Livewire\User\Header;
+use App\Livewire\BonDeCaisse\BonDeCaisses;
 use App\Livewire\Caisse\Caisses;
 use App\Livewire\Camion\Camions;
-use App\Livewire\Client\Clients;
-use App\Livewire\Dossier\Dossiers;
-use App\Livewire\Profile\Profiles;
-use App\Livewire\Commande\Commandes;
-use Illuminate\Support\Facades\Route;
 use App\Livewire\Chauffeur\Chauffeurs;
-use App\Livewire\BonDeCaisse\BonDeCaisses;
+use App\Livewire\Client\Clients;
+use App\Livewire\Commande\Commandes;
+use App\Livewire\Dossier\Dossiers;
 use App\Livewire\Facture\EditFacture;
-use App\Livewire\Fournisseur\Fournisseurs;
-use App\Livewire\Marchandise\Marchandises;
-
 use App\Livewire\Facture\Factures as FacturesDefinitives;
 use App\Livewire\FactureProforma\CreateFacture;
 use App\Livewire\FactureProforma\EditFacture as EditFactureProforma;
 use App\Livewire\FactureProforma\Factures as FactureProformas;
+use App\Livewire\Fournisseur\Fournisseurs;
+use App\Livewire\Home;
+use App\Livewire\Login;
+use App\Livewire\Marchandise\Marchandises;
+use App\Livewire\Profile\Profiles;
+use App\Livewire\User\Header;
+use App\Livewire\User\Users;
+use App\Models\BonDeCaisse;
+use App\Models\Depot;
+use App\Models\Document;
+use App\Models\Dossier;
+use App\Models\Facture;
 use App\Models\FactureProforma;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -100,3 +100,7 @@ Route::get('/view-facture-proformas/{facture}', EditFactureProforma::class)->nam
 Route::get('/facture-definitives', FacturesDefinitives::class)->name('facture-definitives')->middleware('auth');
 
 Route::get('/view-facture-definitives/{facture}', EditFacture::class)->name('view-facture')->middleware('auth');
+
+Route::get('print-facture/{facture}', function (Facture $facture){
+    return $facture->print();
+})->name('print-facture')->middleware('auth');

@@ -228,7 +228,7 @@
             </tr>
             <tr>
                 <td colspan="5" class="total-row">TVA 18%</td>
-                <td class="total-row">{{ number_format($facture->items->sum(function($item) { return $item->unit_price * $item->quantity; }) ?? 0, 2, ',', ' ') * 0.18 }} FCFA</td>
+                <td class="total-row">{{ number_format($facture->items->sum(function($item) { return $item->unit_price * $item->quantity; }) * 0.18 ?? 0, 2, ',', ' ') }} FCFA</td>
             </tr>
             <tr>
                 <td colspan="5" class="total-row">Acompte perçu</td>
