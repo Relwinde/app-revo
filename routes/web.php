@@ -20,7 +20,7 @@ use App\Livewire\BonDeCaisse\BonDeCaisses;
 use App\Livewire\Fournisseur\Fournisseurs;
 use App\Livewire\Marchandise\Marchandises;
 
-use App\Livewire\Facture\Factures;
+use App\Livewire\Facture\Factures as FacturesDefinitives;
 use App\Livewire\FactureProforma\CreateFacture;
 use App\Livewire\FactureProforma\EditFacture as EditFactureProforma;
 use App\Livewire\FactureProforma\Factures as FactureProformas;
@@ -88,8 +88,6 @@ Route::get('/download-document/{document}', function (Document $document) {
 
 Route::get('/facture-proformas', FactureProformas::class)->name('facture-proformas')->middleware('auth');
 
-Route::get('/factures', Factures::class)->name('factures')->middleware('auth');
-
 Route::get('/facture-proformas/create', CreateFacture::class)->name('create-facture-proforma')->middleware('auth');
 
 Route::get('print-proforma/{facture}', function (FactureProforma $facture){
@@ -97,3 +95,7 @@ Route::get('print-proforma/{facture}', function (FactureProforma $facture){
 })->name('print-facture-proforma')->middleware('auth');
 
 Route::get('/view-facture-proformas/{facture}', EditFactureProforma::class)->name('view-facture-proforma')->middleware('auth');
+
+
+
+Route::get('/facture-definitives', FacturesDefinitives::class)->name('facture-definitives')->middleware('auth');

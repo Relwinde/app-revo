@@ -213,6 +213,29 @@
                         </div>
                     </div>
 
+                    <hr>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="facture_proforma_id">Facture Pro-Forma</label>
+                                <select wire:model='facture_proforma_id' class="custom-select" id="facture_proforma_id" name="facture_proforma_id">
+                                    <option value="">Sélectionnez une facture pro-forma</option>
+                                    @foreach ($facturesProformas as $facture)
+                                        <option value="{{ $facture->id }}">{{ $facture->reference }} - {{ $facture->client->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('facture_proforma_id')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>

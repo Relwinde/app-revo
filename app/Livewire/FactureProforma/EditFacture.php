@@ -7,6 +7,7 @@ use App\Models\Chauffeur;
 use App\Models\Client;
 use App\Models\FactureItem;
 use App\Models\FactureProforma;
+use Illuminate\Support\Facades\DB;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
@@ -27,6 +28,8 @@ class EditFacture extends Component
     public $numero;
 
     public $comments;
+
+    public $edit_mode = false;
 
 
     public function mount(FactureProforma $facture){
@@ -88,7 +91,7 @@ class EditFacture extends Component
             ]);
         
         
-           $factureProforma = FactureProforma::make([
+           $this->factureProforma->update([
                 'client_id' => $this->client_id,
                 'camion_id' => $this->camion_id,
                 'chauffeur_id' => $this->chauffeur_id,
@@ -102,13 +105,12 @@ class EditFacture extends Component
 
             try{
                 DB::beginTransaction();
-                
-                $factureProforma->reference = 'REVO'.substr(date('Y'), -2)."-SAP". str_pad(FactureProforma::max('id') + 1, 6, '0', STR_PAD_LEFT);
-                $factureProforma->save();
-                $this->factureProforma = $factureProforma;
-                $this->numero = $factureProforma->reference;
-                DB::commit();
+                $this->factureProforma->save();
                 $this->factureProforma = $this->factureProforma->fresh();
+
+                DB::commit();
+
+                $this->set_edit_mode();
 
             } 
             catch (\Exception $e) {
@@ -134,6 +136,14 @@ class EditFacture extends Component
             $url = route('print-facture-proforma', ['facture'=>$this->factureProforma->id]);
 
             $this->dispatch('print-proforma', url: $url);
+    }
+
+    public function set_edit_mode(){
+        if($this->edit_mode == false){
+            $this->edit_mode = true;
+        } else {
+            $this->edit_mode = false;
+        }
     }
     
 }

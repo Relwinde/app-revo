@@ -124,7 +124,7 @@
                         </div> 
                     @else
                         <div class="row mb-4">
-                            <div class="col text-right">
+                            <div class="col text-left mt-5">
                                 <button wire:click="$dispatch('openModal', { component: 'facture-proforma.modals.add-item', arguments: { factureProforma: {{ $factureProforma }} } })" class="btn btn-primary">Nouvelle ligne</button>
 
                             </div>

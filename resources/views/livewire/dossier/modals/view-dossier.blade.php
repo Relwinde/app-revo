@@ -40,9 +40,9 @@
                                 <label for="type_operation">Type d'opération</label>
                                 <select @if (!$editMode) disabled @endif class="custom-select" required wire:model='type_operation' name="type_operation" id="">
                                     <option value="">Selectionnez le type d'opération</option>
-                                    <option value="TP">Transport</option>
-                                    <option value="CL">Collecte</option>
-                                    <option value="LC">Location</option>
+                                    <option value="MA">Transport</option>
+                                    <option value="CO">Collecte</option>
+                                    <option value="LOC">Location</option>
                                 </select>
                                 @error('type_operation')
                                     <div class="text-danger">{{ $message }}</div>
@@ -219,13 +219,46 @@
                         </div>
 
                         <div class="col">
+
                             <div class="form-group">
-                                <label for="escort">Escorte à organiser</label>
-                                <input @if (!$editMode) disabled @endif type="text" wire:model='escort' class="form-control" id="escort" placeholder="Escorte à organiser">
-                                @error('escort')
+                                <div class="custom-control custom-switch mb-1">
+                                    <input @if (!$editMode) disabled @endif type="checkbox" class="custom-control-input" id="example-sw-custom2" name="example-sw-custom2" wire:model.live="avec_escort">
+                                    <label class="custom-control-label" for="example-sw-custom2">Avec Escorte</label>
+                                </div>
+                            </div>
+
+                            @if ($avec_escort)
+                                <div class="form-group">
+                                    <label for="escort">Escorte à organiser</label>
+                                    <input @if (!$editMode) disabled @endif type="text" wire:model='escort' class="form-control" id="escort" placeholder="Escorte à organiser">
+                                    @error('escort')
+                                        <div class="text-danger">{{ $message }}</div>
+                                    @enderror
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="facture_proforma_id">Facture Pro-Forma</label>
+                                <select @if (!$editMode) disabled @endif wire:model='facture_proforma_id' class="custom-select" id="facture_proforma_id" name="facture_proforma_id">
+                                    <option value="">Sélectionnez une facture pro-forma</option>
+                                    @foreach ($facturesProformas as $facture)
+                                        <option value="{{ $facture->id }}">{{ $facture->reference }} - {{ $facture->client->name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('facture_proforma_id')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
+                        </div>
+
+                        <div class="col">
+                            
                         </div>
                     </div>
 

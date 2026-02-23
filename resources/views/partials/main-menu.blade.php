@@ -42,7 +42,14 @@
             <li class="nav-main-item">
                 <a class="nav-main-link {{ request()->is('*facture-proformas*') ? 'active' : '' }}" href="{{ route('facture-proformas') }}" wire:navigate>
                     <i class="nav-main-link-icon fa fa-file-invoice-dollar"></i>
-                    <span class="nav-main-link-name">Facture Pro-Forma</span>
+                    <span class="nav-main-link-name">Factures Pro-Forma</span>
+                </a>
+            </li>
+
+            <li class="nav-main-item">
+                <a class="nav-main-link {{ request()->is('*facture-definitives*') ? 'active' : '' }}" href="{{ route('facture-definitives') }}" wire:navigate>
+                    <i class="nav-main-link-icon fa fa-file-invoice-dollar"></i>
+                    <span class="nav-main-link-name">Factures Définitives</span>
                 </a>
             </li>
 

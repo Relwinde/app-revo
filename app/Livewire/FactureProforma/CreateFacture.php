@@ -29,6 +29,10 @@ class CreateFacture extends Component
 
     public $comments;
 
+    public function mount(){
+        $this->comments = "NB: Nous sommes assujettis à la TVA (18%) depuis Mai 2023";
+    }
+
     #[On('item-added')]
     public function render()
     {
@@ -96,6 +100,7 @@ class CreateFacture extends Component
                 DB::beginTransaction();
                 
                 $factureProforma->reference = 'REVO'.substr(date('Y'), -2)."-FAP". str_pad(FactureProforma::max('id') + 1, 3, '0', STR_PAD_LEFT);
+                $factureProforma->comments = $this->comments;
                 $factureProforma->save();
                 $this->factureProforma = $factureProforma;
                 $this->numero = $factureProforma->reference;

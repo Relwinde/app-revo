@@ -212,7 +212,7 @@
                     </div>    
                 @endif
 
-                @if ($bon->etape == "CLOS" || $bon->etape == "PAYE" && $bon->documents->count() == 0 && Auth::user()->id == $bon->user->id )
+                @if (($bon->etape == "CLOS" || $bon->etape == "PAYE") && ($bon->documents->count() == 0 && Auth::user()->id == $bon->user->id) )
                     <div class="block-title">
                         <button class="btn btn-primary" wire:click="$dispatch('openModal', {component: 'bon-de-caisse.modals.upload-documents', arguments: { bon : {{ $bon->id }} }})">Joindre un document</button>
                     </div>

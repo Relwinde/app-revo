@@ -38,6 +38,16 @@ class Dossier extends Model
         return $this->belongsTo(Client::class, 'destinataire');
     }
 
+    public function fournisseur()
+    {
+        return $this->belongsTo(Fournisseur::class);
+    }
+
+     public function factureProforma()
+    {
+        return $this->belongsTo(FactureProforma::class);
+    }
+
     public function print_ordre_mission()
     {
 

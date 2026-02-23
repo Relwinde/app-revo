@@ -3,12 +3,13 @@
 namespace App\Livewire\Dossier\Modals;
 
 use App\Models\Camion;
+use App\Models\Chauffeur;
 use App\Models\Client;
 use App\Models\Dossier;
-use App\Models\Chauffeur;
+use App\Models\FactureProforma;
 use App\Models\Fournisseur;
-use Livewire\Attributes\On;
 use Illuminate\Support\Facades\DB;
+use Livewire\Attributes\On;
 use LivewireUI\Modal\ModalComponent;
 
 class ViewDossier extends ModalComponent
@@ -38,6 +39,10 @@ class ViewDossier extends ModalComponent
 
     public $editMode = false;
 
+    public $avec_escort;
+
+    public $facture_proforma_id;
+
     public function mount ()
     {
         $this->numero = $this->dossier->numero;
@@ -57,6 +62,9 @@ class ViewDossier extends ModalComponent
         $this->avec_location = $this->dossier->prix_location ? true : false;
         $this->prix_location = $this->dossier->prix_location;
         $this->fournisseur_id = $this->dossier->fournisseur_id;
+        $this->facture_proforma_id = $this->dossier->facture_proforma_id;
+
+        $this->avec_escort = $this->dossier->escort ? true : false;
     }
 
 
@@ -69,7 +77,15 @@ class ViewDossier extends ModalComponent
         $clients = Client::all();
         $fournisseurs = Fournisseur::all();
 
-        return view('livewire.dossier.modals.view-dossier', ['chauffeurs' => $chauffeurs, 'camions' => $camions, 'clients' => $clients, 'fournisseurs' => $fournisseurs]);
+        // only show proformas that are not already attached to a dossier
+        // $facturesProformas = FactureProforma::whereDoesntHave('dossiers')
+        //     ->orderBy('created_at', 'desc')
+        //     ->get();
+
+        $facturesProformas = FactureProforma::orderBy('created_at', 'desc')
+            ->get();
+
+        return view('livewire.dossier.modals.view-dossier', ['chauffeurs' => $chauffeurs, 'camions' => $camions, 'clients' => $clients, 'fournisseurs' => $fournisseurs, 'facturesProformas' => $facturesProformas]);
     }
 
 
@@ -95,7 +111,9 @@ class ViewDossier extends ModalComponent
                 'date_depart' => ['date', 'nullable'], 
                 'date_retour' => ['date', 'nullable'],
                 'prix_location' => $this->avec_location ? ['required', 'numeric'] : ['nullable'],
+                'escort' => $this->avec_escort ? ['required', 'string'] : ['nullable'],
                 'fournisseur_id' => $this->avec_location ? ['required', 'exists:fournisseurs,id'] : ['nullable'],
+                'facture_proforma_id' => ['nullable', 'exists:facture_proformas,id'],
             ],
             [
                 'client_id.exists' => 'Le client sélectionné est invalide.',
@@ -112,6 +130,11 @@ class ViewDossier extends ModalComponent
                 'escort.string' => 'L\'escort doit être une chaîne de caractères.',
                 'compagnon.string' => 'Le compagnon doit être une chaîne de caractères.',
                 'motif.string' => 'Le motif doit être une chaîne de caractères.',
+                'prix_location.numeric' => 'Le prix de location doit être un nombre.',
+                'fournisseur_id.required' => 'Le fournisseur est obligatoire lorsque l\'option avec location est activée.',
+                'fournisseur_id.exists' => 'Le fournisseur sélectionné est invalide.',
+                'facture_proforma_id.exists' => 'La facture pro-forma sélectionnée est invalide.','escort.string' => 'L\'escort doit être une chaîne de caractères.',
+                'escort.required' => 'L\'escort est obligatoire.',
             ]
         );
 
@@ -143,6 +166,7 @@ class ViewDossier extends ModalComponent
                 'motif' => $this->motif,
                 'date_depart' => $this->date_depart,
                 'date_retour' => $this->date_retour,
+                'facture_proforma_id' => $this->facture_proforma_id,
             ]);
 
             DB::commit();

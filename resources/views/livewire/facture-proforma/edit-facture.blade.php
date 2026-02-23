@@ -27,7 +27,7 @@
                         <!-- Date Info -->
                         <div class="col-3 text-center font-size-sm">
                             <p class="h6">Date</p>
-                            <input @if ($numero != null)
+                            <input @if ($edit_mode == false)
                                disabled inactive 
                             @endif type="date" wire:model="date" class="form-control form-control-alt" />
                         </div>
@@ -43,7 +43,7 @@
                                 ctr@example.com
                             </address> --}}
 
-                                <select @if ($numero != null)
+                                <select @if ($edit_mode == false)
                                disabled inactive 
                             @endif wire:model="client_id" class="form-control form-control-alt">
                                     <option value="">Sélectionner un client</option>
@@ -57,7 +57,7 @@
                         <!-- Company Info -->
                         <div class="col-3 text-center font-size-sm">
                             <p class="h6">Personne Contact</p>
-                            <input @if ($numero != null)
+                            <input @if ($edit_mode == false)
                                disabled inactive 
                             @endif type="text" wire:model="personne_contact" class="form-control form-control-alt" />
                         </div>
@@ -66,7 +66,7 @@
                         <!-- Validity Info -->
                         <div class="col-3 text-center font-size-sm">
                             <p class="h6">Délai de validité (j)</p>
-                            <input @if ($numero != null)
+                            <input @if ($edit_mode == false)
                                disabled inactive 
                             @endif type="number" wire:model="payment_terms" class="form-control form-control-alt" />
                         </div>
@@ -79,7 +79,7 @@
                         {{-- Camion info --}}
                         <div class="col-3 text-center font-size-sm">
                             <p class="h6">Camion</p>
-                            <select @if ($numero != null)
+                            <select @if ($edit_mode == false)
                                disabled inactive 
                             @endif wire:model="camion_id" class="form-control form-control-alt">
                                 <option value="">Sélectionner un camion</option>
@@ -91,7 +91,7 @@
                         {{-- Chauffeur info --}}
                         <div class="col-3 text-center font-size-sm">
                             <p class="h6">Chauffeur</p>
-                            <select @if ($numero != null)
+                            <select @if ($edit_mode == false)
                                disabled inactive 
                             @endif wire:model="chauffeur_id" class="form-control form-control-alt">
                                 <option value="">Sélectionner un chauffeur</option>
@@ -104,11 +104,23 @@
                         <!-- Validity Info -->
                         <div class="col-3 text-center font-size-sm">
                             <p class="h6">Condition d'échéance</p>
-                            <input @if ($numero != null)
+                            <input @if ($edit_mode == false)
                                disabled inactive 
                             @endif  type="text" wire:model="payment_conditions" class="form-control form-control-alt" />
                         </div>
                         <!-- END Validity Info -->
+
+                        <div class="col-3 text-center font-size-sm">
+                            <p class="h6">&nbsp;</p>
+
+                            @if ($edit_mode == false)
+                                <button wire:click="set_edit_mode" class="btn btn-primary">Modifier l'entête</button>
+                                
+                            @else
+                                <button wire:click="saveHeader" class="btn btn-primary">Enregistrer l'entête</button>
+                                
+                            @endif
+                        </div>
 
                     </div>
 
@@ -120,10 +132,9 @@
                             </div>
                         </div> 
                     @else
-                        <div class="row mb-4">
-                            <div class="col text-right">
+                        <div class="row">
+                            <div class="col text-left mt-5">
                                 <button wire:click="$dispatch('openModal', { component: 'facture-proforma.modals.add-item', arguments: { factureProforma: {{ $factureProforma }} } })" class="btn btn-primary">Nouvelle ligne</button>
-
                             </div>
                         </div>
                     @endif
@@ -206,7 +217,9 @@
                                 </div>
                             </div>    
                         </div>
-                        <textarea wire:model='comments' class="form-control form-control-alt" name="comments" id="" cols="30" rows="10"></textarea>
+                        <textarea @if ($edit_mode == false)
+                               disabled inactive 
+                            @endif wire:model='comments' class="form-control form-control-alt" name="comments" id="" cols="30" rows="10"></textarea>
                     </div>
     
                 </div>

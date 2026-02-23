@@ -229,10 +229,13 @@
         </tfoot>
     </table>
 
+    <div class="date-location">
+        <strong>La Direction</strong>
+    </div>
+
     <!-- Pied de page -->
     <div class="footer-info">
-        <p style="margin: 5px 0;"><strong>Conditions:</strong> {{ $facture->payment_conditions ?? 'À négocier' }}</p>
-        <p style="margin: 5px 0; color: #666;">Merci beaucoup d'avoir choisi nos services. Nous attendons avec impatience de travailler avec vous!</p>
+        <p style="margin: 5px 0; color: #666;">{!! nl2br(e($facture->comments)) !!}</p>
     </div>
 
 </div>

@@ -3,13 +3,14 @@
 namespace App\Livewire\Dossier\Modals;
 
 use App\Models\Camion;
+use App\Models\Chauffeur;
 use App\Models\Client;
 use App\Models\Dossier;
-use App\Models\Chauffeur;
+use App\Models\FactureProforma;
 use App\Models\Fournisseur;
 use Illuminate\Support\Facades\DB;
-use LivewireUI\Modal\ModalComponent;
 use Illuminate\Support\Testing\Fakes\Fake;
+use LivewireUI\Modal\ModalComponent;
 
 class CreateDossier extends ModalComponent
 {
@@ -46,6 +47,8 @@ class CreateDossier extends ModalComponent
 
     public $avec_escort;
 
+    public $facture_proforma_id;
+
 
     public function render()
     {
@@ -53,9 +56,15 @@ class CreateDossier extends ModalComponent
         $camions = Camion::all();
         $chauffeurs = Chauffeur::all();
         $fournisseurs = Fournisseur::all();
+        // only show proformas that are not already attached to a dossier
+        // $facturesProformas = FactureProforma::whereDoesntHave('dossiers')
+        //     ->orderBy('created_at', 'desc')
+        //     ->get();
 
+        $facturesProformas = FactureProforma::orderBy('created_at', 'desc')
+            ->get();
 
-        return view('livewire.dossier.modals.create-dossier', ['clients' => $clients, 'camions' => $camions, 'chauffeurs' => $chauffeurs, 'fournisseurs' => $fournisseurs]);
+         return view('livewire.dossier.modals.create-dossier', ['clients' => $clients, 'camions' => $camions, 'chauffeurs' => $chauffeurs, 'fournisseurs' => $fournisseurs, 'facturesProformas' => $facturesProformas]);
     }
 
     public function create()
@@ -66,6 +75,7 @@ class CreateDossier extends ModalComponent
                 'destinataire' => ['required', 'string'],
                 'camion_id' => ['required', 'exists:camions,id'],
                 'chauffeur_id' => ['required', 'exists:chauffeurs,id'],
+                'facture_proforma_id' => ['nullable', 'exists:facture_proformas,id'],
                 'type_operation'=>['required'],
                 'lieu' => ['string', 'nullable'], 
                 'escort' => ['string', 'nullable'], 
@@ -98,6 +108,7 @@ class CreateDossier extends ModalComponent
                 'prix_location.numeric' => 'Le prix de location doit être un nombre.',
                 'fournisseur_id.required' => 'Le fournisseur est obligatoire lorsque l\'option avec location est activée.',
                 'fournisseur_id.exists' => 'Le fournisseur sélectionné est invalide.',
+                'facture_proforma_id.exists' => 'La facture pro-forma sélectionnée est invalide.',
             ]
         );
 
@@ -117,6 +128,7 @@ class CreateDossier extends ModalComponent
             'user_id' => auth()->id(),
             'prix_location' => $this->avec_location ? $this->prix_location : null,
             'fournisseur_id' => $this->avec_location ? $this->fournisseur_id : null,
+            'facture_proforma_id' => $this->facture_proforma_id,
         ]);
 
         $numero = 'REV0'.substr(date('Y'), -2).'-'.date('m').$this->type_operation.str_pad(Dossier::whereYear('created_at', now()->year)->count() + 1, 3, '0', STR_PAD_LEFT);

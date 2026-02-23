@@ -33,6 +33,10 @@ class FactureProforma extends Model
         return $this->belongsTo(User::class, 'created_by');
     }
 
+    public function dossiers(){
+        return $this->hasMany(Dossier::class);
+    }
+
 
     public function print(){
 
@@ -74,9 +78,9 @@ class FactureProforma extends Model
         // Pied de page
         $footer = '<div style="text-align: center; font-size: 10px;">
         <hr>
-        Société à Responsabilité au Capital de 1 000 000 francs CFA <br>
-        Immatriculée au Registre de Commerce et du Crédit Mobilier sous le numéro BFOUA2021 B11588 <br>
-        N°IFU : 00167673T – Régime Fiscal RSI
+        Veuillez libeller tous les chèques à l’ordre de <br>
+        <strong>Nous vous remercions de votre confiance!</strong><br>
+        REVO.Ltd BURKINA FASO  l 11 BP 3105 Ouagadougou 01 l +226 25 48 11 12 l info@revo-limited.com
                    </div>';
         $mpdf->SetHTMLFooter($footer);
 
