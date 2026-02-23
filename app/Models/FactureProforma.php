@@ -78,7 +78,7 @@ class FactureProforma extends Model
         // Pied de page
         $footer = '<div style="text-align: center; font-size: 10px;">
         <hr>
-        Veuillez libeller tous les chèques à l’ordre de <br>
+        Veuillez libeller tous les chèques à l’ordre de REVO.LIMITED<br>
         <strong>Nous vous remercions de votre confiance!</strong><br>
         REVO.Ltd BURKINA FASO  l 11 BP 3105 Ouagadougou 01 l +226 25 48 11 12 l info@revo-limited.com
                    </div>';

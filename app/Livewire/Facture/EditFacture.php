@@ -49,11 +49,11 @@ class EditFacture extends Component
     public function render()
     {
         $pageHeader = [
-            'title' => 'Factures',
+            'title' => 'Factures Définitives',
             'subtitle' => 'Détails de la facture',
             'breadcrumbs' => [
                 ['label' => 'Accueil', 'url' => route('home')],
-                ['label' => 'Factures', 'url' => route('facture-definitives')],
+                ['label' => 'Factures Définitives', 'url' => route('facture-definitives')],
                 ['label' => 'Détails de la facture'],
                 ],
                 ];

@@ -134,7 +134,7 @@
                     @else
                         <div class="row">
                             <div class="col text-left mt-5">
-                                <button wire:click="$dispatch('openModal', { component: 'facture-proforma.modals.add-item', arguments: { facture: {{ $facture }} } })" class="btn btn-primary">Nouvelle ligne</button>
+                                <button wire:click="$dispatch('openModal', { component: 'facture.modals.add-item', arguments: { facture: {{ $facture }} } })" class="btn btn-primary">Nouvelle ligne</button>
                             </div>
                         </div>
                     @endif
@@ -176,7 +176,7 @@
                                             <td class="text-right">{{ number_format($item->unit_price * $item->quantity, 2, '.', ' ') }} </td>
                                             <td class="text-center">
                                                 <div class="btn-group">
-                                                    <button wire:click="$dispatch('openModal', { component: 'facture-proforma.modals.edit-item', arguments: { item: {{ $item }} } })" type="button" class="btn btn-sm btn-light" data-toggle="tooltip" title="Edit Item">
+                                                    <button wire:click="$dispatch('openModal', { component: 'facture.modals.edit-item', arguments: { item: {{ $item }} } })" type="button" class="btn btn-sm btn-light" data-toggle="tooltip" title="Edit Item">
                                                         <i class="fa fa-fw fa-pencil-alt"></i>
                                                     </button>
                                                     <button wire:confirm='Êtes vous sûr de vouloir supprimer cette ligne ?' wire:click='removeItem ({{$item->id}})' type="button" class="btn btn-sm btn-light" data-toggle="tooltip" title="Remove Item">

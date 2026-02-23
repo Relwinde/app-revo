@@ -33,6 +33,7 @@
                             <tr>
                                 <th>Référence</th>
                                 <th>Client</th>
+                                <th>Dossier</th>
                                 <th>Date</th>
                                 <th>Chauffeur</th>
                                 <th>Contact</th>
@@ -46,16 +47,17 @@
                                 <tr>
                                     <td>{{ $facture->reference }}</td>
                                     <td>{{ $facture->client->name }}</td>
+                                    <td>{{ $facture->dossier->numero ?? 'N/A' }}</td>
                                     <td>{{ \Carbon\Carbon::parse($facture->date)->format('d ') }}{{ __(\Carbon\Carbon::parse($facture->date)->format('n')) }} {{ \Carbon\Carbon::parse($facture->date)->format('Y') }}</td>
                                     <td>{{ $facture->chauffeur ? $facture->chauffeur->name : 'N/A' }}</td>
                                     <td>{{ $facture->personne_contact ?? 'N/A' }}</td>
                                     <td>{{ number_format($facture->items->sum(function($item) { return $item->unit_price * $item->quantity; }) ?? 0, 2, ',', ' ') }} FCFA</td>
                                     <td class="text-center">
                                          <div class="btn-group">
-                                            <a href="{{route('view-facture-proforma', $facture->id)}}" wire:navigate class="btn btn-sm btn-light" data-toggle="tooltip" title="View Proforma">
+                                            <a href="{{route('view-facture', $facture->id)}}" wire:navigate class="btn btn-sm btn-light" data-toggle="tooltip" title="View Facture">
                                                 <i class="fa fa-fw fa-eye"></i>
                                             </a>
-                                            <button type="button" class="btn btn-sm btn-light" data-toggle="tooltip" title="Remove Proforma">
+                                            <button type="button" class="btn btn-sm btn-light" data-toggle="tooltip" title="Remove Facture">
                                                 <i class="fa fa-fw fa-times"></i>
                                             </button>
                                         </div>

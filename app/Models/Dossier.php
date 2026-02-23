@@ -65,6 +65,7 @@ class Dossier extends Model
         $facture->payment_conditions = $factureProforma->payment_conditions;
         $facture->personne_contact = $factureProforma->personne_contact;
         $facture->total_amount = $factureProforma->total_amount;
+        $facture->dossier_id = $this->id;
         $facture->created_by = auth()->id();
         $facture->avance = 0;
 
