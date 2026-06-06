@@ -13,7 +13,7 @@ class Commande extends Model
         'numero',
         'user_id',
         'fournisseur_id',
-        'marchandise_id',
+        'marchandise',
         'quantite',
         'description',
         'fournisseur',
@@ -21,10 +21,6 @@ class Commande extends Model
     ];
 
 
-    public function marchandise()
-    {
-        return $this->belongsTo(Marchandise::class);
-    }
 
     public function user()
     {

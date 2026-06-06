@@ -35,7 +35,7 @@
                                     <th>Fournisseur</th>
                                     <th>Marchandise</th>
                                     <th>Quantité</th>
-                                    <th>Description</th>
+                                    <th>Emballage</th>
                                     <th>Dossier</th>
                                     <th>Date de création</th>
                                     <th class="text-center" style="width: 120px;">Actions</th>
@@ -46,7 +46,7 @@
                                 <tr>
                                     <td>{{ $commande->numero }}</td>
                                     <td>{{ $commande->fournisseur}}</td>
-                                    <td>{{ $commande->marchandise->name }}</td>
+                                    <td>{{ $commande->marchandise }}</td>
                                     <td>{{ $commande->quantite }}</td>
                                     <td>{{ $commande->description }}</td>
                                     <td>{{ $commande->dossier ? $commande->dossier->numero : 'N/A' }}</td>

@@ -17,7 +17,7 @@ class CreateCommande extends ModalComponent
     public ?Dossier $dossier = null;
 
     public $fournisseur; // Fournisseur doit être saisi 
-    public $marchandise_id;
+    public $marchandise;
     public $quantite;
     public $description; // Type d'amballage ou autres détails
     public $numero;
@@ -27,14 +27,8 @@ class CreateCommande extends ModalComponent
 
     public function render()
     {
-        $fournisseurs = Fournisseur::all();
-        $marchandises = Marchandise::all();
-
         
-        return view('livewire.commande.modals.create-commande', [
-            'fournisseurs' => $fournisseurs,
-            'marchandises' => $marchandises
-        ]);
+        return view('livewire.commande.modals.create-commande');
     }
 
     public function create()
@@ -43,15 +37,14 @@ class CreateCommande extends ModalComponent
         $this->validate(
             [
                 'fournisseur' => ['required'],
-                'marchandise_id' => ['required', 'exists:marchandises,id'],
+                'marchandise' => ['required', 'string'],
                 'quantite' => ['required', 'integer', 'min:1'],
                 'description' => ['string'],
                 'numero' => ['required', 'string', 'unique:commandes,numero'],
             ],
             [
                 'fournisseur.required' => 'Le fournisseur est obligatoire.',
-                'marchandise_id.required' => 'La marchandise est obligatoire.',
-                'marchandise_id.exists' => 'La marchandise sélectionnée est invalide.',
+                'marchandise.required' => 'La marchandise est obligatoire.',
                 'quantite.required' => 'La quantité est obligatoire.',
                 'quantite.integer' => 'La quantité doit être un nombre entier.',
                 'quantite.min' => 'La quantité doit être au moins de 1.',
@@ -65,7 +58,7 @@ class CreateCommande extends ModalComponent
         // Create the Commande
         $commande = Commande::make([
             'fournisseur' => $this->fournisseur,
-            'marchandise_id' => $this->marchandise_id,
+            'marchandise' => $this->marchandise,
             'quantite' => $this->quantite,
             'description' => $this->description,
             'numero' => $this->numero,

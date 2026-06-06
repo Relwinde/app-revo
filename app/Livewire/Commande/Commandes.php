@@ -25,9 +25,7 @@ class Commandes extends Component
 
         $commandes = Commande::where('numero', 'like', "%{$this->search}%")
             ->orWhere('fournisseur', 'like', "%{$this->search}%")
-            ->orWhereHas('marchandise', function($query) {
-                $query->where('name', 'like', "%{$this->search}%");
-            })
+            ->orWhere('marchandise', 'like', "%{$this->search}%")
             ->orWhereHas('dossier', function($query) {
                 $query->where('numero', 'like', "%{$this->search}%");
             })

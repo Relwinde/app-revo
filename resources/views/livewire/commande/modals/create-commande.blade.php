@@ -44,13 +44,9 @@
                         <div class="col">
                             <div class="form-group">
                                 <label for="address">Nature de colis</label>
-                                <select required wire:model='marchandise_id' class="custom-select" id="address" name="marchandise">
-                                    <option value="0">Selextionnez la nature de colis</option>
-                                    @foreach ($marchandises as $marchandise)
-                                        <option value="{{ $marchandise->id }}">{{ $marchandise->name }}</option>
-                                    @endforeach
-                                </select>
-                                @error('marchandise_id')
+                                <input required wire:model='marchandise' type="text" class="form-control form-control-alt" id="marchandise"
+                                    placeholder="Nature de colis...">
+                                @error('marchandise')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
                             </div>
