@@ -1,6 +1,6 @@
 <div>
     @if ($editMode)
-    <form wire:submit.prevent="update">   
+    <form wire:submit.prevent="update">
     @endif
         <div class="block block-rounded">
             <div class="block-header block-header-default">
@@ -58,27 +58,21 @@
                         @elseif ($bon->etape == "CAISSE" && Auth::user()->can('Payer bon de caisse'))
                             <form>
                                 <div class="form-group">
-                                    {{-- <label class="d-block">Mode de paiement</label> --}}
                                     <div class="custom-control custom-radio custom-control-inline">
                                         <input type="radio" class="custom-control-input" id="type_paiement" wire:model="type_paiement" value="ESPECE">
-
                                         <label class="custom-control-label" for="type_paiement">Espèce</label>
                                     </div>
-
                                     <div class="custom-control custom-radio custom-control-inline">
                                         <input type="radio" class="custom-control-input" id="type_paiement2" wire:model="type_paiement" value="CHEQUE">
                                         <label class="custom-control-label" for="type_paiement2">Chèque</label>
                                     </div>
-                                    
                                     <button wire:confirm="Êtes-vous sûr de vouloir payer ce bon ? Cette action est irreversible." wire:click.prevent="nextStep" type="button" class="btn btn-sm btn-danger">
                                     Payer
                                     </button>
-                                    
                                     @error('type_paiement')
                                         <div class="text-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                
                             </form>
 
                         @elseif ($bon->etape == "PAYE" && Auth::user()->can('Clore bon de caisse'))
@@ -187,7 +181,7 @@
                                 @error('depense')
                                     <div class="text-danger">{{ $message }}</div>
                                 @enderror
-                            </div>   
+                            </div>
                         </div>
                     </div>
                     <div class="row">
@@ -201,8 +195,33 @@
                             </div>
                         </div>
                     </div>
+
+                    @if ($bon->type_paiement === 'CHEQUE' && ($bon->etape === 'PAYE' || $bon->etape === 'CLOS'))
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="block block-rounded bg-light">
+                                    <div class="block-header block-header-default">
+                                        <h3 class="block-title">Détails du chèque</h3>
+                                    </div>
+                                    <div class="block-content">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <p><strong>Numéro:</strong> {{ $bon->numero_cheque }}</p>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <p><strong>Banque:</strong> {{ $bon->banque_cheque }}</p>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <p><strong>Date:</strong> {{ \Carbon\Carbon::parse($bon->date_cheque)->format('d/m/Y') }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
                 </div>
-                
+
             </div>
 
             <div class="block-header block-header-default">

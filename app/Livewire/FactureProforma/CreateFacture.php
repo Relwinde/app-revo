@@ -21,6 +21,8 @@ class CreateFacture extends Component
     public $chauffeur_id;
     public $camion_id;
     public $personne_contact;
+    public $mms_code;
+    public $num_commande;
     public $total_amount;
 
     public $factureProforma;
@@ -69,6 +71,8 @@ class CreateFacture extends Component
                 'payment_conditions' => 'nullable|string|max:255',
                 'chauffeur_id' => 'nullable|exists:chauffeurs,id',
                 'personne_contact' => 'nullable|string|max:255',
+                'mms_code' => 'nullable|string|max:255',
+                'num_commande' => 'nullable|string|max:255',
             ], 
             [
                 'client_id.required' => 'Le client est requis.',
@@ -81,6 +85,8 @@ class CreateFacture extends Component
                 'chauffeur_id.exists' => 'Le chauffeur sélectionné est invalide.',
                 'personne_contact.string' => 'La personne de contact doit être une chaîne de caractères.',
                 'personne_contact.max' => 'La personne de contact ne peut pas dépasser 255 caractères.',
+                'mms_code.max' => 'Le code MMS ne peut pas dépasser 255 caractères.',
+                'num_commande.max' => 'Le numéro de commande ne peut pas dépasser 255 caractères.',
             ]);
         
         
@@ -93,6 +99,8 @@ class CreateFacture extends Component
                 'payment_terms' => $this->payment_terms,
                 'payment_conditions' => $this->payment_conditions,
                 'personne_contact' => $this->personne_contact,
+                'mms_code' => $this->mms_code,
+                'num_commande' => $this->num_commande,
                 'total_amount' => 0, // Initialement à 0, sera mis à jour après l'ajout des produits
             ]);
 

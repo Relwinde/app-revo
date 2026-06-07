@@ -131,7 +131,12 @@ class CreateDossier extends ModalComponent
             'facture_proforma_id' => $this->facture_proforma_id,
         ]);
 
-        $numero = 'REV0'.substr(date('Y'), -2).'-'.date('m').$this->type_operation.str_pad(Dossier::whereYear('created_at', now()->year)->count() + 1, 3, '0', STR_PAD_LEFT);
+        // Le numéro d'ordre dépend désormais du client: nombre de dossiers du client dans l'année en cours
+        $order = Dossier::where('client_id', $this->client_id)
+            ->whereYear('created_at', now()->year)
+            ->count() + 1;
+
+        $numero = 'REV0'.substr(date('Y'), -2).'-'.date('m').$this->type_operation.str_pad($order, 3, '0', STR_PAD_LEFT);
         
         // REV026-01/MA001
 

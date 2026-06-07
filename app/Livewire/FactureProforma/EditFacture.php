@@ -23,6 +23,8 @@ class EditFacture extends Component
     public $chauffeur_id;
     public $camion_id;
     public $personne_contact;
+    public $mms_code;
+    public $num_commande;
     public $total_amount;
 
     public $numero;
@@ -41,7 +43,9 @@ class EditFacture extends Component
         $this->payment_conditions = $this->factureProforma->payment_conditions; 
         $this->chauffeur_id = $this->factureProforma->chauffeur_id;
         $this->camion_id = $this->factureProforma->camion_id;
-        $this->personne_contact = $this->factureProforma->personne_contact; 
+        $this->personne_contact = $this->factureProforma->personne_contact;
+        $this->mms_code = $this->factureProforma->mms_code;
+        $this->num_commande = $this->factureProforma->num_commande;
         $this->numero = $this->factureProforma->reference; 
         $this->comments = $this->factureProforma->comments;
     }
@@ -76,6 +80,8 @@ class EditFacture extends Component
                 'payment_conditions' => 'nullable|string|max:255',
                 'chauffeur_id' => 'nullable|exists:chauffeurs,id',
                 'personne_contact' => 'nullable|string|max:255',
+                'mms_code' => 'nullable|string|max:255',
+                'num_commande' => 'nullable|string|max:255',
             ], 
             [
                 'client_id.required' => 'Le client est requis.',
@@ -88,6 +94,8 @@ class EditFacture extends Component
                 'chauffeur_id.exists' => 'Le chauffeur sélectionné est invalide.',
                 'personne_contact.string' => 'La personne de contact doit être une chaîne de caractères.',
                 'personne_contact.max' => 'La personne de contact ne peut pas dépasser 255 caractères.',
+                'mms_code.max' => 'Le code MMS ne peut pas dépasser 255 caractères.',
+                'num_commande.max' => 'Le numéro de commande ne peut pas dépasser 255 caractères.',
             ]);
         
         
@@ -100,6 +108,8 @@ class EditFacture extends Component
                 'payment_terms' => $this->payment_terms,
                 'payment_conditions' => $this->payment_conditions,
                 'personne_contact' => $this->personne_contact,
+                'mms_code' => $this->mms_code,
+                'num_commande' => $this->num_commande,
                 'total_amount' => 0, // Initialement à 0, sera mis à jour après l'ajout des produits
             ]);
 

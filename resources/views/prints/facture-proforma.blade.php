@@ -164,6 +164,12 @@
                     <span>N° de facture :</span> {{$facture->reference}} <br>
                     <span>Référence client :</span> {{$facture->client->code}} <br>
                     <span>Emis :</span> {{$facture->user->name}} <br>
+                    @if(filled($facture->mms_code))
+                        <span>Code MMS :</span> {{ $facture->mms_code }} <br>
+                    @endif
+                    @if(filled($facture->num_commande))
+                        <span>N° Commande :</span> {{ $facture->num_commande }} <br>
+                    @endif
                     <span>Email :</span> {{$facture->user->email}} <br>
                     <span>Téléphone :</span>  <br>
                 </td>

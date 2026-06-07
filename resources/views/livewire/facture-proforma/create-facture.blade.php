@@ -115,6 +115,22 @@
 
                     </div>
 
+                    <div class="row mb-4">
+                        <div class="col-3 text-center font-size-sm">
+                            <p class="h6">Code MMS</p>
+                            <input @if ($numero != null)
+                               disabled inactive 
+                            @endif type="text" wire:model="mms_code" class="form-control form-control-alt" />
+                        </div>
+
+                        <div class="col-3 text-center font-size-sm">
+                            <p class="h6">N° Commande</p>
+                            <input @if ($numero != null)
+                               disabled inactive 
+                            @endif type="text" wire:model="num_commande" class="form-control form-control-alt" />
+                        </div>
+                    </div>
+
                     @if ($numero == null)
                         <div class="row mb-4">
                             <div class="col text-right">

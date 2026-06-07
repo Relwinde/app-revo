@@ -10,10 +10,16 @@ use App\Models\BonDeCaisse;
 use App\Models\SuiviCaisse;
 use Livewire\Attributes\On;
 use App\Models\AjustementBon;
+use Livewire\WithPagination;
 
 class Caisses extends Component
 {
+    use WithPagination;
+
     public $search;
+    public $view = 'bons';
+    public $dateDu;
+    public $dateAu;
 
     #[On('depot-created')]
     #[On('bon-updated')]
@@ -29,7 +35,7 @@ class Caisses extends Component
             ]
         ];
 
-        $sommeAttente= BonDeCaisse::where('bon_de_caisses.etape', 'CAISSE')->sum('montant');
+        $sommeAttente = BonDeCaisse::where('bon_de_caisses.etape', 'CAISSE')->sum('montant');
         $caisse = Caisse::find(1);
 
         $sommeDepots = Depot::whereDate('depots.created_at', Carbon::today())->sum('montant') + AjustementBon::where('ajustement_bons.type', 'RESTITUTION')->whereDate('ajustement_bons.created_at', Carbon::today())
@@ -40,25 +46,59 @@ class Caisses extends Component
         ->sum('montant') + AjustementBon::where('ajustement_bons.type', 'EXCEDANT')->whereDate('ajustement_bons.created_at', Carbon::today())
         ->sum('montant');
 
-        $bons = BonDeCaisse::orderBy('created_at', 'desc')
-        // 1. Group the statuses into one requirement
-        ->whereIn('etape', ['CAISSE', 'PAYE', 'CLOS']) 
-        
-        // 2. Keep the search logic as a single grouped AND requirement
-        ->where(function($query) {
-            $query->where('numero', 'like', "%{$this->search}%")
-                ->orWhereHas('dossier', function($q) {
-                    $q->where('numero', 'like', "%{$this->search}%");
+        $bons = collect();
+        $mouvements = collect();
+
+        if ($this->view === 'bons') {
+            $bons = BonDeCaisse::with(['user', 'camion', 'dossier'])
+                ->orderBy('created_at', 'desc')
+                ->whereIn('etape', ['CAISSE', 'PAYE', 'CLOS'])
+                ->when(filled($this->search), function ($query) {
+                    $query->where(function ($q) {
+                        $q->where('numero', 'like', "%{$this->search}%")
+                            ->orWhere('depense', 'like', "%{$this->search}%")
+                            ->orWhere('description', 'like', "%{$this->search}%")
+                            ->orWhereHas('dossier', function ($sub) {
+                                $sub->where('numero', 'like', "%{$this->search}%");
+                            })
+                            ->orWhereHas('user', function ($sub) {
+                                $sub->where('name', 'like', "%{$this->search}%");
+                            });
+                    });
                 })
-                ->orWhereHas('user', function($q) {
-                    $q->where('name', 'like', "%{$this->search}%");
-                });
-        })
-        ->paginate(10);
-                
+                ->paginate(10);
+        } else {
+            $mouvements = SuiviCaisse::with(['bonDeCaisse', 'depot', 'ajustementBon.bon_de_caisse'])
+                ->when(filled($this->dateDu), fn ($query) => $query->whereDate('created_at', '>=', $this->dateDu))
+                ->when(filled($this->dateAu), fn ($query) => $query->whereDate('created_at', '<=', $this->dateAu))
+                ->orderByDesc('created_at')
+                ->paginate(10);
+        }
 
+        return view('livewire.caisse.caisses', [
+            'pageHeader' => $pageHeader,
+            'sommeAttente' => $sommeAttente,
+            'caisse' => $caisse,
+            'sommeDepots' => $sommeDepots,
+            'sommeDecaissements' => $sommeDecaissements,
+            'bons' => $bons,
+            'mouvements' => $mouvements,
+        ])->layout('components.layouts.app', ['title' => 'Caisse']);
+    }
 
-        return view('livewire.caisse.caisses', ['pageHeader' => $pageHeader, 'sommeAttente' => $sommeAttente, 'caisse' => $caisse, 'sommeDepots' => $sommeDepots, 'sommeDecaissements' => $sommeDecaissements, 'bons' => $bons])->layout('components.layouts.app', ['title' => 'Caisse']);
+    public function updatedView()
+    {
+        $this->resetPage();
+    }
+
+    public function updatedDateDu()
+    {
+        $this->resetPage();
+    }
+
+    public function updatedDateAu()
+    {
+        $this->resetPage();
     }
 
     public function clear_search()

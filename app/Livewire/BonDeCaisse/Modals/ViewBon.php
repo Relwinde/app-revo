@@ -24,8 +24,9 @@ class ViewBon extends ModalComponent
     public $comments = false;
 
     public $type_paiement;
-    
+
     public $editMode = false;
+    public $showCheckForm = false;
 
 
     public function mount (){
@@ -127,19 +128,19 @@ class ViewBon extends ModalComponent
                     'type_paiement.in' => 'Le type de paiement sélectionné est invalide.',
                 ]);
 
-                $caisse = Caisse::find(1);
-                try {
-                    DB::beginTransaction();
-                        $this->bon->etapeBons()->create([
-                        'etape_precedente' => 'CAISSE',
-                        'etape_actuelle' => 'PAYE',
-                        'montant' => $this->bon->montant_definitif,
-                        'user_id' => auth()->id(),
-                        ]);
+                if($this->type_paiement == 'CHEQUE'){
+                    $this->dispatch('openModal', component: 'bon-de-caisse.modals.check-details-modal', arguments: ['bon' => $this->bon->id]);
+                }else{
+                    $caisse = Caisse::find(1);
+                    try {
+                        DB::beginTransaction();
+                            $this->bon->etapeBons()->create([
+                            'etape_precedente' => 'CAISSE',
+                            'etape_actuelle' => 'PAYE',
+                            'montant' => $this->bon->montant_definitif,
+                            'user_id' => auth()->id(),
+                            ]);
 
-                        if($this->type_paiement == 'CHEQUE'){
-                            $this->bon->update(['type_paiement' => 'CHEQUE']);
-                        }else{
                             if($caisse->solde < $this->bon->montant_definitif){
                                 $this->dispatch('error', ['message' => 'Le solde de la caisse est insuffisant pour effectuer ce décaissement.']);
                                 return;
@@ -154,15 +155,15 @@ class ViewBon extends ModalComponent
                             ]);
                             $suiviCaisse->save();
                             $caisse->decrement('solde', $this->bon->montant_definitif);
-                        }
 
-                        $this->bon->update(['etape' => 'PAYE']);       
-                    DB::commit();
-                    $this->dispatch('bon-updated');
-                } catch (\Exception $e) {
-                    DB::rollBack();
-                    throw $e;
-                    return;
+                            $this->bon->update(['etape' => 'PAYE']);
+                        DB::commit();
+                        $this->dispatch('bon-updated');
+                    } catch (\Exception $e) {
+                        DB::rollBack();
+                        throw $e;
+                        return;
+                    }
                 }
                 break;
             
@@ -193,5 +194,4 @@ class ViewBon extends ModalComponent
     public function printRecu (){
         $this->dispatch('print-recu-bon');
     }
-
 }

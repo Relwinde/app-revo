@@ -54,6 +54,16 @@
                         <p>Mode: <b>{{$bon->type_paiement}}</b></p>
                     </td>
                 </tr>
+                @if($bon->type_paiement === 'CHEQUE')
+                <tr>
+                    <td colspan="3">
+                        <p><b>Détails du chèque:</b></p>
+                        <p>Numéro: {{$bon->numero_cheque}}</p>
+                        <p>Banque: {{$bon->banque_cheque}}</p>
+                        <p>Date: {{ \Carbon\Carbon::parse($bon->date_cheque)->format('d/m/Y') }}</p>
+                    </td>
+                </tr>
+                @endif
                 <tr>
                     <td>
                         La caisse
