@@ -13,15 +13,16 @@ class AddCommande extends ModalComponent
 
     public function render()
     {
-        $commandes = Commande::where('dossier_id', null)->get();
+        $commandes = Commande::whereDoesntHave('dossiers', function($query) {
+            $query->where('dossier_id', $this->dossier->id);
+        })->get();
 
         return view('livewire.dossier.modals.add-commande', ['commandes' => $commandes]);
     }
 
     public function addCommande(Commande $commande)
     {
-        $commande->dossier_id = $this->dossier->id;
-        $commande->save();
+        $this->dossier->commandes()->attach($commande->id);
         $this->dispatch('commande-attached');
     }
 }

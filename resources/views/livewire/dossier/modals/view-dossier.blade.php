@@ -305,7 +305,7 @@
                                     <tr>
                                         <td>{{ $commande->numero }}</td>
                                         <td>{{ $commande->fournisseur ? $commande->fournisseur : 'N/A' }}</td>
-                                        <td>{{ $commande->marchandise ? $commande->marchandise->name : 'N/A' }}</td>
+                                        <td>{{ $commande->marchandise}}</td>
                                         <td>{{ $commande->quantite }}</td>
                                         <td class="text-center">
                                             <div class="btn-group">

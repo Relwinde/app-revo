@@ -63,12 +63,17 @@ class CreateCommande extends ModalComponent
             'description' => $this->description,
             'numero' => $this->numero,
             'user_id' => auth()->id(),
-            'dossier_id' => $this?->dossier?->id,
         ]);
 
         try {
             DB::beginTransaction();
             $commande->save();
+
+            // Attach to dossier if provided
+            if ($this?->dossier?->id) {
+                $this->dossier->commandes()->attach($commande->id);
+            }
+
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();

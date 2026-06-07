@@ -17,7 +17,6 @@ class Commande extends Model
         'quantite',
         'description',
         'fournisseur',
-        'dossier_id',
     ];
 
 
@@ -27,9 +26,9 @@ class Commande extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function dossier()
+    public function dossiers()
     {
-        return $this->belongsTo(Dossier::class);
+        return $this->belongsToMany(Dossier::class, 'commande_dossier');
     }
 
 

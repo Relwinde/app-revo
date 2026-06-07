@@ -184,13 +184,8 @@ class ViewDossier extends ModalComponent
 
     public function removeCommande($commandeId)
     {
-        $commande = $this->dossier->commandes()->where('id', $commandeId)->first();
-
-        if ($commande) {
-            $commande->dossier_id = null;
-            $commande->save();
-            $this->dispatch('commande-removed');
-        }
+        $this->dossier->commandes()->detach($commandeId);
+        $this->dispatch('commande-removed');
     }
 
 
