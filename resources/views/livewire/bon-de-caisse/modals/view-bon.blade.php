@@ -10,7 +10,7 @@
                         <button wire:click.prevent="update" type="submit" class="btn btn-sm btn-primary">
                             Enregistrer
                         </button>
-                    @elseif(!$editMode && $bon->etape == 'EMETTEUR' && Auth::user()->id == $bon->user->id)
+                    @elseif(!$editMode && $bon->etape == 'EMETTEUR' && Auth::user()->id == $bon->user->id && Auth::user()->can('Modifier Bon de caisse'))
                         <button wire:click.prevent="toggleEditMode" type="submit" class="btn btn-sm btn-primary">
                             Modifier
                         </button>
@@ -43,12 +43,16 @@
                 <div class="block-options">
                     @if (!$editMode)
                         @if ($bon->etape == "EMETTEUR" && Auth::user()->id == $bon->user->id)
+                            @can('Annuler Bon de caisse')
                             <button wire:click.prevent="cancelBon" type="submit" class="btn btn-sm btn-warning">
                                 Annuler
                             </button>
+                            @endcan
+                            @can('Envoyer bon de caisse pour validation')
                             <button wire:confirm="Êtes-vous sûr de vouloir envoyer ce bon pour validation ?" wire:click.prevent="nextStep" type="submit" class="btn btn-sm btn-danger">
                                 Envoyer pour validation
                             </button>
+                            @endcan
 
                         @elseif ($bon->etape == "MANAGER" && Auth::user()->can('Envoyer bon de caisse à la caisse'))
                             <button wire:confirm="Êtes-vous sûr de vouloir envoyer ce bon pour paiement ?" wire:click.prevent="nextStep" type="submit" class="btn btn-sm btn-danger">
@@ -89,7 +93,7 @@
 
                         @endif
 
-                        @if ($bon->etape == "PAYE" || $bon->etape == "CLOS" && Auth::user()->can('Imprimer reçu bon de caisse'))
+                        @if (($bon->etape == "PAYE" || $bon->etape == "CLOS") && Auth::user()->can('Imprimer reçu bon de caisse'))
                             <button wire:click.prevent="printRecu" type="button" class="btn btn-sm btn-primary">
                                 Imprimer reçu
                             </button>
@@ -225,17 +229,17 @@
             </div>
 
             <div class="block-header block-header-default">
-                @if ($bon->etape != "EMETTEUR" && $bon->etape != "PAYE" && $bon->etape != "CLOS")
+                @if ($bon->etape != "EMETTEUR" && $bon->etape != "PAYE" && $bon->etape != "CLOS" && Auth::user()->can('Retourner Bon de caisse'))
                     <div class="block-title">
                         <button class="btn btn-danger" wire:click="$dispatch('openModal', {component: 'bon-de-caisse.modals.return-bon', arguments: { bon : {{ $bon->id }} }})" wire:confirm="Êtes-vous sûr de vouloir retourner ce bon ?">Retourner le bon</button>
-                    </div>    
+                    </div>
                 @endif
 
-                @if (($bon->etape == "CLOS" || $bon->etape == "PAYE") && ($bon->documents->count() == 0 && Auth::user()->id == $bon->user->id) )
+                @if (($bon->etape == "CLOS" || $bon->etape == "PAYE") && ($bon->documents->count() == 0 && Auth::user()->id == $bon->user->id) && Auth::user()->can('Joindre document bon de caisse'))
                     <div class="block-title">
                         <button class="btn btn-primary" wire:click="$dispatch('openModal', {component: 'bon-de-caisse.modals.upload-documents', arguments: { bon : {{ $bon->id }} }})">Joindre un document</button>
                     </div>
-                    
+
                 @endif
 
                 @if ($bon->etape == "CLOS" || $bon->etape == "PAYE" && $bon->documents->count() > 0)
@@ -249,7 +253,9 @@
                                 @foreach ($bon->documents as $document)
                                 <tr>
                                     <td>
+                                        @can('Télécharger document bon de caisse')
                                         <a class="h5" href="{{ route('download-document', $document) }}">{{$document->name}}</a>
+                                        @endcan
                                         <div class="font-size-sm text-muted">Téléchargé le : {{ $document->created_at->format('d/m/Y H:i') }}</div>
                                     </td>
                                 </tr>

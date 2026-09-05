@@ -15,11 +15,13 @@
 
                     {{-- onclick="One.helpers('print');" --}}
 
-                    @if ($factureProforma?->items->count() > 0)
-                        <button wire:click='print' type="button" class="btn-block-option" >
-                            <i class="si si-printer mr-1"></i> Imprimer
-                        </button>    
-                    @endif
+                    @can('Imprimer Facture Proforma')
+                        @if ($factureProforma?->items->count() > 0)
+                            <button wire:click='print' type="button" class="btn-block-option" >
+                                <i class="si si-printer mr-1"></i> Imprimer
+                            </button>
+                        @endif
+                    @endcan
                 </div>
             </div>
             <div class="block-content">
@@ -132,19 +134,23 @@
                     </div>
 
                     @if ($numero == null)
-                        <div class="row mb-4">
-                            <div class="col text-right">
-                                <button wire:click="saveHeader" class="btn btn-primary">Enregistrer</button>
+                        @can('Créer Facture Proforma')
+                            <div class="row mb-4">
+                                <div class="col text-right">
+                                    <button wire:click="saveHeader" class="btn btn-primary">Enregistrer</button>
 
+                                </div>
                             </div>
-                        </div> 
+                        @endcan
                     @else
-                        <div class="row mb-4">
-                            <div class="col text-left mt-5">
-                                <button wire:click="$dispatch('openModal', { component: 'facture-proforma.modals.add-item', arguments: { factureProforma: {{ $factureProforma }} } })" class="btn btn-primary">Nouvelle ligne</button>
+                        @can('Modifier Facture Proforma')
+                            <div class="row mb-4">
+                                <div class="col text-left mt-5">
+                                    <button wire:click="$dispatch('openModal', { component: 'facture-proforma.modals.add-item', arguments: { factureProforma: {{ $factureProforma }} } })" class="btn btn-primary">Nouvelle ligne</button>
 
+                                </div>
                             </div>
-                        </div>
+                        @endcan
                     @endif
 
 
@@ -187,12 +193,16 @@
                                             <td class="text-right">{{ number_format($item->unit_price * $item->quantity, 2, '.', ' ') }} </td>
                                             <td class="text-center">
                                                 <div class="btn-group">
-                                                    <button wire:click="$dispatch('openModal', { component: 'facture-proforma.modals.edit-item', arguments: { item: {{ $item }} } })" type="button" class="btn btn-sm btn-light" data-toggle="tooltip" title="Edit Item">
-                                                        <i class="fa fa-fw fa-pencil-alt"></i>
-                                                    </button>
-                                                    <button wire:confirm='Êtes vous sûr de vouloir supprimer cette ligne ?' wire:click='removeItem ({{$item->id}})' type="button" class="btn btn-sm btn-light" data-toggle="tooltip" title="Remove Item">
-                                                        <i class="fa fa-fw fa-times"></i>
-                                                    </button>
+                                                    @can('Modifier Facture Proforma')
+                                                        <button wire:click="$dispatch('openModal', { component: 'facture-proforma.modals.edit-item', arguments: { item: {{ $item }} } })" type="button" class="btn btn-sm btn-light" data-toggle="tooltip" title="Edit Item">
+                                                            <i class="fa fa-fw fa-pencil-alt"></i>
+                                                        </button>
+                                                    @endcan
+                                                    @can('Supprimer ligne Facture Proforma')
+                                                        <button wire:confirm='Êtes vous sûr de vouloir supprimer cette ligne ?' wire:click='removeItem ({{$item->id}})' type="button" class="btn btn-sm btn-light" data-toggle="tooltip" title="Remove Item">
+                                                            <i class="fa fa-fw fa-times"></i>
+                                                        </button>
+                                                    @endcan
                                                 </div>
                                             </td>
                                         </tr>             
@@ -220,15 +230,17 @@
                             </div>
 
                             <div class="col">
-                                <div class="row mb-4">
-                                    <div class="col text-right">
-                                        <button wire:click="saveComments" class="btn btn-primary">Enregistrer Commentaires</button>
-                                        <div wire:loading class="spinner-border spinner-border-sm text-primary" role="status">
-                                            <span class="sr-only">Loading...</span>
-                                        </div>
+                                @can('Modifier Facture Proforma')
+                                    <div class="row mb-4">
+                                        <div class="col text-right">
+                                            <button wire:click="saveComments" class="btn btn-primary">Enregistrer Commentaires</button>
+                                            <div wire:loading class="spinner-border spinner-border-sm text-primary" role="status">
+                                                <span class="sr-only">Loading...</span>
+                                            </div>
 
+                                        </div>
                                     </div>
-                                </div>    
+                                @endcan
                             </div>
                                 <textarea wire:model='comments' class="form-control form-control-alt" name="comments" id="" cols="30" rows="10"></textarea>
                         </div>    

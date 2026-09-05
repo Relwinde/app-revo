@@ -71,6 +71,8 @@ class EditFacture extends Component
     }
 
     public function saveHeader (){
+            abort_unless(auth()->user()->can('Modifier Facture Proforma'), 403);
+
             $this->validate([
                 'client_id' => 'required|exists:clients,id',
                 'camion_id' => 'nullable|exists:camions,id',
@@ -132,16 +134,21 @@ class EditFacture extends Component
     }
 
     public function removeItem (FactureItem $item){
+        abort_unless(auth()->user()->can('Supprimer ligne Facture Proforma'), 403);
+
         $item->delete();
     }
 
     public function saveComments (){
+        abort_unless(auth()->user()->can('Modifier Facture Proforma'), 403);
+
         $this->factureProforma->comments = $this->comments;
 
         $this->factureProforma->save();
     }
 
     public function print (){
+            abort_unless(auth()->user()->can('Imprimer Facture Proforma'), 403);
 
             $url = route('print-facture-proforma', ['facture'=>$this->factureProforma->id]);
 

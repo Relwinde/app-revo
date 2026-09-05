@@ -98,6 +98,8 @@ class ViewDossier extends ModalComponent
 
     public function update ()
     {
+        abort_unless(auth()->user()->can('Modifier Dossier'), 403);
+
         $this->validate(
             [
                 'client_id' => ['required', 'exists:clients,id'],
@@ -184,6 +186,8 @@ class ViewDossier extends ModalComponent
 
     public function removeCommande($commandeId)
     {
+        abort_unless(auth()->user()->can('Détacher Commande de Dossier'), 403);
+
         $this->dossier->commandes()->detach($commandeId);
         $this->dispatch('commande-removed');
     }
@@ -191,17 +195,23 @@ class ViewDossier extends ModalComponent
 
     public function printOrdreMission()
     {
+        abort_unless(auth()->user()->can('Imprimer Ordre de Mission'), 403);
+
         $this->dispatch('print-ordre-mission');
     }
 
     public function printManifest()
     {
+        abort_unless(auth()->user()->can('Imprimer Manifeste'), 403);
+
         $this->dispatch('print-manifest');
 
     }
 
     public function generateFactureDefinitive()
     {
+       abort_unless(auth()->user()->can('Générer Facture Définitive'), 403);
+
        $facture = $this->dossier->generateFactureDefinitive();
 
        $url = route('view-facture', ['facture' => $facture->id]);

@@ -8,10 +8,12 @@
             <div class="block-header">
                 <h3 class="block-title">{{ $pageHeader['subtitle'] }}</h3>
                 <div class="block-options">
-                    <button wire:click="$dispatch('openModal', { component: 'client.modals.create-client' })"
-                        class="btn btn-sm btn-primary">
-                        <i class="fa fa-plus"></i> Ajouter un client
-                    </button>
+                    @can('Créer Client')
+                        <button wire:click="$dispatch('openModal', { component: 'client.modals.create-client' })"
+                            class="btn btn-sm btn-primary">
+                            <i class="fa fa-plus"></i> Ajouter un client
+                        </button>
+                    @endcan
                 </div>
             </div>
 
@@ -81,14 +83,18 @@
                                 {{-- ACTIONS --}}
                                 <td class="text-center">
                                     <div class="btn-group">
-                                        <button wire:click="$dispatch('openModal', { component: 'client.modals.edit-client', arguments: { client: {{ $client }} } })" type="button" class="btn btn-sm btn-light" title="Modifier">
-                                                <i class="fa fa-fw fa-pencil-alt"></i>
-                                        </button>
-                                        <a wire:click.prevent="delete({{ $client->id }})"
-                                            wire:confirm="Êtes-vous sûr de vouloir supprimer ce client ?" type="button"
-                                            class="btn btn-sm btn-light" title="Supprimer">
-                                            <i class="fa fa-fw fa-trash"></i>
-                                        </a>
+                                        @can('Modifier Client')
+                                            <button wire:click="$dispatch('openModal', { component: 'client.modals.edit-client', arguments: { client: {{ $client }} } })" type="button" class="btn btn-sm btn-light" title="Modifier">
+                                                    <i class="fa fa-fw fa-pencil-alt"></i>
+                                            </button>
+                                        @endcan
+                                        @can('Supprimer Client')
+                                            <a wire:click.prevent="delete({{ $client->id }})"
+                                                wire:confirm="Êtes-vous sûr de vouloir supprimer ce client ?" type="button"
+                                                class="btn btn-sm btn-light" title="Supprimer">
+                                                <i class="fa fa-fw fa-trash"></i>
+                                            </a>
+                                        @endcan
                                     </div>
                                 </td>
                             </tr>

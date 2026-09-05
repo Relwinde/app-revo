@@ -12,9 +12,11 @@
                                 Enregistrer
                             </button>
                         @else
-                            <button wire:click.prevent="toggleEditMode" type="submit" class="btn btn-sm btn-primary">
-                                Modifier
-                            </button>
+                            @can('Modifier Commande')
+                                <button wire:click.prevent="toggleEditMode" type="submit" class="btn btn-sm btn-primary">
+                                    Modifier
+                                </button>
+                            @endcan
                         @endif
                     <div wire:loading class="spinner-border spinner-border-sm text-primary" role="status">
                         <span class="sr-only">Loading...</span>

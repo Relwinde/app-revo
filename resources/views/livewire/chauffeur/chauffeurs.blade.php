@@ -6,10 +6,12 @@
             <div class="block-header">
                 <h3 class="block-title">{{ $pageHeader['subtitle'] ?? 'Liste des chauffeurs' }}</h3>
                 <div class="block-options">
-                    <button wire:click="$dispatch('openModal', { component: 'chauffeur.modals.create-chauffeur' })"
-                        class="btn btn-sm btn-primary">
-                        <i class="fa fa-plus"></i> Ajouter un chauffeur
-                    </button>
+                    @can('Créer Chauffeur')
+                        <button wire:click="$dispatch('openModal', { component: 'chauffeur.modals.create-chauffeur' })"
+                            class="btn btn-sm btn-primary">
+                            <i class="fa fa-plus"></i> Ajouter un chauffeur
+                        </button>
+                    @endcan
                 </div>
             </div>
 
@@ -89,14 +91,16 @@
                                             {{-- Actions --}}
                                             <td class="text-center">
                                                 <div class="btn-group">
-                                                    <button wire:click.prevent="{{ $editMode && $chauffeurId === $chauffeur->id
+                                                    @can('Modifier Chauffeur')
+                                                        <button wire:click.prevent="{{ $editMode && $chauffeurId === $chauffeur->id
                             ? 'update(' . $chauffeur->id . ')'
                             : 'toggleEditMode(' . $chauffeur->id . ')' }}" class="btn btn-sm btn-light"
-                                                        title="Modifier">
+                                                            title="Modifier">
 
-                                                        <i
-                                                            class="fa fa-fw {{ $editMode && $chauffeurId === $chauffeur->id ? 'fa-check' : 'fa-pencil-alt' }}"></i>
-                                                    </button>
+                                                            <i
+                                                                class="fa fa-fw {{ $editMode && $chauffeurId === $chauffeur->id ? 'fa-check' : 'fa-pencil-alt' }}"></i>
+                                                        </button>
+                                                    @endcan
 
                                                     @if ($editMode && $chauffeurId === $chauffeur->id)
                                                         <button wire:click.prevent="toggleEditMode({{ $chauffeur->id }})"
@@ -104,10 +108,12 @@
                                                             <i class="fa fa-fw fa-times"></i>
                                                         </button>
                                                     @else
-                                                        <a wire:confirm="Êtes-vous sûr de vouloir supprimer ce chauffeur ?" wire:click.prevent="delete({{ $chauffeur->id }})" class="btn btn-sm btn-light"
-                                                            title="Supprimer">
-                                                            <i class="fa fa-fw fa-trash"></i>
-                                                        </a>
+                                                        @can('Supprimer Chauffeur')
+                                                            <a wire:confirm="Êtes-vous sûr de vouloir supprimer ce chauffeur ?" wire:click.prevent="delete({{ $chauffeur->id }})" class="btn btn-sm btn-light"
+                                                                title="Supprimer">
+                                                                <i class="fa fa-fw fa-trash"></i>
+                                                            </a>
+                                                        @endcan
                                                     @endif
                                                 </div>
                                             </td>

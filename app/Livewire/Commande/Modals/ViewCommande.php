@@ -45,6 +45,7 @@ class ViewCommande extends ModalComponent
 
     public function update()
     {
+        abort_unless(auth()->user()->can('Modifier Commande'), 403);
 
         $this->validate([
             'fournisseur' => ['required', 'string'],

@@ -32,6 +32,8 @@ class EntrepriseSettings extends Component
 
     public function save()
     {
+        abort_unless(auth()->user()->can('Modifier Entreprise'), 403);
+
         $this->validate(
             [
                 'capital' => ['nullable', 'string', 'max:255'],

@@ -6,10 +6,12 @@
                 <div class="block-header">
                     <h3 class="block-title">{{ $pageHeader['subtitle'] }}</h3>
                     <div class="block-options">
+                        @can('Créer Bon de caisse')
                         <button wire:click="$dispatch('openModal', { component: 'bon_de_caisse.modals.create-bon' })"
                             class="btn btn-sm btn-primary">
                             <i class="fa fa-plus"></i> Nouveau bon
                         </button>
+                        @endcan
                     </div>
                 </div>
 
@@ -53,10 +55,12 @@
                                     </td>
                                     <td>
                                         <div class="btn-group">
+                                            @can('Voir Bon de caisse')
                                             <button wire:click="$dispatch('openModal', { component: 'bon_de_caisse.modals.view-bon', arguments: { bon: {{ $bon }} } })"
                                                 class="btn btn-sm btn-light" title="Voir">
                                                 <i class="fa fa-fw fa-eye"></i>
                                             </button>
+                                            @endcan
                                         </div>
                                     </td>
                                 </tr>

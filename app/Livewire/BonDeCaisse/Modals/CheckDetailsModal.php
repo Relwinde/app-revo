@@ -29,6 +29,8 @@ class CheckDetailsModal extends ModalComponent
 
     public function confirmerPaiement()
     {
+        abort_unless(auth()->user()->can('Payer bon de caisse'), 403);
+
         $this->validate([
             'numeroChecque' => 'required|string|max:50',
             'banqueChecque' => 'required|string|max:100',

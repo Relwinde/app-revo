@@ -21,9 +21,11 @@
                                             </td>
                                             <td class="text-center">
                                                 <div class="btn-group">
-                                                    <button wire:click="removePermission({{ $granted->id }})" type="button" class="btn btn-sm btn-light" data-toggle="tooltip" title="Edit Client">
-                                                        <i class="fa fa-fw fa-minus"></i>
-                                                    </button>
+                                                    @can('Modifier Profil')
+                                                        <button wire:click="removePermission({{ $granted->id }})" type="button" class="btn btn-sm btn-light" data-toggle="tooltip" title="Edit Client">
+                                                            <i class="fa fa-fw fa-minus"></i>
+                                                        </button>
+                                                    @endcan
                                                 </div>
                                             </td>
                                         </tr>
@@ -50,9 +52,11 @@
                                             </td>
                                             <td class="text-center">
                                                 <div class="btn-group">
-                                                    <button wire:click="addPermission({{ $ungiven->id }})" type="button" class="btn btn-sm btn-light" data-toggle="tooltip" title="Edit Client">
-                                                        <i class="fa fa-fw fa-plus"></i>
-                                                    </button>
+                                                    @can('Modifier Profil')
+                                                        <button wire:click="addPermission({{ $ungiven->id }})" type="button" class="btn btn-sm btn-light" data-toggle="tooltip" title="Edit Client">
+                                                            <i class="fa fa-fw fa-plus"></i>
+                                                        </button>
+                                                    @endcan
                                                 </div>
                                             </td>
                                         </tr>

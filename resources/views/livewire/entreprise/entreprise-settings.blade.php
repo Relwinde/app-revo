@@ -8,12 +8,14 @@
                 <div class="block-header block-header-default">
                     <h3 class="block-title">Informations de l'entreprise</h3>
                     <div class="block-options">
-                        <button type="submit" class="btn btn-sm btn-primary">
-                            Enregistrer
-                        </button>
-                        <div wire:loading class="spinner-border spinner-border-sm text-primary" role="status">
-                            <span class="sr-only">Loading...</span>
-                        </div>
+                        @can('Modifier Entreprise')
+                            <button type="submit" class="btn btn-sm btn-primary">
+                                Enregistrer
+                            </button>
+                            <div wire:loading class="spinner-border spinner-border-sm text-primary" role="status">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                        @endcan
                     </div>
                 </div>
                 <div class="block-content">

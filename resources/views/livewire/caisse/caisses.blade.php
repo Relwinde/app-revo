@@ -5,10 +5,12 @@
             <div class="block-header">
                 <h3 class="block-title">{{ $pageHeader['subtitle'] }}</h3>
                 <div class="block-options">
+                    @can('Créer Dépôt caisse')
                     <button wire:click="$dispatch('openModal', { component: 'caisse.modals.create-depot' })"
                         class="btn btn-sm btn-primary">
                         <i class="fa fa-hand-holding-usd"></i> Effectuer un dépôt
                     </button>
+                    @endcan
                 </div>
             </div>
     </div>

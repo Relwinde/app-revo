@@ -20,6 +20,8 @@ class ReturnBon extends ModalComponent
     }
 
     public function stepBack (){
+       abort_unless(auth()->user()->can('Retourner Bon de caisse'), 403);
+
        switch ($this->bon->etape) {
             case 'CAISSE':
                 try{

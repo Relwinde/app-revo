@@ -6,10 +6,12 @@
             <div class="block-header">
                 <h3 class="block-title">{{ $pageHeader['subtitle'] }}</h3>
                 <div class="block-options">
-                    <button wire:click="$dispatch('openModal', { component: 'fournisseur.modals.create-fournisseur' })"
-                        class="btn btn-sm btn-primary">
-                        <i class="fa fa-plus"></i> Ajouter un prestataire
-                    </button>
+                    @can('Créer Fournisseur')
+                        <button wire:click="$dispatch('openModal', { component: 'fournisseur.modals.create-fournisseur' })"
+                            class="btn btn-sm btn-primary">
+                            <i class="fa fa-plus"></i> Ajouter un prestataire
+                        </button>
+                    @endcan
                 </div>
             </div>
 
@@ -78,15 +80,19 @@
                                             {{-- ACTIONS --}}
                                             <td class="text-center">
                                                 <div class="btn-group">
-                                                    <button wire:click="$dispatch('openModal', { component: 'fournisseur.modals.edit-fournisseur', arguments: { fournisseur: {{ $fournisseur }} } })"
-                                                        class="btn btn-sm btn-light" title="Modifier">
-                                                        <i
-                                                            class="fa fa-fw fa-pencil-alt"></i>
-                                                    </button>
-                                                    <a wire:click.prevent="delete({{ $fournisseur->id }})" class="btn btn-sm btn-light"
-                                                        title="Supprimer" wire:confirm="Êtes-vous sûr de vouloir supprimer ce fournisseur ?">
-                                                        <i class="fa fa-fw fa-trash"></i>
-                                                    </a>
+                                                    @can('Modifier Fournisseur')
+                                                        <button wire:click="$dispatch('openModal', { component: 'fournisseur.modals.edit-fournisseur', arguments: { fournisseur: {{ $fournisseur }} } })"
+                                                            class="btn btn-sm btn-light" title="Modifier">
+                                                            <i
+                                                                class="fa fa-fw fa-pencil-alt"></i>
+                                                        </button>
+                                                    @endcan
+                                                    @can('Supprimer Fournisseur')
+                                                        <a wire:click.prevent="delete({{ $fournisseur->id }})" class="btn btn-sm btn-light"
+                                                            title="Supprimer" wire:confirm="Êtes-vous sûr de vouloir supprimer ce fournisseur ?">
+                                                            <i class="fa fa-fw fa-trash"></i>
+                                                        </a>
+                                                    @endcan
                                                 </div>
                                             </td>
                                         </tr>

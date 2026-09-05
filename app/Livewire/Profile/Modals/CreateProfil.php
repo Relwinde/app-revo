@@ -17,6 +17,8 @@ class CreateProfil extends ModalComponent
     }
 
     public function create(){
+        abort_unless(auth()->user()->can('Créer Profil'), 403);
+
         $this->validate([
             'name' => 'required|unique:roles,name'
         ], [

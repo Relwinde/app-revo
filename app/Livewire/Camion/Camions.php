@@ -42,6 +42,8 @@ class Camions extends Component
 
     public function update($id)
     {
+        abort_unless(auth()->user()->can('Modifier Camion'), 403);
+
         $this->validate([
             'license_plate' => 'required|string|max:255|unique:camions,license_plate,' . $id,
             'model' => 'nullable|string|max:255',
@@ -66,6 +68,8 @@ class Camions extends Component
 
     public function delete($id)
     {
+        abort_unless(auth()->user()->can('Supprimer Camion'), 403);
+
         $camion = Camion::find($id);
         if ($camion) {
             $camion->delete();

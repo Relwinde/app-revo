@@ -62,6 +62,8 @@ class CreateFacture extends Component
     }
 
     public function saveHeader (){
+            abort_unless(auth()->user()->can('Créer Facture Proforma'), 403);
+
             $this->validate([
                 'client_id' => 'required|exists:clients,id',
                 'camion_id' => 'nullable|exists:camions,id',
@@ -136,6 +138,7 @@ class CreateFacture extends Component
     }
 
     public function print (){
+            abort_unless(auth()->user()->can('Imprimer Facture Proforma'), 403);
 
             $url = route('print-facture-proforma', ['facture'=>$this->factureProforma->id]);
 

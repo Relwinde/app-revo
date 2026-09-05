@@ -36,6 +36,8 @@ class EditFournisseur extends ModalComponent
     }
 
     public function save (){
+        abort_unless(auth()->user()->can('Modifier Fournisseur'), 403);
+
         $this->validate([
             'name' => ['required', 'string', 'max:255', 'unique:fournisseurs,name,' . $this->fournisseur->id],
             'email' => ['nullable', 'email', 'unique:fournisseurs,email'. $this->fournisseur->id],

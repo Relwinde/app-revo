@@ -29,6 +29,8 @@ class Marchandises extends Component
         }
     }
     public function update($id){
+        abort_unless(auth()->user()->can('Modifier Marchandise'), 403);
+
         $this->validate([
             'name' => 'required|string|max:255|unique:marchandises,name,'.$id,
         ]);
@@ -49,6 +51,8 @@ class Marchandises extends Component
     }
 
     public function delete($id){
+        abort_unless(auth()->user()->can('Supprimer Marchandise'), 403);
+
         $marchandise = Marchandise::find($id);
         if($marchandise){
             $marchandise->delete();

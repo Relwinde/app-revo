@@ -33,6 +33,8 @@ class CreateCommande extends ModalComponent
 
     public function create()
     {
+        abort_unless(auth()->user()->can('Créer Commande'), 403);
+
         // Validation and creation logic here
         $this->validate(
             [

@@ -32,9 +32,11 @@
                                             </td>
                                             <td class="text-center">
                                                 <div class="btn-group">
-                                                    <button wire:click="addCommande({{ $commande->id }})" type="button" class="btn btn-sm btn-light" data-toggle="tooltip" title="Ajouter le bon de commande au dossier">
-                                                        <i class="fa fa-fw fa-plus"></i>
-                                                    </button>
+                                                    @can('Attacher Commande à Dossier')
+                                                        <button wire:click="addCommande({{ $commande->id }})" type="button" class="btn btn-sm btn-light" data-toggle="tooltip" title="Ajouter le bon de commande au dossier">
+                                                            <i class="fa fa-fw fa-plus"></i>
+                                                        </button>
+                                                    @endcan
                                                 </div>
                                             </td>
                                         </tr>

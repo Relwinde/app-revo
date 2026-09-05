@@ -26,6 +26,8 @@ class CreateBon extends ModalComponent
     }
 
     public function create (){
+        abort_unless(auth()->user()->can('Créer Bon de caisse'), 403);
+
         $this->validate([
             'montant' => 'required|numeric',
             'depense' => 'required|string',

@@ -6,10 +6,12 @@
             <div class="block-header">
                 <h3 class="block-title">{{ $pageHeader['subtitle'] }}</h3>
                 <div class="block-options">
-                    <button wire:click="$dispatch('openModal', { component: 'user.modals.create-user' })"
-                        class="btn btn-sm btn-primary">
-                        <i class="fa fa-plus"></i> Ajouter un utilisateur
-                    </button>
+                    @can('Créer Utilisateur')
+                        <button wire:click="$dispatch('openModal', { component: 'user.modals.create-user' })"
+                            class="btn btn-sm btn-primary">
+                            <i class="fa fa-plus"></i> Ajouter un utilisateur
+                        </button>
+                    @endcan
                 </div>
             </div>
 
@@ -51,11 +53,13 @@
                                     {{ $user->created_at->format('d/m/Y H:i') }}
                                 </td>
                                 <td class="text-center">
-                                    <button wire:confirm="Êtes-vous sûr de vouloir supprimer cet utilisateur ?"
-                                        wire:click="delete({{ $user->id }})" class="btn btn-sm btn-alt-danger"
-                                        title="Supprimer">
-                                        <i class="fa fa-trash"></i>
-                                    </button>
+                                    @can('Supprimer Utilisateur')
+                                        <button wire:confirm="Êtes-vous sûr de vouloir supprimer cet utilisateur ?"
+                                            wire:click="delete({{ $user->id }})" class="btn btn-sm btn-alt-danger"
+                                            title="Supprimer">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    @endcan
                             </tr>
                         @empty
                             <tr>

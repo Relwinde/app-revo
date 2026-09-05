@@ -32,6 +32,8 @@ class Users extends Component
 
     public function delete($id)
     {
+        abort_unless(auth()->user()->can('Supprimer Utilisateur'), 403);
+
         $user = User::find($id);
         if ($user) {
             $user->delete();

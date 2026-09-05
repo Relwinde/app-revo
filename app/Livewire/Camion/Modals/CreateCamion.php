@@ -20,6 +20,8 @@ class CreateCamion extends ModalComponent
 
     public function create()
     {
+        abort_unless(auth()->user()->can('Créer Camion'), 403);
+
         $this->validate([
             'license_plate' => 'required|string|max:255|unique:camions,license_plate',
             'model' => 'nullable|string|max:255',

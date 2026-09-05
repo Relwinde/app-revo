@@ -6,10 +6,12 @@
             <div class="block-header">
                 <h3 class="block-title">{{ $pageHeader['subtitle'] }}</h3>
                 <div class="block-options">
-                    <button wire:click="$dispatch('openModal', { component: 'dossier.modals.create-dossier' })"
-                        class="btn btn-sm btn-primary">
-                        <i class="fa fa-plus"></i> Nouvelle opération
-                    </button>
+                    @can('Créer Dossier')
+                        <button wire:click="$dispatch('openModal', { component: 'dossier.modals.create-dossier' })"
+                            class="btn btn-sm btn-primary">
+                            <i class="fa fa-plus"></i> Nouvelle opération
+                        </button>
+                    @endcan
                 </div>
             </div>
 

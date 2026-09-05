@@ -6,7 +6,7 @@
             <div class="block-header">
                 <h3 class="block-title">{{ $pageHeader['subtitle'] }}</h3>
                 <div class="block-options">
-                    @can('Ajouter Profil')
+                    @can('Créer Profil')
                         <button wire:click="$dispatch('openModal', { component: 'profile.modals.create-profil' })" class="btn btn-sm btn-primary">
                             <i class="fa fa-plus"></i> Ajouter un profil
                         </button>

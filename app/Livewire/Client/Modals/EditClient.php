@@ -38,6 +38,8 @@ class EditClient extends ModalComponent
     }
 
     public function save (){
+        abort_unless(auth()->user()->can('Modifier Client'), 403);
+
          $this->validate(
             [
                 'name' => ['required', 'string', 'max:255', 'unique:clients,name,'.$this->client->id],

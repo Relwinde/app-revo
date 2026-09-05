@@ -22,6 +22,8 @@ class AddCommande extends ModalComponent
 
     public function addCommande(Commande $commande)
     {
+        abort_unless(auth()->user()->can('Attacher Commande à Dossier'), 403);
+
         $this->dossier->commandes()->attach($commande->id);
         $this->dispatch('commande-attached');
     }

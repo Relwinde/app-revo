@@ -25,6 +25,8 @@ class CreateClient extends ModalComponent
 
     public function create()
     {
+        abort_unless(auth()->user()->can('Créer Client'), 403);
+
         $this->validate(
             [
                 'name' => ['required', 'string', 'max:255', 'unique:clients,name'],

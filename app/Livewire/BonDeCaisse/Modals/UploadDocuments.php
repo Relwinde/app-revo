@@ -25,6 +25,8 @@ class UploadDocuments extends ModalComponent
 
     public function save()
     {
+        abort_unless(auth()->user()->can('Joindre document bon de caisse'), 403);
+
         $this->validate([
             'file' => 'required|file|mimes:pdf|max:10240', // Max 10MB
         ], [

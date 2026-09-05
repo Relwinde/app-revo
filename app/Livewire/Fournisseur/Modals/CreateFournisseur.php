@@ -23,6 +23,8 @@ class CreateFournisseur extends ModalComponent
 
     public function create()
     {
+        abort_unless(auth()->user()->can('Créer Fournisseur'), 403);
+
         $this->validate([
             'name' => ['required', 'string', 'max:255', 'unique:fournisseurs,name'],
             'email' => ['nullable', 'email', 'unique:fournisseurs,email'],

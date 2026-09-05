@@ -21,6 +21,8 @@ class CreateUser extends ModalComponent
 
     public function create (){
 
+        abort_unless(auth()->user()->can('Créer Utilisateur'), 403);
+
         $this->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',

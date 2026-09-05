@@ -28,6 +28,8 @@ class AddItem extends ModalComponent
 
     public function addItem()
     {
+        abort_unless(auth()->user()->can('Modifier Facture Proforma'), 403);
+
         $this->validate([
             'description' => 'required|string',
             'quantity' => 'required|numeric|min:1',

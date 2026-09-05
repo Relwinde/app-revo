@@ -18,21 +18,27 @@
                         @else
 
                             @if ($dossier->factureProforma )
-
-                                <button wire:click.prevent="generateFactureDefinitive" type="submit" class="btn btn-sm btn-primary">
-                                    Générer Facture Définitive
-                                </button>
-                                
+                                @can('Générer Facture Définitive')
+                                    <button wire:click.prevent="generateFactureDefinitive" type="submit" class="btn btn-sm btn-primary">
+                                        Générer Facture Définitive
+                                    </button>
+                                @endcan
                             @endif
-                            <button wire:click.prevent="printOrdreMission" type="submit" class="btn btn-sm btn-primary">
-                                Ordre de mission
-                            </button>
-                            <button wire:click.prevent="printManifest" type="submit" class="btn btn-sm btn-primary">
-                                Manifeste
-                            </button>
-                            <button wire:click.prevent="toggleEditMode" type="submit" class="btn btn-sm btn-primary">
-                                Modifier
-                            </button>
+                            @can('Imprimer Ordre de Mission')
+                                <button wire:click.prevent="printOrdreMission" type="submit" class="btn btn-sm btn-primary">
+                                    Ordre de mission
+                                </button>
+                            @endcan
+                            @can('Imprimer Manifeste')
+                                <button wire:click.prevent="printManifest" type="submit" class="btn btn-sm btn-primary">
+                                    Manifeste
+                                </button>
+                            @endcan
+                            @can('Modifier Dossier')
+                                <button wire:click.prevent="toggleEditMode" type="submit" class="btn btn-sm btn-primary">
+                                    Modifier
+                                </button>
+                            @endcan
                         @endif
                     <div wire:loading class="spinner-border spinner-border-sm text-primary" role="status">
                         <span class="sr-only">Loading...</span>
@@ -279,12 +285,16 @@
                 <div class="block-footer">
                     <div class="table-responsive">
                         <div class="justify-content-left py-sm-1 py-md-1">
-                            <button wire:click="$dispatch('openModal', { component: 'dossier.modals.add-commande', arguments: { dossier: {{ $dossier }} } })" class="btn btn-sm btn-primary">Ajouter un PO</button>
+                            @can('Attacher Commande à Dossier')
+                                <button wire:click="$dispatch('openModal', { component: 'dossier.modals.add-commande', arguments: { dossier: {{ $dossier }} } })" class="btn btn-sm btn-primary">Ajouter un PO</button>
+                            @endcan
 
-                            <button wire:click="$dispatch('openModal', { component: 'commande.modals.create-commande', arguments: { dossier: {{ $dossier }} } })"
-                            class="btn btn-sm btn-primary">
-                            <i class="fa fa-plus"></i> Nouveau PO
-                            </button>
+                            @can('Créer Commande')
+                                <button wire:click="$dispatch('openModal', { component: 'commande.modals.create-commande', arguments: { dossier: {{ $dossier }} } })"
+                                class="btn btn-sm btn-primary">
+                                <i class="fa fa-plus"></i> Nouveau PO
+                                </button>
+                            @endcan
 
                         </div>
 
@@ -309,7 +319,9 @@
                                         <td>{{ $commande->quantite }}</td>
                                         <td class="text-center">
                                             <div class="btn-group">
-                                                <button wire:click="removeCommande({{ $commande->id }})" class="btn btn-sm btn-light" title="Retirer le bon de commande"><i class="fa fa-fw fa-minus"></i></button>
+                                                @can('Détacher Commande de Dossier')
+                                                    <button wire:click="removeCommande({{ $commande->id }})" class="btn btn-sm btn-light" title="Retirer le bon de commande"><i class="fa fa-fw fa-minus"></i></button>
+                                                @endcan
                                             </div>
                                         </td>
                                     </tr>

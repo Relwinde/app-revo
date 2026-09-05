@@ -44,6 +44,8 @@ class Chauffeurs extends Component
 
     public function update($id)
     {
+        abort_unless(auth()->user()->can('Modifier Chauffeur'), 403);
+
         $this->validate([
             'name'    => 'required|string|max:255|unique:chauffeurs,name,' . $id,
             'email'   => 'nullable|email|unique:chauffeurs,email,' . $id,
@@ -74,6 +76,8 @@ class Chauffeurs extends Component
 
     public function delete($id)
     {
+        abort_unless(auth()->user()->can('Supprimer Chauffeur'), 403);
+
         $chauffeur = Chauffeur::find($id);
         if ($chauffeur) {
             $chauffeur->delete();

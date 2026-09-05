@@ -41,6 +41,8 @@ class CreateAjustement extends ModalComponent
     }
 
     public function save (){
+        abort_unless(auth()->user()->can('Faire un ajustement sur bon de caisse'), 403);
+
         $this->validate([
             'montant' => 'required|numeric',
             'libelle' => 'required|string',

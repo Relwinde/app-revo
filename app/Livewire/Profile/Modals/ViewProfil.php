@@ -37,10 +37,14 @@ class ViewProfil extends ModalComponent
     }
 
     public function addPermission (Permission $permission){
+        abort_unless(auth()->user()->can('Modifier Profil'), 403);
+
         $this->profile->givePermissionTo($permission->name);
     }
 
     public function removePermission (Permission $permission){
+        abort_unless(auth()->user()->can('Modifier Profil'), 403);
+
         $this->profile->revokePermissionTo($permission->name);
     }
 }

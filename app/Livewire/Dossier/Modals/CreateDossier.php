@@ -69,6 +69,8 @@ class CreateDossier extends ModalComponent
 
     public function create()
     {
+        abort_unless(auth()->user()->can('Créer Dossier'), 403);
+
         $this->validate(
             [
                 'client_id' => ['required', 'exists:clients,id'],

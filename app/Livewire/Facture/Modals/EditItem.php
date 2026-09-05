@@ -32,6 +32,7 @@ class EditItem extends ModalComponent
     }
 
     public function save (){
+        abort_unless(auth()->user()->can('Modifier Facture'), 403);
 
         $this->validate([
             'description' => 'required|string',

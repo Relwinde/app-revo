@@ -23,6 +23,8 @@ class CreateChauffeur extends ModalComponent
 
     public function create()
     {
+        abort_unless(auth()->user()->can('Créer Chauffeur'), 403);
+
         $this->validate([
             'name' => 'required|string|max:255|unique:chauffeurs,name',
             'email' => 'nullable|email|unique:chauffeurs,email',

@@ -47,6 +47,8 @@ class ViewBon extends ModalComponent
     }
 
     public function update (){
+        abort_unless(auth()->user()->can('Modifier Bon de caisse'), 403);
+
         $this->validate([
             'montant' => 'required|numeric',
             'depense' => 'required|string',
@@ -81,6 +83,7 @@ class ViewBon extends ModalComponent
     public function nextStep (){
         switch ($this->bon->etape) {
             case 'EMETTEUR':
+                abort_unless(auth()->user()->can('Envoyer bon de caisse pour validation'), 403);
                 try {
                     DB::beginTransaction();
                         $this->bon->etapeBons()->create([
@@ -101,6 +104,7 @@ class ViewBon extends ModalComponent
 
 
             case 'MANAGER':
+                abort_unless(auth()->user()->can('Envoyer bon de caisse à la caisse'), 403);
                 try {
                     DB::beginTransaction();
                         $this->bon->etapeBons()->create([
@@ -120,6 +124,7 @@ class ViewBon extends ModalComponent
                 break;
 
             case 'CAISSE':
+                abort_unless(auth()->user()->can('Payer bon de caisse'), 403);
                 $this->validate([
                     'type_paiement' => 'required|string|in:ESPECE,CHEQUE',
                 ], [
@@ -168,6 +173,7 @@ class ViewBon extends ModalComponent
                 break;
             
             case 'PAYE':
+                abort_unless(auth()->user()->can('Clore bon de caisse'), 403);
                 try {
                     DB::beginTransaction();
                         $this->bon->etapeBons()->create([
@@ -192,6 +198,7 @@ class ViewBon extends ModalComponent
 
 
     public function printRecu (){
+        abort_unless(auth()->user()->can('Imprimer reçu bon de caisse'), 403);
         $this->dispatch('print-recu-bon');
     }
 }

@@ -90,6 +90,8 @@ class Fournisseurs extends Component
 
     public function delete($id)
     {
+        abort_unless(auth()->user()->can('Supprimer Fournisseur'), 403);
+
         $fournisseur = Fournisseur::find($id);
 
         if ($fournisseur) {

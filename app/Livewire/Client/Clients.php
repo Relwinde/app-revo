@@ -133,6 +133,8 @@ class Clients extends Component
 
     public function delete($id)
     {
+        abort_unless(auth()->user()->can('Supprimer Client'), 403);
+
         $client = Client::find($id);
 
         if ($client) {

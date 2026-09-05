@@ -17,6 +17,8 @@ class CreateMarchandise extends ModalComponent
 
     public function create()
     {
+        abort_unless(auth()->user()->can('Créer Marchandise'), 403);
+
         $this->validate([
             'name' => 'required|string|max:255|unique:marchandises,name',
         ]);

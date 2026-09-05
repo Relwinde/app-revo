@@ -23,6 +23,8 @@ class CreateDepot extends ModalComponent
     }
 
     public function save (){
+        abort_unless(auth()->user()->can('Créer Dépôt caisse'), 403);
+
         $this->validate([
             'montant' => 'required|numeric',
             'libelle' => 'required|string',

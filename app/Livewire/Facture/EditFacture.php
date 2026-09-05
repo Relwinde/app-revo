@@ -68,6 +68,8 @@ class EditFacture extends Component
     }
 
     public function saveHeader (){
+            abort_unless(auth()->user()->can('Modifier Facture'), 403);
+
             $this->validate([
                 'client_id' => 'required|exists:clients,id',
                 'camion_id' => 'nullable|exists:camions,id',
@@ -123,16 +125,21 @@ class EditFacture extends Component
     }
 
     public function removeItem (FactureItem $item){
+        abort_unless(auth()->user()->can('Supprimer ligne Facture'), 403);
+
         $item->delete();
     }
 
     public function saveComments (){
+        abort_unless(auth()->user()->can('Modifier Facture'), 403);
+
         $this->facture->comments = $this->comments;
 
         $this->facture->save();
     }
 
     public function print (){
+            abort_unless(auth()->user()->can('Imprimer Facture'), 403);
 
             $url = route('print-facture', ['facture'=>$this->facture->id]);
 

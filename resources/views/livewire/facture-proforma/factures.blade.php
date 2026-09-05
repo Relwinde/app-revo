@@ -6,10 +6,12 @@
                 <div class="block-header">
                     <h3 class="block-title">{{ $pageHeader['subtitle'] ?? 'Liste des factures pro-forma' }}</h3>
                     <div class="block-options">
-                        <a href="{{route('create-facture-proforma')}}" wire:navigate
-                            class="btn btn-sm btn-primary">
-                            <i class="fa fa-plus"></i> Nouvelle pro-forma
-                    </a>
+                        @can('Créer Facture Proforma')
+                            <a href="{{route('create-facture-proforma')}}" wire:navigate
+                                class="btn btn-sm btn-primary">
+                                <i class="fa fa-plus"></i> Nouvelle pro-forma
+                        </a>
+                        @endcan
                     </div>
                 </div>
 
