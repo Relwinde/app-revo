@@ -7,6 +7,7 @@ use App\Livewire\Chauffeur\Chauffeurs;
 use App\Livewire\Client\Clients;
 use App\Livewire\Commande\Commandes;
 use App\Livewire\Dossier\Dossiers;
+use App\Livewire\Entreprise\EntrepriseSettings;
 use App\Livewire\Facture\EditFacture;
 use App\Livewire\Facture\Factures as FacturesDefinitives;
 use App\Livewire\FactureProforma\CreateFacture;
@@ -51,6 +52,8 @@ Route::get('/chauffeurs', Chauffeurs::class)->name('chauffeurs')->middleware('au
 Route::get('/camions', Camions::class)->name('camions')->middleware('auth');
 
 Route::get('/profils', Profiles::class)->name('profils')->middleware('auth');
+
+Route::get('/parametres/entreprise', EntrepriseSettings::class)->name('parametres.entreprise')->middleware('auth');
 
 Route::get('/dossiers', Dossiers::class)->name('operations')->middleware('auth');
 

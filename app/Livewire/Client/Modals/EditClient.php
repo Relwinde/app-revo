@@ -19,15 +19,17 @@ class EditClient extends ModalComponent
     public $rccm;
     public $ifu;
     public $div_fisc;
+    public $code;
 
     public function mount(){
-        $this->name = $this->client->name; 
-        $this->email = $this->client->email; 
-        $this->phone = $this->client->phone; 
+        $this->name = $this->client->name;
+        $this->email = $this->client->email;
+        $this->phone = $this->client->phone;
         $this->address = $this->client->address;
-        $this->rccm = $this->client->rccm; 
-        $this->ifu = $this->client->ifu; 
+        $this->rccm = $this->client->rccm;
+        $this->ifu = $this->client->ifu;
         $this->div_fisc = $this->client->div_fisc;
+        $this->code = $this->client->code;
     }
 
     public function render()
@@ -45,6 +47,7 @@ class EditClient extends ModalComponent
                 'div_fisc' => ['nullable', 'string'],
                 'rccm' => ['nullable', 'string', 'unique:clients,rccm,'.$this->client->id],
                 'ifu' => ['nullable', 'string', 'unique:clients,ifu,'.$this->client->id],
+                'code' => ['required', 'string', 'max:255', 'unique:clients,code,'.$this->client->id],
             ],
             [
                 'name.required' => 'Le nom du client est obligatoire.',
@@ -53,6 +56,8 @@ class EditClient extends ModalComponent
                 'email.unique' => 'Cet email est déjà utilisé.',
                 'rccm.unique' => 'Ce RCCM existe déjà.',
                 'ifu.unique' => 'Cet IFU existe déjà.',
+                'code.required' => 'Le code du client est obligatoire.',
+                'code.unique' => 'Ce code client existe déjà.',
             ]
         );
 
@@ -65,7 +70,8 @@ class EditClient extends ModalComponent
                 'address' => $this->address,
                 'rccm' => $this->rccm,
                 'ifu' => $this->ifu,
-                'div_fisc' => $this->div_fisc,]
+                'div_fisc' => $this->div_fisc,
+                'code' => mb_strtoupper($this->code, 'UTF-8'),]
                 );
             DB::commit();
 

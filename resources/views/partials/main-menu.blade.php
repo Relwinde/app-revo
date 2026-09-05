@@ -110,6 +110,13 @@
                 </a>
             </li>
 
+            <li class="nav-main-item">
+                <a class="nav-main-link {{ request()->routeIs('parametres.entreprise') ? 'active' : '' }}" href="{{ route('parametres.entreprise') }}" wire:navigate>
+                    <i class="nav-main-link-icon si si-briefcase"></i>
+                    <span class="nav-main-link-name">Entreprise</span>
+                </a>
+            </li>
+
         </ul>
     </div>
 </div>

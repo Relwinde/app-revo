@@ -9,15 +9,14 @@
                 </th>
                 <td style="font-size: 12px; width: 50%; text-align: left;">
 
-                    <div> SARL au Capital de 100 000 FCFA</div>
-                    <div> 979 Boulevard Charles de Gaulle, Arr.10 </div>
-                    <div> 11 BP 3105 Ouagadougou 01 </div>
-                    <div>Téléphone : (+226) 25 48 11 12</div>
-                    <div>Email : info@revo-limited.com</div>
-                    <div>RCCM BF : BF OUA2021 B11588</div>
-                    <div>N° IFU : 00167673T</div>
-                    <div>Régime d’imposition : Régime Simplifié d'Imposition (RSI)</div>
-                    <div>Division fiscal: Ouaga V</div>
+                    <div> SARL au Capital de {{ $entreprise->capital }}</div>
+                    {!! nl2br(e($entreprise->adresse)) !!}
+                    <div>Téléphone : {{ $entreprise->telephone }}</div>
+                    <div>Email : {{ $entreprise->email }}</div>
+                    <div>RCCM BF : {{ $entreprise->rccm }}</div>
+                    <div>N° IFU : {{ $entreprise->ifu }}</div>
+                    <div>Régime d’imposition : {{ $entreprise->regime_imposition }}</div>
+                    <div>Division fiscal: {{ $entreprise->division_fiscale }}</div>
 
                 </td>
             </tr>

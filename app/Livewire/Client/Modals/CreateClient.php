@@ -28,7 +28,7 @@ class CreateClient extends ModalComponent
         $this->validate(
             [
                 'name' => ['required', 'string', 'max:255', 'unique:clients,name'],
-                'code' => ['required', 'string', 'max:255', 'unique:clients,name'],
+                'code' => ['required', 'string', 'max:255', 'unique:clients,code'],
                 'email' => ['nullable', 'email', 'unique:clients,email'],
                 'phone' => ['nullable', 'string', 'max:50'],
                 'address' => ['nullable', 'string'],

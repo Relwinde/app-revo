@@ -99,6 +99,14 @@
                         </div>
 
                         <div class="col">
+                            <div class="form-group">
+                                <label for="code">Code Client</label>
+                                <input wire:model='code' type="text" class="form-control form-control-alt" id="code"
+                                    placeholder="Code Client...">
+                                @error('code')
+                                    <div class="text-danger">{{ $message }}</div>
+                                @enderror
+                            </div>
                         </div>
                     </div>
 
